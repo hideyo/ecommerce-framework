@@ -10,7 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Hideyo\\Framework": "src"
+            "Hideyo\\Framework\\": "src"
         }
     },
     "require-dev": {
