@@ -18,11 +18,6 @@
         "orchestra/testbench": "^3.4.2",
         "phpunit/phpunit" : "~6.2"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1-dev"
-        }
-    },
     "config": {
         "sort-packages": true
     },
