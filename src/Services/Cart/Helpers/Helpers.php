@@ -1,4 +1,4 @@
-<?php namespace Hideyo\Services\Cart\Helpers;
+<?php namespace Hideyo\Ecommerce\Framework\Services\Cart\Helpers;
 
 class Helpers {
 

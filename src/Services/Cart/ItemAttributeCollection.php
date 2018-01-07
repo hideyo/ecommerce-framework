@@ -1,6 +1,6 @@
 <?php
 
-namespace Hideyo\Services\Cart;
+namespace Hideyo\Ecommerce\Framework\Services\Cart;
 
 use Illuminate\Support\Collection;
 

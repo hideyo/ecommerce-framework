@@ -1,8 +1,8 @@
 <?php
 
-namespace Hideyo\Services\Cart;
+namespace Hideyo\Ecommerce\Framework\Services\Cart;
 
-use Hideyo\Services\Cart\Helpers\Helpers;
+use Hideyo\Ecommerce\Framework\Services\Cart\Helpers\Helpers;
 
 class Cart
 {

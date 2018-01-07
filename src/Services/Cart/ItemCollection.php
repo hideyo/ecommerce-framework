@@ -1,9 +1,9 @@
 <?php
 
-namespace Hideyo\Services\Cart;
+namespace Hideyo\Ecommerce\Framework\Services\Cart;
 
 use Illuminate\Support\Collection;
-use Hideyo\Services\Cart\Helpers\Helpers;
+use Hideyo\Ecommerce\Framework\Services\Cart\Helpers\Helpers;
 
 class ItemCollection extends Collection {
     /**
