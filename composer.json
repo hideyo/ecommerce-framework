@@ -1,7 +1,7 @@
 {
     "name": "hideyo/ecommerce-framework",
     "type": "library",
-    "description": "A simple API extension for DateTime.",
+    "description": "Hideyo e-commerce framework",
 
     "homepage": "http://hideyo.io",
     "license": "GPL-3.0+",
