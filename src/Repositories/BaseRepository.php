@@ -26,7 +26,7 @@ class BaseRepository
     public function find($modelId)
     {
         return $this->model->find($modelId);
-    }  
+    }
 
     public function updateEntity(array $attributes = array())
     {
