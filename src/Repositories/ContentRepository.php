@@ -126,7 +126,6 @@ class ContentRepository extends BaseRepository implements ContentRepositoryInter
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
         $shop = $this->shop->find($shopId);
 
-       
         $rules = array(
             'file'=>'required|image|max:1000',
             'rank' => 'required'
@@ -175,7 +174,6 @@ class ContentRepository extends BaseRepository implements ContentRepositoryInter
             
             return $this->modelImage;
         }
-    
     }
 
     public function updateGroupById(array $attributes, $newsGroupId)
@@ -231,7 +229,6 @@ class ContentRepository extends BaseRepository implements ContentRepositoryInter
 
         $directory = app_path() . "/storage/files/".$this->model->shop_id."/content/".$this->model->id;
         File::deleteDirectory($directory);
-
 
         return $this->model->delete();
     }
