@@ -185,7 +185,7 @@ class CartRepository implements CartRepositoryInterface
             $discountCondition = array();
             if($discountValue) {
 
-                $discountCondition = new \Hideyo\Services\Cart\CartCondition(array(
+                $discountCondition = new \Hideyo\Ecommerce\Framework\Services\Cart\CartCondition(array(
                     'name' => 'Discount',
                     'type' => 'tax',
                     'target' => 'item',
@@ -213,7 +213,7 @@ class CartRepository implements CartRepositoryInterface
         }
 
         Cart::removeConditionsByType('sending_method');
-        $condition = new \Hideyo\Services\Cart\CartCondition(array(
+        $condition = new \Hideyo\Ecommerce\Framework\Services\Cart\CartCondition(array(
             'name' => 'Sending method',
             'type' => 'sending_method',
             'target' => 'subtotal',
@@ -259,7 +259,7 @@ class CartRepository implements CartRepositoryInterface
         $paymentMethodArray['value_ex_tax'] = $valueExTax;
 
         Cart::removeConditionsByType('payment_method');
-        $condition = new \Hideyo\Services\Cart\CartCondition(array(
+        $condition = new \Hideyo\Ecommerce\Framework\Services\Cart\CartCondition(array(
             'name' => 'Payment method',
             'type' => 'payment_method',
             'target' => 'subtotal',
@@ -311,7 +311,7 @@ class CartRepository implements CartRepositoryInterface
             $sendingMethodArray['value_ex_tax'] = $valueExTax;
 
             Cart::removeConditionsByType('sending_method_country_price');
-            $condition1 = new \Hideyo\Services\Cart\CartCondition(array(
+            $condition1 = new \Hideyo\Ecommerce\Framework\Services\Cart\CartCondition(array(
                 'name' => 'Sending method country price',
                 'type' => 'sending_method_country_price',
                 'target' => 'subtotal',
@@ -322,7 +322,7 @@ class CartRepository implements CartRepositoryInterface
             ));
 
             Cart::removeConditionsByType('sending_cost');
-            $condition2 = new \Hideyo\Services\Cart\CartCondition(array(
+            $condition2 = new \Hideyo\Ecommerce\Framework\Services\Cart\CartCondition(array(
                 'name' => 'Sending Cost',
                 'type' => 'sending_cost',
                 'target' => 'subtotal',
@@ -506,7 +506,7 @@ class CartRepository implements CartRepositoryInterface
 
     public function setCouponCode($discountValue, $couponData, $couponCode)
     {
-        $condition = new \Hideyo\Services\Cart\CartCondition(array(
+        $condition = new \Hideyo\Ecommerce\Framework\Services\Cart\CartCondition(array(
             'name' => 'Coupon code',
             'type' => 'coupon',
             'target' => 'subtotal',
