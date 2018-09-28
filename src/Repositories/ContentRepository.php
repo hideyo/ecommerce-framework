@@ -6,23 +6,19 @@ use Hideyo\Ecommerce\Framework\Models\ContentImage;
 use Hideyo\Ecommerce\Framework\Models\ContentGroup;
 use Image;
 use File;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
 use Validator;
-use Auth;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
  
 class ContentRepository extends BaseRepository implements ContentRepositoryInterface
 {
 
     protected $model;
 
-    public function __construct(Content $model, ContentImage $modelImage, ContentGroup $modelGroup, ShopRepositoryInterface $shop)
+    public function __construct(Content $model, ContentImage $modelImage, ContentGroup $modelGroup)
     {
         $this->model = $model;
         $this->modelImage = $modelImage;
         $this->modelGroup = $modelGroup;
-        $this->shop = $shop;
     }
 
     /**

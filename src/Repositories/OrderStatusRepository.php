@@ -2,8 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\OrderStatus;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
  
 class OrderStatusRepository extends BaseRepository implements OrderStatusRepositoryInterface
 {

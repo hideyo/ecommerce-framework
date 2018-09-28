@@ -2,9 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\GeneralSetting;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Auth;
 use Validator;
  
 class GeneralSettingRepository extends BaseRepository implements GeneralSettingRepositoryInterface

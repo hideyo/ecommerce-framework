@@ -2,8 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Attribute;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Validator;
  
 class AttributeRepository extends BaseRepository implements AttributeRepositoryInterface

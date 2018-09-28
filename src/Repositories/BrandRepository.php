@@ -3,14 +3,12 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Brand;
 use Hideyo\Ecommerce\Framework\Models\BrandImage;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Hideyo\Ecommerce\Framework\Repositories\RedirectRepositoryInterface;
 use Image;
 use File;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Validator;
-use Auth;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
  
 class BrandRepository extends BaseRepository implements BrandRepositoryInterface
 {
@@ -19,13 +17,11 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     public function __construct(
         Brand $model, 
         BrandImage $modelImage, 
-        RedirectRepositoryInterface $redirect, 
-        ShopRepositoryInterface $shop)
+        RedirectRepositoryInterface $redirect)
     {
         $this->model        = $model;
         $this->modelImage   = $modelImage;
         $this->redirect     = $redirect;
-        $this->shop         = $shop;
         $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/brand/";
         $this->publicImagePath = public_path() .config('hideyo.public_path'). "/brand/";
     }

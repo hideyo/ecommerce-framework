@@ -6,8 +6,6 @@ use Hideyo\Ecommerce\Framework\Models\OrderProduct;
 use Hideyo\Ecommerce\Framework\Models\OrderAddress;
 use Hideyo\Ecommerce\Framework\Models\OrderSendingMethod;
 use Hideyo\Ecommerce\Framework\Models\OrderPaymentMethod;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Hideyo\Ecommerce\Framework\Repositories\ClientRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\OrderAddressRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepositoryInterface;
@@ -15,7 +13,6 @@ use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepositoryInterface;
 use DB;
 use Carbon\Carbon;
-use Auth;
 use Cart;
  
 class OrderRepository extends BaseRepository implements OrderRepositoryInterface

@@ -2,16 +2,12 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
 
 use Hideyo\Ecommerce\Framework\Models\Client;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepositoryInterface;
 use Mail;
-use Config;
 use Carbon\Carbon;
 use Validator;
-use Auth;
 use Hash;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 
 class ClientRepository extends BaseRepository implements ClientRepositoryInterface
 {
@@ -19,12 +15,10 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
     protected $model;
 
     public function __construct(
-        Client $model, 
-        ShopRepositoryInterface $shop, 
+        Client $model,  
         ClientAddressRepositoryInterface $clientAddress)
     {
         $this->model = $model;
-        $this->shop = $shop;
         $this->clientAddress = $clientAddress;
     }
 
@@ -286,7 +280,7 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
         $attributes['active'] = 0;
         $attributes['confirmed'] = 0;
         $attributes['confirmation_code'] = md5(uniqid(mt_rand(), true));
-        $mailChimplistId = Config::get('mailchimp.consumerId');        
+        $mailChimplistId = config()->get('mailchimp.consumerId');        
 
         if($accountConfirmed) {
             $attributes['confirmation_code'] = null;

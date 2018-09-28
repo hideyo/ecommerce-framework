@@ -3,9 +3,6 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 
 use Hideyo\Ecommerce\Framework\Models\ExtraField;
 use Hideyo\Ecommerce\Framework\Models\ExtraFieldDefaultValue;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Auth;
 use Validator;
 
 class ExtraFieldRepository extends BaseRepository  implements ExtraFieldRepositoryInterface

@@ -2,10 +2,7 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\PaymentMethod;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Validator;
-use Auth;
  
 class PaymentMethodRepository extends BaseRepository implements PaymentMethodRepositoryInterface
 {

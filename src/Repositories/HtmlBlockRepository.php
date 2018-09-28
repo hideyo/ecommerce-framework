@@ -2,12 +2,8 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\HtmlBlock;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use File;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
 use Image;
-use Auth;
 use Validator;
 
 class HtmlBlockRepository extends BaseRepository implements HtmlBlockRepositoryInterface
@@ -15,10 +11,9 @@ class HtmlBlockRepository extends BaseRepository implements HtmlBlockRepositoryI
 
     protected $model;
 
-    public function __construct(HtmlBlock $model, ShopRepositoryInterface $shop)
+    public function __construct(HtmlBlock $model)
     {
         $this->model = $model;
-        $this->shop = $shop;
         $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/html_block/";
         $this->publicImagePath = public_path() .config('hideyo.public_path'). "/html_block/";
 

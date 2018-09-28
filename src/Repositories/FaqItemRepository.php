@@ -3,8 +3,6 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\FaqItem;
 use Hideyo\Ecommerce\Framework\Models\FaqItemGroup;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
  
 class FaqItemRepository extends BaseRepository implements FaqItemRepositoryInterface
 {

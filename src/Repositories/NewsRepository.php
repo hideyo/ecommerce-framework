@@ -9,7 +9,6 @@ use Image;
 use File;
 use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
 use Validator;
-use Auth;
 
 class NewsRepository  extends BaseRepository implements NewsRepositoryInterface
 {

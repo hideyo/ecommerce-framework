@@ -4,7 +4,6 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\ProductAmountOption;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Auth;
  
 class ProductAmountOptionRepository extends BaseRepository implements ProductAmountOptionRepositoryInterface
 {

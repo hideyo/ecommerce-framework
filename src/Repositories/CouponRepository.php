@@ -3,8 +3,6 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Coupon;
 use Hideyo\Ecommerce\Framework\Models\CouponGroup;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 use Validator;
  

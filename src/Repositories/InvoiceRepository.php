@@ -6,15 +6,12 @@ use Hideyo\Ecommerce\Framework\Models\InvoiceRule;
 use Hideyo\Ecommerce\Framework\Models\InvoiceAddress;
 use Hideyo\Ecommerce\Framework\Models\InvoiceSendingMethod;
 use Hideyo\Ecommerce\Framework\Models\InvoicePaymentMethod;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Hideyo\Ecommerce\Framework\Repositories\OrderRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\ClientRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\InvoiceAddressRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepositoryInterface;
 use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepositoryInterface;
 use Validator;
-use Auth;
  
 class InvoiceRepository extends BaseRepository implements InvoiceRepositoryInterface
 {

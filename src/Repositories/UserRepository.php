@@ -4,7 +4,6 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\User;
 use Hash;
 use Validator;
-use Config;
 use Mail;
 use Lang;
 
@@ -95,11 +94,11 @@ class UserRepository  extends BaseRepository implements UserRepositoryInterface
             // $this->model->detachAllRoles($roles);
             // $this->model->attachRole( $role ); // Parameter can be an Role object, array or id.
 
-            if (Config::get('confide::signup_email')) {
+            if (config()->get('confide::signup_email')) {
                 $user = $this->model;
                 Mail::queueOn(
-                    Config::get('confide::email_queue'),
-                    Config::get('confide::email_account_confirmation'),
+                    config()->get('confide::email_queue'),
+                    config()->get('confide::email_account_confirmation'),
                     compact('user'),
                     function ($message) use ($user) {
                         $message
@@ -190,7 +189,7 @@ class UserRepository  extends BaseRepository implements UserRepositoryInterface
             $input['password'] = null;
         }
 
-        return \Confide::logAttempt($input, Config::get('confide::signup_confirm'));
+        return \Confide::logAttempt($input, config()->get('confide::signup_confirm'));
     }
 
     /**
