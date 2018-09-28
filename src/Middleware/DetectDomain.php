@@ -1,21 +1,10 @@
 <?php namespace Hideyo\Ecommerce\Framework\Middleware;
 
 use Closure;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 
 class DetectDomain
 {
-    /**
-     * Create a new filter instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        ShopRepositoryInterface $shop)
-    {
-        $this->shop = $shop;
-    }
-
     /**
      * Handle an incoming request.
      *
@@ -30,7 +19,7 @@ class DetectDomain
             config()->set('app.url', $root);
         }
 
-        $shop = $this->shop->checkByUrl(config()->get('app.url'));
+        $shop = ShopService::checkByUrl(config()->get('app.url'));
 
         if(!$shop) {
             abort(404, "shop cannot be found");
@@ -38,7 +27,7 @@ class DetectDomain
 
         config()->set('app.shop_id', $shop->id);
         view()->share('shop', $shop);
-
+        app()->instance('shop', $shop);
         return $next($request);
     }
 }
