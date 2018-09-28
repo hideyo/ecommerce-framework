@@ -8,7 +8,6 @@ use Image;
 use File;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Validator;
-use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
  
 class BrandRepository extends BaseRepository implements BrandRepositoryInterface
 {
