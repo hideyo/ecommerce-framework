@@ -182,7 +182,7 @@ class HtmlBlockRepository extends BaseRepository implements HtmlBlockRepositoryI
     {
 
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         if (count($attributes) > 0) {
             $this->model->fill($attributes);

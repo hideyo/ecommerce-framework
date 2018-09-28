@@ -74,7 +74,7 @@ class ProductCategoryRepository extends BaseRepository implements ProductCategor
     {
         $userId = auth('hideyobackend')->user()->id;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
         $attributes['modified_by_user_id'] = $userId;
 
         $destinationPath = $this->storageImagePath.$productCategoryId;
@@ -128,7 +128,7 @@ class ProductCategoryRepository extends BaseRepository implements ProductCategor
     public function refactorAllImagesByShopId($shopId)
     {
         $result = $this->model->get();
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
         foreach ($result as $productImage) {
             if ($shop->thumbnail_square_sizes) {
                 $sizes = explode(',', $shop->thumbnail_square_sizes);
@@ -264,7 +264,7 @@ class ProductCategoryRepository extends BaseRepository implements ProductCategor
         $this->imageModel = $this->findImage($imageId);
         $filename = storage_path() ."/app/files/product_category/".$this->imageModel->product_category_id."/".$this->imageModel->file;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         if (File::exists($filename)) {
             File::delete($filename);

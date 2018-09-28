@@ -79,7 +79,7 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     {
         $userId = auth('hideyobackend')->user()->id;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
        
         $rules = array(
             'file'=>'required|image|max:1000',
@@ -187,7 +187,7 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
         $this->modelImage = $this->findImage($imageId);
         $filename = $this->storageImagePath.$this->modelImage->brand_id."/".$this->modelImage->file;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         if (File::exists($filename)) {
             File::delete($filename);
@@ -207,7 +207,7 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     public function refactorAllImagesByShopId($shopId)
     {
         $result = $this->modelImage->get();
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
         if($result AND $shop->thumbnail_square_sizes) {
             foreach ($result as $productImage) {
                 if ($shop->thumbnail_square_sizes) {

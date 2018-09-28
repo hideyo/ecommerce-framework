@@ -244,7 +244,7 @@ class CartRepository implements CartRepositoryInterface
 
         $valueExTax = $paymentMethodArray['price_details']['original_price_ex_tax'];
         $valueIncTax = $paymentMethodArray['price_details']['original_price_inc_tax'];
-        $shop = $this->shop->find(config()->get('app.shop_id'));
+        $shop = ShopService::find(config()->get('app.shop_id'));
         $value = $valueIncTax;
         $freeSending = ( $paymentMethodArray['no_price_from'] - Cart::getSubTotalWithTax());
 
@@ -294,7 +294,7 @@ class CartRepository implements CartRepositoryInterface
                 $sendingMethodArray['sending_method_country_price'] = $sendingMethodCountryPrice->toArray();
             }
 
-            $shop = $this->shop->find(config()->get('app.shop_id'));
+            $shop = ShopService::find(config()->get('app.shop_id'));
 
             $valueExTax = $sendingMethodArray['price_details']['original_price_ex_tax'];
             $valueIncTax = $sendingMethodArray['price_details']['original_price_inc_tax'];

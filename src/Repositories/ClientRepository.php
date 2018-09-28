@@ -272,7 +272,7 @@ class ClientRepository extends BaseRepository implements ClientRepositoryInterfa
         $result = array();
         $result['result'] = false;
 
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         $client = $this->model->where('shop_id', '=', $shopId)->where('email', '=', $attributes['email'])->get()->first();
 

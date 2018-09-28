@@ -124,7 +124,7 @@ class ContentRepository extends BaseRepository implements ContentRepositoryInter
     {
         $userId = auth('hideyobackend')->user()->id;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         $rules = array(
             'file'=>'required|image|max:1000',
@@ -238,7 +238,7 @@ class ContentRepository extends BaseRepository implements ContentRepositoryInter
         $this->modelImage = $this->findImage($newsImageId);
         $filename = storage_path() ."/app/files/content/".$this->modelImage->content_id."/".$this->modelImage->file;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         if (File::exists($filename)) {
             File::delete($filename);

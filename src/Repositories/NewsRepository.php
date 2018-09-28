@@ -109,7 +109,7 @@ class NewsRepository  extends BaseRepository implements NewsRepositoryInterface
     {
         $userId = auth('hideyobackend')->user()->id;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
         $attributes['modified_by_user_id'] = $userId;
         $destinationPath = $this->storageImagePath.$newsId;
         $attributes['user_id'] = $userId;
@@ -181,7 +181,7 @@ class NewsRepository  extends BaseRepository implements NewsRepositoryInterface
     public function refactorAllImagesByShopId($shopId)
     {
         $result = $this->modelImage->get();
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
         foreach ($result as $productImage) {
             if ($shop->thumbnail_square_sizes) {
                 $sizes = explode(',', $shop->thumbnail_square_sizes);
@@ -269,7 +269,7 @@ class NewsRepository  extends BaseRepository implements NewsRepositoryInterface
         $this->modelImage = $this->findImage($newsImageId);
         $filename = $this->storageImagePath.$this->modelImage->news_id."/".$this->modelImage->file;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
-        $shop = $this->shop->find($shopId);
+        $shop = ShopService::find($shopId);
 
         if (File::exists($filename)) {
             File::delete($filename);
