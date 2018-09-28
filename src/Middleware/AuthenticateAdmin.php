@@ -3,7 +3,7 @@
 namespace Hideyo\Ecommerce\Framework\Middleware;
 
 use Closure;
-use Hideyo\Models\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
 
 class AuthenticateAdmin
 {
