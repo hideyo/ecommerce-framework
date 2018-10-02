@@ -1,12 +1,13 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\Shop\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\Shop;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop;
 use File;
 use Image;
 use Validator;
- 
-class ShopRepository extends BaseRepository implements ShopRepositoryInterface
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
+
+class ShopRepository extends BaseRepository
 {
     protected $model;
 

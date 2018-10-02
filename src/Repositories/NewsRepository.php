@@ -7,10 +7,9 @@ use Hideyo\Ecommerce\Framework\Models\NewsGroup;
 use Carbon\Carbon;
 use Image;
 use File;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
 use Validator;
 
-class NewsRepository  extends BaseRepository implements NewsRepositoryInterface
+class NewsRepository  extends BaseRepository 
 {
 
     /**
@@ -22,11 +21,10 @@ class NewsRepository  extends BaseRepository implements NewsRepositoryInterface
 
     protected $model;
 
-    public function __construct(News $model, NewsImage $modelImage, NewsGroup $modelGroup, ShopRepositoryInterface $shop)
+    public function __construct(News $model, NewsImage $modelImage, NewsGroup $modelGroup)
     {
         $this->model = $model;
         $this->modelImage = $modelImage;
-        $this->shop = $shop;
         $this->modelGroup = $modelGroup;
         $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/news/";
         $this->publicImagePath = public_path() .config('hideyo.public_path'). "/news/";

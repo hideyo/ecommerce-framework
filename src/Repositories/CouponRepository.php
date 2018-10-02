@@ -6,7 +6,7 @@ use Hideyo\Ecommerce\Framework\Models\CouponGroup;
 use Carbon\Carbon;
 use Validator;
  
-class CouponRepository extends BaseRepository  implements CouponRepositoryInterface
+class CouponRepository extends BaseRepository  
 {
 
     protected $model;

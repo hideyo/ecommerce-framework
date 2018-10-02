@@ -7,7 +7,7 @@ use Validator;
 use Mail;
 use Lang;
 
-class UserRepository  extends BaseRepository implements UserRepositoryInterface
+class UserRepository  extends BaseRepository 
 {
 
 

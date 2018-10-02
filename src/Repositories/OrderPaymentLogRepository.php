@@ -3,7 +3,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\OrderPaymentLog;
  
-class OrderPaymentLogRepository extends BaseRepository  implements OrderPaymentLogRepositoryInterface
+class OrderPaymentLogRepository extends BaseRepository 
 {
 
     protected $model;

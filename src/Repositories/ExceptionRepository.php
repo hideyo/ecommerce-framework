@@ -4,7 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\Exception;
 use Validator;
  
-class ExceptionRepository extends BaseRepository  implements ExceptionRepositoryInterface
+class ExceptionRepository extends BaseRepository  
 {
 
     protected $model;

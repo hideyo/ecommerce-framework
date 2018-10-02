@@ -6,16 +6,16 @@ use Hideyo\Ecommerce\Framework\Models\OrderProduct;
 use Hideyo\Ecommerce\Framework\Models\OrderAddress;
 use Hideyo\Ecommerce\Framework\Models\OrderSendingMethod;
 use Hideyo\Ecommerce\Framework\Models\OrderPaymentMethod;
-use Hideyo\Ecommerce\Framework\Repositories\ClientRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\OrderAddressRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\ClientRepository;
+use Hideyo\Ecommerce\Framework\Repositories\OrderAddressRepository;
+use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepository;
+use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepository;
+use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepository;
 use DB;
 use Carbon\Carbon;
 use Cart;
  
-class OrderRepository extends BaseRepository implements OrderRepositoryInterface
+class OrderRepository extends BaseRepository 
 {
 
     protected $model;
@@ -23,11 +23,11 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     public function __construct(
         Order $model,
         OrderProduct $modelOrderProduct,
-        ClientRepositoryInterface $client,
-        ClientAddressRepositoryInterface $clientAddress,
-        OrderAddressRepositoryInterface $orderAddress,
-        SendingMethodRepositoryInterface $sendingMethod,
-        PaymentMethodRepositoryInterface $paymentMethod
+        ClientRepository $client,
+        ClientAddressRepository $clientAddress,
+        OrderAddressRepository $orderAddress,
+        SendingMethodRepository $sendingMethod,
+        PaymentMethodRepository $paymentMethod
     ) {
         $this->model = $model;
         $this->modelOrderProduct = $modelOrderProduct;

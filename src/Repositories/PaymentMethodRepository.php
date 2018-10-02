@@ -4,7 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\PaymentMethod;
 use Validator;
  
-class PaymentMethodRepository extends BaseRepository implements PaymentMethodRepositoryInterface
+class PaymentMethodRepository extends BaseRepository 
 {
 
     protected $model;

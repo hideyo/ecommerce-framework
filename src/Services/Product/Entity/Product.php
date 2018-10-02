@@ -1,6 +1,6 @@
 <?php 
 
-namespace Hideyo\Ecommerce\Framework\Models;
+namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
 
 use Hideyo\Ecommerce\Framework\Models\BaseModel;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -143,7 +143,7 @@ class Product extends BaseModel
 
     public function shop()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Shop');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop');
     }
 
     public function attributeGroup()
@@ -178,12 +178,12 @@ class Product extends BaseModel
 
     public function relatedProducts()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\Product', 'product_related_product', 'product_id', 'related_product_id');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_related_product', 'product_id', 'related_product_id');
     }
 
     public function relatedProductsActive()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\Product', 'product_related_product', 'product_id', 'related_product_id')->whereHas('productCategory', function ($query) {
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_related_product', 'product_id', 'related_product_id')->whereHas('productCategory', function ($query) {
             $query->where('active', '=', '1');
         })->where('product.active', '=', '1');
     }

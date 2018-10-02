@@ -2,21 +2,21 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
 
 use Hideyo\Ecommerce\Framework\Models\Client;
-use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepository;
 use Mail;
 use Carbon\Carbon;
 use Validator;
 use Hash;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 
-class ClientRepository extends BaseRepository implements ClientRepositoryInterface
+class ClientRepository extends BaseRepository 
 {
 
     protected $model;
 
     public function __construct(
         Client $model,  
-        ClientAddressRepositoryInterface $clientAddress)
+        ClientAddressRepository $clientAddress)
     {
         $this->model = $model;
         $this->clientAddress = $clientAddress;

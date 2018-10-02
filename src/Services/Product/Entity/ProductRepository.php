@@ -1,18 +1,18 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
  
-use Hideyo\Ecommerce\Framework\Repositories\ProductImageRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\RedirectRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Models\Product;
+use Hideyo\Ecommerce\Framework\Repositories\ProductImageRepository;
+use Hideyo\Ecommerce\Framework\Repositories\RedirectRepository;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
 use Hideyo\Ecommerce\Framework\Models\ProductImage;
 use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
 use Image;
 use File;
 use Auth;
 use Validator;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
-class ProductRepository extends BaseRepository implements ProductRepositoryInterface
+class ProductRepository extends BaseRepository
 {
 
     protected $model;
@@ -20,12 +20,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     protected $guard = 'admin';
 
 
-    public function __construct(Product $model, ProductImage $modelImage, ShopRepositoryInterface $shop, RedirectRepositoryInterface $redirect)
+    public function __construct(Product $model, ProductImage $modelImage, RedirectRepository $redirect)
     {
         $this->model = $model;
         $this->modelImage = $modelImage;
         $this->redirect = $redirect;
-        $this->shop = $shop;
         $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/product/";
         $this->publicImagePath = public_path() .config('hideyo.public_path'). "/product/";
 
@@ -551,7 +550,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     function selectAllByShopIdAndProductCategoryId($shopId, $productCategoryId, $filters = false)
     {
-
         $result = $this->model
         ->with(array('subcategories', 'extraFields' => function ($query) {
             $query->with('extraField')->orderBy('id', 'desc');
@@ -575,7 +573,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $result->get();
     }
 
-    function selectOneByShopIdAndId($shopId, $productId)
+    public function selectOneByShopIdAndId($shopId, $productId = false, $attributeId = false)
     {
            return $this->model->with(
                array(
@@ -630,53 +628,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
            )->where('shop_id', '=', $shopId)->where('active', '=', 1)->whereNotNull('product_category_id')->where('id', '=', $productId)->get()->first();
     }
 
-    function selectOneByIdAndAttributeId($id, $attributeId) 
-    {
-        return $this->model
-        ->with(
-            array(
-                'attributeGroup',
-                'attributes' => function($query) use ($attributeId) {
-                    $query->with(
-                        array(
-                            'combinations' => function($query)
-                            {
-                                $query->with(
-                                    array(
-                                        'productAttribute', 
-                                        'attribute' => function($query){
-                                            $query->with(
-                                                array(
-                                                    'attributeGroup'
-                                                )
-                                            );
-                                        }
-                                    )
-                                );
-                            }
-                        )
-                    )->orderBy('default_on', 'desc');
-                },
-                'extraFields' => function($query){$query->where('value', '!=', '')
-                ->orWhereNotNull('extra_field_default_value_id')
-                ->with(
-                    array(
-                        'extraField', 
-                        'extraFieldDefaultValue'
-                    )
-                )
-                ->orderBy('id', 'desc');}, 
-                    'taxRate', 
-                    'productCategory',  
-                    'relatedProducts' => function($query){$query->with('productImages')->orderBy('rank', 'asc');}
-                )
-            )
-
-           ->where('active', '=', 1)
-           ->where('id', '=', $id)->get()->first();             
-    }
-
-    function ajaxProductImages($product, $combinationsIds, $productAttributeId = false) 
+    public function ajaxProductImages($product, $combinationsIds, $productAttributeId = false) 
     {
         $images = array();
 

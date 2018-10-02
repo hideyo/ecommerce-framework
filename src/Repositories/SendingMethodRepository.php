@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Auth;
 use Validator;
  
-class SendingMethodRepository extends BaseRepository implements SendingMethodRepositoryInterface 
+class SendingMethodRepository extends BaseRepository 
 {
 
     protected $model;

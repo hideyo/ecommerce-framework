@@ -5,7 +5,7 @@ use Hideyo\Ecommerce\Framework\Models\SendingPaymentMethodRelated;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
  
-class SendingPaymentMethodRelatedRepository extends BaseRepository implements SendingPaymentMethodRelatedRepositoryInterface
+class SendingPaymentMethodRelatedRepository extends BaseRepository
 {
 
     protected $model;

@@ -5,13 +5,14 @@ namespace Hideyo\Ecommerce\Framework\Services\Shop;
 use App\Product;
 use Validator;
 use File;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\ShopRepository;
+use Hideyo\Ecommerce\Framework\Services\BaseService;
  
-class ShopService
+class ShopService extends BaseService
 {
-	public function __construct(ShopRepositoryInterface $shop)
+	public function __construct(ShopRepository $shop)
 	{
-		$this->shop = $shop;
+		$this->repo = $shop;
 	} 
 
     /**
@@ -23,7 +24,7 @@ class ShopService
     private function rules($shopId = false)
     {
         $rules = array(
-            'title' => 'required|between:4,65|unique:'.$this->shop->getModel()->getTable(),
+            'title' => 'required|between:4,65|unique:'.$this->repo->getModel()->getTable(),
             'active' => 'required'
         );
 
@@ -42,34 +43,34 @@ class ShopService
             return $validator;
         }
 
-        $this->shop->getModel()->slug = null;
-        $this->shop->getModel()->fill($attributes);
-        $this->shop->getModel()->save();
+        $this->repo->getModel()->slug = null;
+        $this->repo->getModel()->fill($attributes);
+        $this->repo->getModel()->save();
         
         if (isset($attributes['logo'])) {
-            $destinationPath = $this->storageImagePath.$this->shop->getModel()->id;
+            $destinationPath = $this->storageImagePath.$this->repo->getModel()->id;
             $filename =  str_replace(" ", "_", strtolower($attributes['logo']->getClientOriginalName()));
             $upload_success = $attributes['logo']->move($destinationPath, $filename);
 
             $attributes['logo_file_name'] = $filename;
             $attributes['logo_file_path'] = $upload_success->getRealPath();
-            $this->shop->getModel()->fill($attributes);
-            $this->shop->getModel()->save();
+            $this->repo->getModel()->fill($attributes);
+            $this->repo->getModel()->save();
 
-            if (File::exists($this->shop->getModel()->logo_file_path)) {
-                if (!File::exists($this->publicImagePath.$this->shop->getModel()->id)) {
-                    File::makeDirectory($this->publicImagePath.$this->shop->getModel()->id, 0777, true);
+            if (File::exists($this->repo->getModel()->logo_file_path)) {
+                if (!File::exists($this->publicImagePath.$this->repo->getModel()->id)) {
+                    File::makeDirectory($this->publicImagePath.$this->repo->getModel()->id, 0777, true);
                 }
 
-                if (!File::exists($this->publicImagePath.$this->shop->getModel()->id."/".$this->shop->getModel()->logo_file_name)) {
-                    $image = Image::make($this->shop->getModel()->logo_file_path);
+                if (!File::exists($this->publicImagePath.$this->repo->getModel()->id."/".$this->repo->getModel()->logo_file_name)) {
+                    $image = Image::make($this->repo->getModel()->logo_file_path);
                     $image->interlace();
-                    $image->save($this->publicImagePath.$this->shop->getModel()->id."/".$this->shop->getModel()->logo_file_name);
+                    $image->save($this->publicImagePath.$this->repo->getModel()->id."/".$this->repo->getModel()->logo_file_name);
                 }
             }
         }
         
-        return $this->shop->getModel();
+        return $this->repo->getModel();
     }
 
     public function updateById(array $attributes, $shopId)
@@ -135,23 +136,6 @@ class ShopService
 
     public function checkByUrl($shopUrl)
     {
-        return $this->shop->checkByUrl($shopUrl);
+        return $this->repo->checkByUrl($shopUrl);
     }
-
-    public function find($shopId)
-    {
-        return $this->shop->find($shopId);
-    }
-
-    public function selectAll()
-    {
-        return $this->shop->selectAll();
-    }
-
-    public function getModel()
-    {
-        return $this->shop->getModel();
-    }
-
-
 }

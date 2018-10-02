@@ -3,7 +3,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Language;
  
-class LanguageRepository extends BaseRepository implements LanguageRepositoryInterface
+class LanguageRepository extends BaseRepository 
 {
 
     protected $model;

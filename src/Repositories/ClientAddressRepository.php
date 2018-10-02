@@ -4,7 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\ClientAddress;
 use File;
  
-class ClientAddressRepository extends BaseRepository implements ClientAddressRepositoryInterface
+class ClientAddressRepository extends BaseRepository
 {
 
     protected $model;

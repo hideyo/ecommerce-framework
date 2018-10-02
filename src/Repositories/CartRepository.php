@@ -3,23 +3,23 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Shop;
 use Cart;
-use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\ProductRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\CouponRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepository;
+use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepository;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
+use Hideyo\Ecommerce\Framework\Repositories\CouponRepository;
 use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
  
-class CartRepository implements CartRepositoryInterface 
+class CartRepository 
 {
     protected $cart;
 
     public function __construct(
         Cart $cart, 
-        SendingMethodRepositoryInterface $sendingMethod, 
-        PaymentMethodRepositoryInterface $paymentMethod, 
-        ProductRepositoryInterface $product,
-        CouponRepositoryInterface $coupon)
+        SendingMethodRepository $sendingMethod, 
+        PaymentMethodRepository $paymentMethod, 
+        ProductRepository $product,
+        CouponRepository $coupon)
     {
         $this->cart = $cart;
         $this->sendingMethod = $sendingMethod;

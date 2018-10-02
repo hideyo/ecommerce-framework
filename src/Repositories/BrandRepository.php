@@ -3,20 +3,20 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Brand;
 use Hideyo\Ecommerce\Framework\Models\BrandImage;
-use Hideyo\Ecommerce\Framework\Repositories\RedirectRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\RedirectRepository;
 use Image;
 use File;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Validator;
  
-class BrandRepository extends BaseRepository implements BrandRepositoryInterface
+class BrandRepository extends BaseRepository 
 {
     protected $model;
 
     public function __construct(
         Brand $model, 
         BrandImage $modelImage, 
-        RedirectRepositoryInterface $redirect)
+        RedirectRepository $redirect)
     {
         $this->model        = $model;
         $this->modelImage   = $modelImage;

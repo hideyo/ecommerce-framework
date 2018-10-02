@@ -6,7 +6,7 @@ use File;
 use Image;
 use Validator;
 
-class HtmlBlockRepository extends BaseRepository implements HtmlBlockRepositoryInterface
+class HtmlBlockRepository extends BaseRepository 
 {
 
     protected $model;

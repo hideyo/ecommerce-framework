@@ -43,6 +43,6 @@ class Brand extends BaseModel
 
     public function shop()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Shop');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop');
     }
 }

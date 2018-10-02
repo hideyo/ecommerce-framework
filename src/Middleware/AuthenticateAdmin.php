@@ -3,7 +3,7 @@
 namespace Hideyo\Ecommerce\Framework\Middleware;
 
 use Closure;
-use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 
 class AuthenticateAdmin
 {
@@ -27,7 +27,7 @@ class AuthenticateAdmin
 
         if (auth()->guard('hideyobackend')->check()) {
             view()->share('this_user', auth()->guard('hideyobackend')->user());
-            view()->share('available_shops', Shop::all());
+            view()->share('available_shops', ShopService::selectAll());
         }
 
         return $next($request);

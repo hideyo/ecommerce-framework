@@ -41,6 +41,6 @@ class User extends Authenticatable
 
     public function shop()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Shop', 'selected_shop_id', 'id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop', 'selected_shop_id', 'id');
     }
 }

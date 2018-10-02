@@ -8,7 +8,7 @@ use File;
 use Image;
 use Validator;
 
-class RedirectRepository  extends BaseRepository implements RedirectRepositoryInterface
+class RedirectRepository  extends BaseRepository 
 {
 
     protected $model;

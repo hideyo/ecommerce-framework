@@ -4,7 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\FaqItem;
 use Hideyo\Ecommerce\Framework\Models\FaqItemGroup;
  
-class FaqItemRepository extends BaseRepository implements FaqItemRepositoryInterface
+class FaqItemRepository extends BaseRepository 
 {
 
     protected $model;

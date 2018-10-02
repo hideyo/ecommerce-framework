@@ -5,7 +5,7 @@ use Hideyo\Ecommerce\Framework\Models\ProductTagGroup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
  
-class ProductTagGroupRepository extends BaseRepository implements ProductTagGroupRepositoryInterface
+class ProductTagGroupRepository extends BaseRepository 
 {
 
     protected $model;

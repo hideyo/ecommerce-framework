@@ -3,7 +3,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\OrderStatusEmailTemplate;
 
-class OrderStatusEmailTemplateRepository extends BaseRepository implements OrderStatusEmailTemplateRepositoryInterface
+class OrderStatusEmailTemplateRepository extends BaseRepository 
 {
 
     protected $model;

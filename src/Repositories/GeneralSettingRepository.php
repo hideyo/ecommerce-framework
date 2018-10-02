@@ -4,7 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\GeneralSetting;
 use Validator;
  
-class GeneralSettingRepository extends BaseRepository implements GeneralSettingRepositoryInterface
+class GeneralSettingRepository extends BaseRepository
 {
 
     protected $model;

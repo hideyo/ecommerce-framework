@@ -39,7 +39,7 @@ class ProductCategory extends Node
 
     public function shop()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Shop');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop');
     }
 
     public static function boot()
@@ -77,6 +77,6 @@ class ProductCategory extends Node
 
     public function products()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\Product');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product');
     }
 }

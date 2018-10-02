@@ -2,16 +2,16 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\ProductRelatedProduct;
-use Hideyo\Ecommerce\Framework\Models\Product;
-use Hideyo\Ecommerce\Framework\Repositories\ProductRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
 use Auth;
  
-class ProductRelatedProductRepository  extends BaseRepository implements ProductRelatedProductRepositoryInterface
+class ProductRelatedProductRepository  extends BaseRepository 
 {
 
     protected $model;
 
-    public function __construct(ProductRelatedProduct $model, ProductRepositoryInterface $product)
+    public function __construct(ProductRelatedProduct $model, ProductRepository $product)
     {
         $this->model = $model;
         $this->product = $product;

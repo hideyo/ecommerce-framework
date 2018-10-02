@@ -2,14 +2,16 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\ProductExtraFieldValue;
-use Hideyo\Ecommerce\Framework\Repositories\ProductExtraFieldValueRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\ProductExtraFieldValueRepository;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
+
  
-class ProductExtraFieldValueRepository extends BaseRepository implements ProductExtraFieldValueRepositoryInterface
+class ProductExtraFieldValueRepository extends BaseRepository 
 {
 
     protected $model;
 
-    public function __construct(ProductExtraFieldValue $model, ProductRepositoryInterface $product)
+    public function __construct(ProductExtraFieldValue $model, ProductRepository $product)
     {
         $this->model = $model;
         $this->product = $product;

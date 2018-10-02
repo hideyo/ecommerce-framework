@@ -4,8 +4,8 @@ namespace Hideyo\Ecommerce\Framework;
 use Hideyo\Ecommerce\Framework\Models\AttributeGroup;
 use Validator;
  
-class AttributeGroupRepository extends BaseRepository implements AttributeGroupRepositoryInterface
-{
+class AttributeGroupRepository extends BaseRepository
+
     protected $model;
 
     public function __construct(AttributeGroup $model)

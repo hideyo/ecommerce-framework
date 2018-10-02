@@ -5,7 +5,7 @@ use Hideyo\Ecommerce\Framework\Models\ExtraField;
 use Hideyo\Ecommerce\Framework\Models\ExtraFieldDefaultValue;
 use Validator;
 
-class ExtraFieldRepository extends BaseRepository  implements ExtraFieldRepositoryInterface
+class ExtraFieldRepository extends BaseRepository 
 {
 
     protected $model;

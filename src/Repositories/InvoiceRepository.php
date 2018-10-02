@@ -6,25 +6,25 @@ use Hideyo\Ecommerce\Framework\Models\InvoiceRule;
 use Hideyo\Ecommerce\Framework\Models\InvoiceAddress;
 use Hideyo\Ecommerce\Framework\Models\InvoiceSendingMethod;
 use Hideyo\Ecommerce\Framework\Models\InvoicePaymentMethod;
-use Hideyo\Ecommerce\Framework\Repositories\OrderRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\ClientRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\InvoiceAddressRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\OrderRepository;
+use Hideyo\Ecommerce\Framework\Repositories\ClientRepository;
+use Hideyo\Ecommerce\Framework\Repositories\InvoiceAddressRepository;
+use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepository;
+use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepository;
 use Validator;
  
-class InvoiceRepository extends BaseRepository implements InvoiceRepositoryInterface
+class InvoiceRepository extends BaseRepository 
 {
 
     protected $model;
 
     public function __construct(
         Invoice $model,
-        OrderRepositoryInterface $order,
-        ClientRepositoryInterface $client,
-        InvoiceAddressRepositoryInterface $invoiceAddress,
-        SendingMethodRepositoryInterface $sendingMethod,
-        PaymentMethodRepositoryInterface $paymentMethod
+        OrderRepository $order,
+        ClientRepository $client,
+        InvoiceAddressRepository $invoiceAddress,
+        SendingMethodRepository $sendingMethod,
+        PaymentMethodRepository $paymentMethod
     ) {
         $this->model = $model;
         $this->client = $client;

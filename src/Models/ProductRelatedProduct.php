@@ -18,11 +18,11 @@ class ProductRelatedProduct extends BaseModel
 
     public function product()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Product', 'product_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_id');
     }
 
     public function relatedProduct()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Product', 'related_product_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'related_product_id');
     }
 }

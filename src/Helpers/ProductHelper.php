@@ -3,7 +3,7 @@
 namespace Hideyo\Ecommerce\Framework\Helpers;
 
 use Config;
-use Hideyo\Ecommerce\Framework\Models\Product;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
 use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
 use Hideyo\Ecommerce\Framework\Models\ProductAttributeCombination;
 use DbView;

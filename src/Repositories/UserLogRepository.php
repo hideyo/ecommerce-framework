@@ -3,7 +3,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use UserLog;
  
-class UserLogRepository  extends BaseRepository implements UserLogRepositoryInterface
+class UserLogRepository  extends BaseRepository 
 {
 
     protected $model;

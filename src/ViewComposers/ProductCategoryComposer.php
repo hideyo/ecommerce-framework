@@ -1,7 +1,7 @@
 <?php namespace Hideyo\Ecommerce\Framework\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-use Hideyo\Ecommerce\Framework\Repositories\ProductCategoryRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\ProductCategoryRepository;
 use Config;
 
 class ProductCategoryComposer
@@ -11,7 +11,7 @@ class ProductCategoryComposer
      *
      * @return void
      */
-    public function __construct(ProductCategoryRepositoryInterface $productCategory)
+    public function __construct(ProductCategoryRepository $productCategory)
     {
         $this->productCategory = $productCategory;
     }

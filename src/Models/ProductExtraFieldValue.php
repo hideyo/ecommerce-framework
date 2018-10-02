@@ -27,6 +27,6 @@ class ProductExtraFieldValue extends BaseModel
 
     public function product()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Product');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product');
     }
 }

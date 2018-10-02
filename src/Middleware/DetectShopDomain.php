@@ -3,7 +3,7 @@
 use Closure;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 
-class DetectDomain
+class DetectShopDomain
 {
     /**
      * Handle an incoming request.
@@ -28,6 +28,7 @@ class DetectDomain
         config()->set('app.shop_id', $shop->id);
         view()->share('shop', $shop);
         app()->instance('shop', $shop);
+
         return $next($request);
     }
 }

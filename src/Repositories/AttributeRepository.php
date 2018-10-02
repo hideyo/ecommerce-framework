@@ -4,8 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\Attribute;
 use Validator;
  
-class AttributeRepository extends BaseRepository implements AttributeRepositoryInterface
-{
+class AttributeRepository extends BaseRepository 
     protected $model;
 
     public function __construct(Attribute $model)

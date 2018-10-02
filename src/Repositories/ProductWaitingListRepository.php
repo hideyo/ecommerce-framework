@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Auth;
 use Validator;
  
-class ProductWaitingListRepository  extends BaseRepository implements ProductWaitingListRepositoryInterface
+class ProductWaitingListRepository  extends BaseRepository 
 {
 
     protected $model;

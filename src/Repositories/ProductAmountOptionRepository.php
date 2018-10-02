@@ -5,12 +5,12 @@ use Hideyo\Ecommerce\Framework\Models\ProductAmountOption;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
  
-class ProductAmountOptionRepository extends BaseRepository implements ProductAmountOptionRepositoryInterface
+class ProductAmountOptionRepository extends BaseRepository 
 {
 
     protected $model;
 
-    public function __construct(ProductAmountOption $model, ProductRepositoryInterface $product)
+    public function __construct(ProductAmountOption $model, ProductRepository $product)
     {
         $this->model = $model;
         $this->product = $product;

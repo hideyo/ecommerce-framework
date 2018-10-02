@@ -4,22 +4,29 @@ namespace Hideyo\Ecommerce\Framework\Services\Product;
  
 use App\Product;
 
-use Hideyo\Ecommerce\Framework\Repositories\ProductRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
+use Hideyo\Ecommerce\Framework\Services\BaseService;
  
-class ProductService
+class ProductService extends BaseService
 {
-	public function __construct(ProductRepositoryInterface $shop)
+	public function __construct(ProductRepository $product)
 	{
-		$this->shop = $shop;
+		$this->repo = $product;
 	} 
 
-    public function checkByUrl($shopUrl)
+    public function selectOneByShopIdAndId($shopId, $productId, $attributeId = false)
     {
-        return $this->shop->checkByUrl($shopUrl);
+       return $this->repo->selectOneByShopIdAndId($shopId, $productId, $attributeId);
     }
 
-    public function find($shopId)
+    public function ajaxProductImages($product, $combinationsIds, $productAttributeId = false) 
     {
-        return $this->shop->find($shopId);
-    }	 
+        return $this->repo->ajaxProductImages($product, $combinationsIds, $productAttributeId);
+    }
+
+    public  function selectAllByShopIdAndProductCategoryId($shopId, $productCategoryId, $filters = false)
+    {
+        return $this->repo->selectAllByShopIdAndProductCategoryId($shopId, $productCategoryId, $filters);
+    }
+
 }

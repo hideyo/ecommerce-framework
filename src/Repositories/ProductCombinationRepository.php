@@ -3,14 +3,15 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
 use Hideyo\Ecommerce\Framework\Models\ProductAttributeCombination;
-use Hideyo\Ecommerce\Framework\Repositories\ProductCombinationRepositoryInterface;
+use Hideyo\Ecommerce\Framework\Repositories\ProductCombinationRepository;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
  
-class ProductCombinationRepository extends BaseRepository implements ProductCombinationRepositoryInterface
+class ProductCombinationRepository extends BaseRepository 
 {
 
     protected $model;
 
-    public function __construct(ProductAttribute $model, ProductAttributeCombination $modelAttributeCombination, ProductRepositoryInterface $product)
+    public function __construct(ProductAttribute $model, ProductAttributeCombination $modelAttributeCombination, ProductRepository $product)
     {
         $this->model = $model;
         $this->modelAttributeCombination = $modelAttributeCombination;

@@ -9,7 +9,7 @@ use File;
 use Validator;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
  
-class ContentRepository extends BaseRepository implements ContentRepositoryInterface
+class ContentRepository extends BaseRepository 
 {
 
     protected $model;

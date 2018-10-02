@@ -4,7 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
 use Hideyo\Ecommerce\Framework\Models\TaxRate;
 use Validator;
  
-class TaxRateRepository extends BaseRepository implements TaxRateRepositoryInterface
+class TaxRateRepository extends BaseRepository 
 {
 
     protected $model;

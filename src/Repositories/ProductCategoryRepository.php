@@ -2,10 +2,8 @@
 namespace Hideyo\Ecommerce\Framework\Repositories;
 
 
-use Hideyo\Ecommerce\Framework\Repositories\ProductCategoryImageRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\RedirectRepositoryInterface;
-use Hideyo\Ecommerce\Framework\Repositories\ShopRepositoryInterface;
-
+use Hideyo\Ecommerce\Framework\Repositories\ProductCategoryImageRepository;
+use Hideyo\Ecommerce\Framework\Repositories\RedirectRepository;
 use Hideyo\Ecommerce\Framework\Models\ProductCategory;
 use Hideyo\Ecommerce\Framework\Models\ProductCategoryImage;
 use Image;
@@ -13,7 +11,7 @@ use File;
 use Auth;
 use Validator;
  
-class ProductCategoryRepository extends BaseRepository implements ProductCategoryRepositoryInterface
+class ProductCategoryRepository extends BaseRepository 
 {
     protected $model;
 
@@ -44,12 +42,11 @@ class ProductCategoryRepository extends BaseRepository implements ProductCategor
         return $rules;
     }
 
-    public function __construct(ProductCategory $model, ProductCategoryImage $imageModel, ShopRepositoryInterface $shop, RedirectRepositoryInterface $redirect)
+    public function __construct(ProductCategory $model, ProductCategoryImage $imageModel, RedirectRepository $redirect)
     {
         $this->model = $model;
         $this->imageModel = $imageModel;
         $this->redirect = $redirect;
-        $this->shop = $shop;
         $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/product_category/";
         $this->publicImagePath = public_path() .config('hideyo.public_path'). "/product_category/";
     }

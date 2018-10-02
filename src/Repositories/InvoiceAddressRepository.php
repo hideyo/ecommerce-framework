@@ -3,7 +3,7 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\InvoiceAddress;
  
-class InvoiceAddressRepository extends BaseRepository implements InvoiceAddressRepositoryInterface
+class InvoiceAddressRepository extends BaseRepository 
 {
 
     protected $model;
