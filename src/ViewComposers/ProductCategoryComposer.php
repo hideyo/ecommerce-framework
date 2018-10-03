@@ -1,22 +1,10 @@
 <?php namespace Hideyo\Ecommerce\Framework\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-use Hideyo\Ecommerce\Framework\Repositories\ProductCategoryRepository;
-use Config;
+use Hideyo\Ecommerce\Framework\Services\ProductCategory\ProductCategoryFacade as ProductCategoryService;
 
 class ProductCategoryComposer
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(ProductCategoryRepository $productCategory)
-    {
-        $this->productCategory = $productCategory;
-    }
-
-
     /**
      * Bind data to the view.
      *
@@ -25,6 +13,6 @@ class ProductCategoryComposer
      */
     public function compose(View $view)
     {
-        $view->with('frontendProductCategories', $this->productCategory->selectAllByShopIdAndRoot(Config::get('app.shop_id')));
+        $view->with('frontendProductCategories', ProductCategoryService::selectAllByShopIdAndRoot(config()->get('app.shop_id')));
     }
 }

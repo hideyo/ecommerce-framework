@@ -1,8 +1,7 @@
 <?php
 
 namespace Hideyo\Ecommerce\Framework\Services\Shop;
- 
-use App\Product;
+
 use Validator;
 use File;
 use Hideyo\Ecommerce\Framework\Services\Shop\Entity\ShopRepository;
