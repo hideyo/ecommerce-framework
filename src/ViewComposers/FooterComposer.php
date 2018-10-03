@@ -2,21 +2,10 @@
 
 use Illuminate\Contracts\View\View;
 use Hideyo\Ecommerce\Framework\Services\News\Entity\NewsRepository;
-use Config;
+use Hideyo\Ecommerce\Framework\Services\News\NewsFacade as NewsService;
 
 class FooterComposer
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(NewsRepository $news)
-    {
-        $this->news = $news;
-    }
-
-
     /**
      * Bind data to the view.
      *
@@ -25,6 +14,6 @@ class FooterComposer
      */
     public function compose(View $view)
     {
-        $view->with('footerNews', $this->news->selectByLimitAndOrderBy(Config::get('app.shop_id'), '5', 'desc'));
+        $view->with('footerNews', NewsService::selectByLimitAndOrderBy(config()->get('app.shop_id'), '5', 'desc'));
     }
 }

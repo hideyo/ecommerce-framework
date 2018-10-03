@@ -366,10 +366,10 @@ class NewsRepository  extends BaseRepository
                 $query->orderBy('rank', 'asc');
             })
         )
-            ->limit($limit)
-           ->where('shop_id', '=', $shopId)
-           ->where('published_at', '<=', $dt->toDateString('Y-m-d'))
-            ->orderBy('created_at', $orderBy)->get();
+        ->limit($limit)
+        ->where('shop_id', '=', $shopId)
+        ->where('published_at', '<=', $dt->toDateString('Y-m-d'))
+        ->orderBy('created_at', $orderBy)->get();
     }
 
     function selectAllByShopIdAndPaginate($shopId, $totalPage, $filters = false)
