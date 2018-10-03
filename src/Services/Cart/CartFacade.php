@@ -1,4 +1,7 @@
-<?php namespace Hideyo\Ecommerce\Framework\Facades;
+<?php
+
+namespace Hideyo\Ecommerce\Framework\Services\Cart;
+
 use Illuminate\Support\Facades\Facade;
 
 class CartFacade extends Facade 
