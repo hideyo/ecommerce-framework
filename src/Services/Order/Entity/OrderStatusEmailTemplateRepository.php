@@ -1,7 +1,7 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\Order\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\OrderStatusEmailTemplate;
+use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatusEmailTemplate;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class OrderStatusEmailTemplateRepository extends BaseRepository 
