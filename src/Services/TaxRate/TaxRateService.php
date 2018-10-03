@@ -1,18 +1,19 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
- 
-use Hideyo\Ecommerce\Framework\Models\TaxRate;
+
+namespace Hideyo\Ecommerce\Framework\Services\TaxRate;
+
 use Validator;
+use File;
+use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRateRepository;
+use Hideyo\Ecommerce\Framework\Services\BaseService;
  
-class TaxRateRepository extends BaseRepository 
+class TaxRateService extends BaseService
 {
+	public function __construct(TaxRateRepository $taxRate)
+	{
+		$this->repo = $taxRate;
+	} 
 
-    protected $model;
-
-    public function __construct(TaxRate $model)
-    {
-        $this->model = $model;
-    }
 
     /**
      * The validation rules for the model.
@@ -60,5 +61,6 @@ class TaxRateRepository extends BaseRepository
         $this->model = $this->find($id);
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
         return $this->updateEntity($attributes);   
-    }  
+    } 
+	
 }

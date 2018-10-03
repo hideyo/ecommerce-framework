@@ -3,8 +3,8 @@ namespace Hideyo\Ecommerce\Framework\Repositories;
  
 use Hideyo\Ecommerce\Framework\Models\Shop;
 use Cart;
-use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepository;
-use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepository;
+use Hideyo\Ecommerce\Framework\Services\Sendingmethod\SendingmethodFacade as SendingmethodService;
+use Hideyo\Ecommerce\Framework\Services\PaymentMethod\PaymentMethodFacade as PaymentMethodService;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
 use Hideyo\Ecommerce\Framework\Repositories\CouponRepository;
 use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
@@ -16,14 +16,10 @@ class CartRepository
 
     public function __construct(
         Cart $cart, 
-        SendingMethodRepository $sendingMethod, 
-        PaymentMethodRepository $paymentMethod, 
         ProductRepository $product,
         CouponRepository $coupon)
     {
         $this->cart = $cart;
-        $this->sendingMethod = $sendingMethod;
-        $this->paymentMethod = $paymentMethod;
         $this->product = $product;
         $this->coupon = $coupon;
     }
@@ -197,7 +193,7 @@ class CartRepository
 
     public function updateSendingMethod($sendingMethodId)
     {
-        $sendingMethod = $this->sendingMethod->selectOneByShopIdAndId(config()->get('app.shop_id'), $sendingMethodId);
+        $sendingMethod = SendingmethodService::selectOneByShopIdAndId(config()->get('app.shop_id'), $sendingMethodId);
         $sendingMethodArray = array();
         if (isset($sendingMethod->id)) {
             $sendingMethodArray = $sendingMethod->toArray();          
@@ -230,7 +226,7 @@ class CartRepository
 
     public function updatePaymentMethod($paymentMethodId)
     {
-        $paymentMethod = $this->paymentMethod->selectOneByShopIdAndId(config()->get('app.shop_id'), $paymentMethodId);
+        $paymentMethod = PaymentMethodService::selectOneByShopIdAndId(config()->get('app.shop_id'), $paymentMethodId);
 
         $paymentMethodArray = array();
         if (isset($paymentMethod->id)) {
@@ -270,7 +266,7 @@ class CartRepository
 
     public function updateSendingMethodCountryPrice($sendingMethodCountryPriceId)
     {
-        $sendingMethodCountryPrice = $this->sendingMethod->selectOneCountryPriceByShopIdAndId(config()->get('app.shop_id'), $sendingMethodCountryPriceId);
+        $sendingMethodCountryPrice = SendingmethodService::selectOneCountryPriceByShopIdAndId(config()->get('app.shop_id'), $sendingMethodCountryPriceId);
      
         if ($sendingMethodCountryPrice) {
             $sendingMethod = $sendingMethodCountryPrice->sendingMethod;

@@ -1,11 +1,12 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\SendingMethod;
+use Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethod;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Auth;
 use Validator;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class SendingMethodRepository extends BaseRepository 
 {
@@ -88,15 +89,10 @@ class SendingMethodRepository extends BaseRepository
         return $this->model;
     }
 
-    function selectOneByShopIdAndId($shopId, $sendingMethodId)
+    public function selectOneByShopIdAndId($shopId, $sendingMethodId)
     {
-        $result = $this->model->with(array('relatedPaymentMethods' => function ($query) {
+        return $this->model->with(array('relatedPaymentMethods' => function ($query) {
             $query->where('active', '=', 1);
         }))->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $sendingMethodId)->get();
-        
-        if ($result->isEmpty()) {
-            return false;
-        }
-        return $result->first();
     } 
 }

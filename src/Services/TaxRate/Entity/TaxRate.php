@@ -1,6 +1,8 @@
 <?php 
 
-namespace Hideyo\Ecommerce\Framework\Models;
+namespace Hideyo\Ecommerce\Framework\Services\TaxRate\Entity;
+
+use Hideyo\Ecommerce\Framework\Models\BaseModel;
 
 class TaxRate extends BaseModel
 {

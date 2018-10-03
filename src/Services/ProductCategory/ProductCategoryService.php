@@ -10,16 +10,15 @@ use Hideyo\Ecommerce\Framework\Services\BaseService;
  
 class ProductCategoryService extends BaseService
 {
-	public function __construct(ProductCategoryRepository $shop)
+	public function __construct(ProductCategoryRepository $productCategory)
 	{
-		$this->repo = $shop;
+		$this->repo = $productCategory;
 	} 
 
     public function selectOneByShopIdAndSlug($shopId, $slug, $imageTag = false)
     { 
     	return $this->repo->selectOneByShopIdAndSlug($shopId, $slug, $imageTag);
     }
-
 
     public function selectAllByShopIdAndRoot($shopId)
     {
@@ -29,6 +28,11 @@ class ProductCategoryService extends BaseService
     public function selectRootCategories($shopId, $imageTag)
     {
     	return $this->repo->selectRootCategories($shopId, $imageTag);
+    }
+
+    public function selectCategoriesByParentId($shopId, $parentId, $imageTag = false)
+    {
+    	return $this->repo->selectCategoriesByParentId($shopId, $parentId, $imageTag);
     }
 
 }

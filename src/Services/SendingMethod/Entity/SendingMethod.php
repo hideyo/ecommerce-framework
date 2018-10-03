@@ -1,27 +1,38 @@
 <?php 
 
-namespace Hideyo\Ecommerce\Framework\Models;
+namespace Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity;
 
 use Hideyo\Ecommerce\Framework\Models\BaseModel;
 use Carbon\Carbon;
 
-class PaymentMethod extends BaseModel
+class SendingMethod extends BaseModel
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */    
-    protected $table = 'payment_method';
+    protected $table = 'sending_method';
 
     // Add the 'avatar' attachment to the fillable array so that it's mass-assignable on this model.
-    protected $fillable = ['total_price_discount_type', 'total_price_discount_value', 'total_price_discount_start_date', 'total_price_discount_end_date',  'active', 'percent_of_total', 'price', 'no_price_from', 'payment_external', 'title', 'shop_id', 'tax_rate_id', 'mollie_external_payment_way', 'order_confirmed_order_status_id', 'payment_completed_order_status_id',  'payment_failed_order_status_id', 'mollie_api_key', 'modified_by_user_id'];
+    protected $fillable = ['total_price_discount_type', 'total_price_discount_value', 'total_price_discount_start_date', 'total_price_discount_end_date', 'active', 'price', 'no_price_from', 'minimal_weight', 'maximal_weight', 'title', 'shop_id', 'tax_rate_id', 'modified_by_user_id'];
+
+    public function relatedPaymentMethods()
+    {
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod', 'sending_payment_method_related');
+    }
+
+
+    public function relatedPaymentMethodsActive()
+    {
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod', 'sending_payment_method_related')->where('active', '=', 1);
+    }
 
     public function getPriceDetails()
     {
         $taxRate = 0;
         $priceInc = 0;
-        
+
         if (isset($this->taxRate->rate)) {
             $taxRate = $this->taxRate->rate;
             $priceInc = (($this->taxRate->rate / 100) * $this->price) + $this->price;
@@ -31,33 +42,18 @@ class PaymentMethod extends BaseModel
             'original_price_ex_tax' => $this->price,
             'original_price_inc_tax' => $priceInc,
             'original_price_ex_tax_number_format' => number_format($this->price, 2, '.', ''),
-            'original_price_inc_tax_number_forma' => number_format($priceInc, 2, '.', ''),
+            'original_price_inc_tax_number_format' => number_format($priceInc, 2, '.', ''),
             'tax_rate' => $taxRate,
             'tax_value' => $priceInc - $this->price,
             'tax_value_number_format' => number_format(($priceInc - $this->price), 2, '.', ''),
-            'currency' => $this->Shop->currency_code,
+            'currency' => $this->shop->currency_code,
 
         );
     }
 
     public function taxRate()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\TaxRate');
-    }
-
-    public function orderConfirmedOrderStatus()
-    {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus', 'order_confirmed_order_status_id');
-    }
-
-    public function orderPaymentCompletedOrderStatus()
-    {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus', 'payment_completed_order_status_id');
-    }
-
-    public function orderPaymentFailedOrderStatus()
-    {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus', 'payment_failed_order_status_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate');
     }
 
     public function shop()
@@ -68,7 +64,7 @@ class PaymentMethod extends BaseModel
     public function setTotalPriceDiscountStartDateAttribute($value)
     {
         $this->attributes['total_price_discount_start_date'] = null;
-        
+
         if ($value) {
             $date = explode('/', $value);
             $value = Carbon::createFromDate($date[2], $date[1], $date[0])->toDateTimeString();
@@ -94,7 +90,7 @@ class PaymentMethod extends BaseModel
             $date = explode('/', $value);
             $value = Carbon::createFromDate($date[2], $date[1], $date[0])->toDateTimeString();
             $this->attributes['total_price_discount_end_date'] = $value;
-        }
+        }   
     }
 
     public function getTotalPriceDiscountEndDateAttribute($value)

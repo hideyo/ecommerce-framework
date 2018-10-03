@@ -8,8 +8,8 @@ use Hideyo\Ecommerce\Framework\Models\OrderSendingMethod;
 use Hideyo\Ecommerce\Framework\Models\OrderPaymentMethod;
 use Hideyo\Ecommerce\Framework\Repositories\ClientRepository;
 use Hideyo\Ecommerce\Framework\Repositories\OrderAddressRepository;
-use Hideyo\Ecommerce\Framework\Repositories\SendingMethodRepository;
-use Hideyo\Ecommerce\Framework\Repositories\PaymentMethodRepository;
+use Hideyo\Ecommerce\Framework\Services\Sendingmethod\SendingmethodFacade as SendingmethodService;
+use Hideyo\Ecommerce\Framework\Services\PaymentMethod\PaymentMethodFacade as PaymentMethodService;
 use Hideyo\Ecommerce\Framework\Repositories\ClientAddressRepository;
 use DB;
 use Carbon\Carbon;
@@ -25,17 +25,13 @@ class OrderRepository extends BaseRepository
         OrderProduct $modelOrderProduct,
         ClientRepository $client,
         ClientAddressRepository $clientAddress,
-        OrderAddressRepository $orderAddress,
-        SendingMethodRepository $sendingMethod,
-        PaymentMethodRepository $paymentMethod
+        OrderAddressRepository $orderAddress
     ) {
         $this->model = $model;
         $this->modelOrderProduct = $modelOrderProduct;
         $this->client = $client;
         $this->orderAddress = $orderAddress;
         $this->clientAddress = $clientAddress;
-        $this->paymentMethod = $paymentMethod;
-        $this->sendingMethod = $sendingMethod;
     }
   
     public function create(array $attributes)
@@ -141,7 +137,7 @@ class OrderRepository extends BaseRepository
         if (Cart::getConditionsByType('sending_method')->count()) {
 
             $attributes = Cart::getConditionsByType('sending_method')->first()->getAttributes();
-            $sendingMethod = $this->sendingMethod->find($attributes['data']['id']);
+            $sendingMethod = SendingMethodService::find($attributes['data']['id']);
             $price = $sendingMethod->getPriceDetails();
             $sendingMethodArray = $sendingMethod->toArray();
   
@@ -158,7 +154,7 @@ class OrderRepository extends BaseRepository
         if (Cart::getConditionsByType('payment_method')->count()) {
 
            $attributes = Cart::getConditionsByType('payment_method')->first()->getAttributes();
-            $paymentMethod = $this->paymentMethod->find($attributes['data']['id']);
+            $paymentMethod = PaymentMethodService::find($attributes['data']['id']);
             $price = $paymentMethod->getPriceDetails();
 
             $paymentMethodArray = $paymentMethod->toArray();
