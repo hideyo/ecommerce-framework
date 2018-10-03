@@ -1,7 +1,7 @@
 <?php namespace Hideyo\Ecommerce\Framework\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-use Hideyo\Ecommerce\Framework\Repositories\NewsRepository;
+use Hideyo\Ecommerce\Framework\Services\News\Entity\NewsRepository;
 use Config;
 
 class FooterComposer

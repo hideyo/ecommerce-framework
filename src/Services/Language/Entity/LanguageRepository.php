@@ -1,0 +1,36 @@
+<?php
+namespace Hideyo\Ecommerce\Framework\Repositories;
+ 
+use Hideyo\Ecommerce\Framework\Models\Language;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
+ 
+class LanguageRepository extends BaseRepository 
+{
+
+    protected $model;
+
+    public function __construct(Language $model)
+    {
+        $this->model = $model;
+    }
+  
+    public function create(array $attributes)
+    {
+        $attributes['shop_id'] = \auth()->user()->selected_shop_id;
+        $attributes['modified_by_user_id'] = \auth()->user()->id;
+
+        $this->model->fill($attributes);
+        $this->model->save();
+        
+        return $this->model;
+    }
+
+    public function updateById(array $attributes, $id)
+    {
+        $this->model = $this->find($id);
+        $attributes['shop_id'] = \auth()->user()->selected_shop_id;
+        $attributes['modified_by_user_id'] = \auth()->user()->id;
+
+        return $this->updateEntity($attributes);
+    }
+}

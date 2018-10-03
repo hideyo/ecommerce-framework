@@ -1,7 +1,7 @@
 <?php
 
 namespace Hideyo\Ecommerce\Framework\Helpers;
-use Hideyo\Ecommerce\Framework\Models\HtmlBlock;
+use Hideyo\Ecommerce\Framework\Services\HtmlBlock\Entity\HtmlBlock;
 use DbView;
 
 class HtmlBlockHelper

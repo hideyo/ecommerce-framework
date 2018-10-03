@@ -2,9 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethod;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Auth;
 use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  

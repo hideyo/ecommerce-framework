@@ -4,10 +4,10 @@ namespace Hideyo\Ecommerce\Framework\Helpers;
 
 use Config;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
-use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
-use Hideyo\Ecommerce\Framework\Models\ProductAttributeCombination;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttributeCombination;
 use DbView;
-use Hideyo\Ecommerce\Framework\Models\ProductImage;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductImage;
 use Illuminate\Support\Facades\Request;
 
 class ProductHelper

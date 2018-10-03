@@ -2,7 +2,7 @@
 
 namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
 
-use Hideyo\Ecommerce\Framework\Models\BaseModel;
+use Hideyo\Ecommerce\Framework\Services\BaseModel;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Carbon\Carbon;
 use Elasticquent\ElasticquentTrait;
@@ -148,12 +148,12 @@ class Product extends BaseModel
 
     public function attributeGroup()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\AttributeGroup', 'leading_atrribute_group_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Attribute\Entity\AttributeGroup', 'leading_atrribute_group_id');
     }
     
     public function extraFields()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductExtraFieldValue');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductExtraFieldValue');
     }
 
     public function taxRate()
@@ -163,17 +163,17 @@ class Product extends BaseModel
 
     public function brand()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Brand');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\Brand');
     }
 
     public function productCategory()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\ProductCategory');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory');
     }
 
     public function subcategories()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\ProductCategory', 'product_sub_product_category');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory', 'product_sub_product_category');
     }
 
     public function relatedProducts()
@@ -190,21 +190,21 @@ class Product extends BaseModel
 
     public function productImages()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductImage');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductImage');
     }
 
     public function attributes()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductAttribute');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute');
     }
 
     public function amountOptions()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductAmountOption');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAmountOption');
     }
 
     public function amountSeries()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductAmountSeries');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAmountSeries');
     }
 }

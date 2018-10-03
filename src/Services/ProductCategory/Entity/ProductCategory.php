@@ -57,17 +57,17 @@ class ProductCategory extends Node
 
     public function refProductCategory()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\ProductCategory', 'redirect_product_category_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory', 'redirect_product_category_id');
     }
 
     public function productCategoryImages()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductCategoryImage');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategoryImage');
     }
 
     public function productCategoryHighlightProduct()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\Product', 'product_category_highlight_product', 'product_category_id', 'product_id');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\Product', 'product_category_highlight_product', 'product_category_id', 'product_id');
     }
 
     public function productCategoryHighlightProductActive()

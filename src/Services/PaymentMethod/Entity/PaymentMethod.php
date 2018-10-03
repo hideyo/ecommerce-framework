@@ -2,7 +2,7 @@
 
 namespace Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity;
 
-use Hideyo\Ecommerce\Framework\Models\BaseModel;
+use Hideyo\Ecommerce\Framework\Services\BaseModel;
 use Carbon\Carbon;
 
 class PaymentMethod extends BaseModel

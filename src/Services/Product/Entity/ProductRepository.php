@@ -2,13 +2,12 @@
 namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
  
 use Hideyo\Ecommerce\Framework\Repositories\ProductImageRepository;
-use Hideyo\Ecommerce\Framework\Repositories\RedirectRepository;
+use Hideyo\Ecommerce\Framework\Services\Redirect\Entity\RedirectRepository;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
-use Hideyo\Ecommerce\Framework\Models\ProductImage;
-use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductImage;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute;
 use Image;
 use File;
-use Auth;
 use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
