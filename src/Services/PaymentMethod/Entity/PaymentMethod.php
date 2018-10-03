@@ -47,17 +47,17 @@ class PaymentMethod extends BaseModel
 
     public function orderConfirmedOrderStatus()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus', 'order_confirmed_order_status_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatus', 'order_confirmed_order_status_id');
     }
 
     public function orderPaymentCompletedOrderStatus()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus', 'payment_completed_order_status_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatus', 'payment_completed_order_status_id');
     }
 
     public function orderPaymentFailedOrderStatus()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus', 'payment_failed_order_status_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatus', 'payment_failed_order_status_id');
     }
 
     public function shop()

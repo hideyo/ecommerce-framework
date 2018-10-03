@@ -1,6 +1,6 @@
 <?php 
 
-namespace Hideyo\Ecommerce\Framework\Models;
+namespace Hideyo\Ecommerce\Framework\Services\User\Entity;
 
 
 use Laravel\Passport\HasApiTokens;

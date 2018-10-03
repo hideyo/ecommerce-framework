@@ -24,7 +24,7 @@ class TaxRateService extends BaseService
     public function rules($taxRateId = false)
     {
         $rules = array(
-            'title' => 'required|between:2,65|unique_with:'.$this->model->getTable().', shop_id',
+            'title' => 'required|between:2,65|unique_with:'.$this->repo->getModel()->getTable().', shop_id',
             'rate'  => 'numeric|required'
         );
         
@@ -45,9 +45,9 @@ class TaxRateService extends BaseService
         }
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->model->fill($attributes);
-        $this->model->save();
-        return $this->model;
+        $this->repo->getModel()->fill($attributes);
+        $this->repo->getModel()->save();
+        return $this->repo->getModel();
     }
 
     public function updateById(array $attributes, $id)
@@ -58,9 +58,14 @@ class TaxRateService extends BaseService
             return $validator;
         }
 
-        $this->model = $this->find($id);
+        $model = $this->find($id);
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        return $this->updateEntity($attributes);   
+
+        if (count($attributes) > 0) {
+            $model->fill($attributes);
+            $model->save();
+        }
+        return $model;  
     } 
 	
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\GeneralSetting\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\GeneralSetting;
+use Hideyo\Ecommerce\Framework\Services\GeneralSetting\Entity\GeneralSetting;
 use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  

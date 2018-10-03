@@ -1,7 +1,8 @@
-<?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+<?php 
+
+namespace Hideyo\Ecommerce\Framework\Services\User\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\User;
+use Hideyo\Ecommerce\Framework\Services\User\Entity\User;
 use Hash;
 use Validator;
 use Mail;

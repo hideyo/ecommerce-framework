@@ -1,6 +1,6 @@
 <?php 
 
-namespace Hideyo\Ecommerce\Framework\Models;
+namespace Hideyo\Ecommerce\Framework\Services\Faq\Entity;
 
 use Hideyo\Ecommerce\Framework\Services\BaseModel;
 use Cviebrock\EloquentSluggable\Sluggable;

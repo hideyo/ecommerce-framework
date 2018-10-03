@@ -18,6 +18,6 @@ class OrderStatus extends BaseModel
 
     public function orderStatusEmailTemplate()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatusEmailTemplate');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatusEmailTemplate');
     }
 }

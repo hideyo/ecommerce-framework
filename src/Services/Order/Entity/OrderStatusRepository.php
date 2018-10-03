@@ -1,7 +1,8 @@
 <?php
 namespace Hideyo\Ecommerce\Framework\Services\Order\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\OrderStatus;
+use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatus;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class OrderStatusRepository extends BaseRepository 
 {

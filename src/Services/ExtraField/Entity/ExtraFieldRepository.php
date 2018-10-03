@@ -1,9 +1,10 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\ExtraField\Entity;
 
-use Hideyo\Ecommerce\Framework\Models\ExtraField;
-use Hideyo\Ecommerce\Framework\Models\ExtraFieldDefaultValue;
+use Hideyo\Ecommerce\Framework\Services\ExtraField\Entity\ExtraField;
+use Hideyo\Ecommerce\Framework\Services\ExtraField\Entity\ExtraFieldDefaultValue;
 use Validator;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class ExtraFieldRepository extends BaseRepository 
 {

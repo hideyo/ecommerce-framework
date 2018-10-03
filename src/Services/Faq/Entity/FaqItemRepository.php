@@ -1,8 +1,9 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\Faq\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\FaqItem;
-use Hideyo\Ecommerce\Framework\Models\FaqItemGroup;
+use Hideyo\Ecommerce\Framework\Services\Faq\Entity\FaqItem;
+use Hideyo\Ecommerce\Framework\Services\Faq\Entity\FaqItemGroup;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class FaqItemRepository extends BaseRepository 
 {

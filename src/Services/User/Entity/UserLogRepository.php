@@ -1,5 +1,6 @@
-<?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+<?php 
+
+namespace Hideyo\Ecommerce\Framework\Services\User\Entity;
  
 use UserLog;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;

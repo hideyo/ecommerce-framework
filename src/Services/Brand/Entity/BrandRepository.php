@@ -1,13 +1,14 @@
 <?php
-namespace Hideyo\Ecommerce\Framework\Repositories;
+namespace Hideyo\Ecommerce\Framework\Services\Brand\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\Brand;
-use Hideyo\Ecommerce\Framework\Models\BrandImage;
-use Hideyo\Ecommerce\Framework\Repositories\RedirectRepository;
+use Hideyo\Ecommerce\Framework\Services\Brand\Entity\Brand;
+use Hideyo\Ecommerce\Framework\Services\Brand\Entity\BrandImage;
+use Hideyo\Ecommerce\Framework\Services\Redirect\Entity\RedirectRepository;
 use Image;
 use File;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Validator;
+use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class BrandRepository extends BaseRepository 
 {
