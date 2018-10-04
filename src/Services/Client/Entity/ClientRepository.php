@@ -79,28 +79,6 @@ class ClientRepository extends BaseRepository
         return $this->model;
     }
 
-    public function setAccountChange($user, $attributes, $shopId)
-    {
-        $checkEmailExist = $this->model
-        ->where('shop_id', '=', $shopId)
-        ->where('email', '=', $attributes['email'])
-        ->get()
-        ->first();
-
-        if ($checkEmailExist) {
-            return false;
-        }
-
-        $this->model = $this->find($user->id);
-
-        if ($this->model) {
-            $newAttributes['new_email'] = $attributes['email'];
-            $newAttributes['new_password'] = Hash::make($attributes['password']);
-            $newAttributes['confirmation_code'] = md5(uniqid(mt_rand(), true));
-            return $this->updateEntity($newAttributes);
-        }
-    }
-
     public function updateById(array $attributes, $clientId)
     {
         $this->model = $this->find($clientId);
@@ -228,7 +206,7 @@ class ClientRepository extends BaseRepository
 
     public function validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId)
     {
-        return $this->model = $this->model
+        return $this->model
         ->where('shop_id', '=', $shopId)
         ->where('email', '=', $email)
         ->whereNotNull('account_created')
@@ -236,28 +214,14 @@ class ClientRepository extends BaseRepository
         ->get()->first();
     }
 
-    public function resetAccount($code, $newEmail, $shopId)
+    public function validateConfirmationCodeByConfirmationCodeAndNewEmail($confirmationCode, $newEmail, $shopId)
     {
-
-        $checkEmailExist = $this->model->where('shop_id', '=', $shopId)->where('email', '=', $newEmail)->get()->first();
-
-        if ($checkEmailExist) {
-            return false;
-        }
-
-        $check = $this->model->whereNotNull('account_created')->where('shop_id', '=', $shopId)->where('new_email', '=', $newEmail)->where('confirmation_code', '=', $code)->get()->first();
-
-        if ($check) {
-            $newAttributes['email'] = $check->new_email;
-            $newAttributes['password'] = $check->new_password;
-            $newAttributes['confirmed'] = 1;
-            $newAttributes['active'] = 1;
-            $newAttributes['confirmation_code'] = null;
-            $this->model = $this->find($check->id);
-            return $this->updateEntity($newAttributes);
-        }
-
-        return false;
+        return $this->model
+        ->where('shop_id', '=', $shopId)
+        ->where('new_email', '=', $newEmail)
+        ->whereNotNull('account_created')
+        ->where('confirmation_code', '=', $confirmationCode)
+        ->get()->first();
     }
 
     public function updateLastLogin($clientId)
@@ -273,68 +237,13 @@ class ClientRepository extends BaseRepository
         return false;
     }
 
-    public function resetPasswordByConfirmationCodeAndEmail(array $attributes, $shopId)
-    {
-        $result = array();
-        $result['result'] = false;
-
-        $this->model = $this->model->whereNotNull('account_created')->where('shop_id', '=', $shopId)->where('email', '=', $attributes['email'])->where('confirmation_code', '=', $attributes['confirmation_code'])->get()->first();
-
-        if ($this->model) {
-            if ($attributes['password']) {
-                $attributes['confirmed'] = 1;
-                $attributes['active'] = 1;
-                $attributes['confirmation_code'] = null;
-                $attributes['password'] = Hash::make($attributes['password']);
-            }
-
-            $this->updateEntity($attributes);
-            $result['result'] = true;
-        } else {
-            $result['errors'][] = 'message.error.email-with-code-not-exist';
-        }
-
-        return $result;
-    }
-
-
     public function selectAllExport()
     {
         return $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->whereNotNull('account_created')->where('active', '=', 1)->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
-    public static function encodePassword($password, $salt = 'foodeliciousnl', $count = 1000, $length = 32, $algorithm = 'sha1', $start = 16)
-    {
-        $hash = self::protectPassword($password, $salt, $count, $length, $algorithm, $start);
-
-        return base64_encode($hash);
-    }
-
     function editAddress($shopId, $clientId, $addressId, $attributes)
     {
         $address = $this->clientAddress->updateByIdAndShopId($shopId, $attributes, $clientId, $addressId);
-    }
-
-    public static function protectPassword($password, $salt, $count, $length, $algorithm = 'sha256', $start = 0)
-    {
-        $keyblock = $start + $length;                        // Key blocks to compute
-        $derivedKey = '';                                    // Derived key
-
-        // Create key
-        for ($block=1; $block <= $keyblock; $block++) {
-          // Initial hash for this block
-            $ib = $hash = hash_hmac($algorithm, $salt . pack('N', $block), $password, true);
-
-          // Perform block iterations
-            for ($i=1; $i<$count; $i++) {
-              // XOR each iterate
-                $ib ^= ($hash = hash_hmac($algorithm, $hash, $password, true));
-            }
-
-            $derivedKey .= $ib;                                // Append iterated block
-        }
-
-        // Return derived key of correct length
-        return substr($derivedKey, $start, $length);
     }
 }

@@ -18,7 +18,7 @@ class ClientService extends BaseService
 		$this->repoAddress = $clientAddress;
 	} 
 
-    public function validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId)
+    public function validateConfirmationCode($confirmationCode, $email, $shopId)
     {
     	return $this->repo->validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId);
 	}
@@ -136,5 +136,74 @@ class ClientService extends BaseService
         
         return $model;
     }
+
+    public function requestChangeAccountDetails($attributes, $shopId) {
+
+        $client = $this->repo->checkEmailByShopId($attributes['email'], $shopId);
+
+        if ($client) {
+            $newAttributes = array(
+                'new_email' => $attributes['email'],
+                'new_password' => Hash::make($attributes['password']),
+                'confirmation_code' => md5(uniqid(mt_rand(), true))
+            );
+
+            $client->fill($newAttributes);
+            $client->save();
+            
+            return $client;
+        }
+
+        return false;
+    }
+
+    public function changeAccountDetails($confirmationCode, $newEmail, $shopId) {
+
+        $client = $this->repo->validateConfirmationCodeByConfirmationCodeAndNewEmail($confirmationCode, $newEmail, $shopId);
+
+        if ($client) {
+            $newAttributes['email'] = $client->new_email;
+            $newAttributes['password'] = $client->new_password;
+            $newAttributes['confirmed'] = 1;
+            $newAttributes['active'] = 1;
+            $newAttributes['confirmation_code'] = null;
+            $newAttributes['new_email'] = null;
+            $newAttributes['new_password'] = null;
+            $client->fill($newAttributes);
+            $client->save();
+            
+            return $client;
+
+        }
+
+        return false;
+
+    }
+
+
+    public function changePassword(array $attributes, $shopId)
+    {
+        $result = array();
+        $result['result'] = false;
+
+        $client = $this->repo->validateConfirmationCodeByConfirmationCodeAndEmail($attributes['confirmation_code'], $attributes['email'], $shopId);
+
+        if ($client) {
+            if ($attributes['password']) {
+                $newAttributes['confirmed'] = 1;
+                $newAttributes['active'] = 1;
+                $newAttributes['confirmation_code'] = null;
+                $newAttributes['password'] = Hash::make($attributes['password']);
+                $client->fill($newAttributes);
+                $client->save();
+                return $client;
+            }
+        }
+
+        return false;
+    }
+
+
+
 
 }
