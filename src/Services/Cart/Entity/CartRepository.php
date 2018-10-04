@@ -7,7 +7,7 @@ use Hideyo\Ecommerce\Framework\Services\Sendingmethod\SendingmethodFacade as Sen
 use Hideyo\Ecommerce\Framework\Services\PaymentMethod\PaymentMethodFacade as PaymentMethodService;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
 use Hideyo\Ecommerce\Framework\Services\Coupon\Entity\CouponRepository;
-use Hideyo\Ecommerce\Framework\Models\ProductAttribute;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
  
 class CartRepository 

@@ -140,16 +140,15 @@ class ClientRepository extends BaseRepository
         return $client;
     }
 
+    public function checkEmailByShopIdAndNoAccountCreated($email, $shopId) {
+        return $this->model->where('shop_id', '=', $shopId)->whereNotNull('account_created')->where('email', '=', $email)->get()->first();
+    }
 
-    public function validateRegister(array $attributes, $shopId)
+    public function checkEmailByShopId($email, $shopId)
     {
-        $client = $this->model->where('shop_id', '=', $shopId)->where('email', '=', $attributes['email'])->get()->first();
+        return $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->get()->first();
 
-        if ($client) {
-            return false;
-        }
 
-        return true;
     }
 
     public function validateRegisterNoAccount(array $attributes, $shopId)
@@ -192,21 +191,10 @@ class ClientRepository extends BaseRepository
         return false;
     }
 
-    function confirm($code, $email, $shopId)
+    function getClientByConfirmationCode($shopId, $email, $confirmationCode)
     {
-        $this->model = $this->model->where('shop_id', '=', $shopId)->where('confirmation_code', '=', $code)->get()->first();
-
-        if ($this->model) {
-            $attributes['confirmed'] = 1;
-            $attributes['active'] = 1;
-            $attributes['confirmation_code'] = null;
-            
-            return $this->updateEntity($attributes);
-        }
-        
-        return false;
+        return $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->where('confirmation_code', '=', $confirmationCode)->get()->first();
     }
-
 
     function activate($clientId)
     {
@@ -238,22 +226,7 @@ class ClientRepository extends BaseRepository
         return false;
     }
 
-    function getConfirmationCodeByEmail($email, $shopId)
-    {
-        $result = array();
-        $result['result'] = false;
-
-        $this->model = $this->model->where('shop_id', '=', $shopId)->whereNotNull('account_created')->where('email', '=', $email)->get()->first();
-
-        if ($this->model) {
-            $attributes['confirmation_code'] = md5(uniqid(mt_rand(), true));
-            return $this->updateEntity($attributes);
-        }
-        
-        return false;
-    }
-
-    function validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId)
+    public function validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId)
     {
         return $this->model = $this->model
         ->where('shop_id', '=', $shopId)
@@ -261,49 +234,6 @@ class ClientRepository extends BaseRepository
         ->whereNotNull('account_created')
         ->where('confirmation_code', '=', $confirmationCode)
         ->get()->first();
-    }
-
-    public function register(array $attributes, $shopId, $accountConfirmed = false)
-    {
-        $result = array();
-        $result['result'] = false;
-
-        $shop = ShopService::find($shopId);
-
-        $client = $this->model->where('shop_id', '=', $shopId)->where('email', '=', $attributes['email'])->get()->first();
-
-        if ($client) {
-            return false;
-        }
-
-        $attributes['shop_id'] = $shopId;
-        $attributes['modified_by_user_id'] = null;
-
-        $attributes['active'] = 0;
-        $attributes['confirmed'] = 0;
-        $attributes['confirmation_code'] = md5(uniqid(mt_rand(), true));
-        $mailChimplistId = config()->get('mailchimp.consumerId');        
-
-        if($accountConfirmed) {
-            $attributes['confirmation_code'] = null;
-            $attributes['active'] = 1;
-            $attributes['confirmed'] = 1;
-        }
-        
-        if (isset($attributes['password'])) {            
-            $attributes['password'] = Hash::make($attributes['password']);
-            $attributes['account_created'] = Carbon::now()->toDateTimeString();
-        }
-
-        $this->model->fill($attributes);
-        $this->model->save();
-
-        $clientAddress = $this->clientAddress->createByClient($attributes, $this->model->id);
-        $new['delivery_client_address_id'] = $clientAddress->id;
-        $new['bill_client_address_id'] = $clientAddress->id;
-        $this->model->fill($new);
-        $this->model->save();
-        return $this->model;
     }
 
     public function resetAccount($code, $newEmail, $shopId)

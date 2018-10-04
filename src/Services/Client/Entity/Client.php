@@ -69,27 +69,24 @@ class Client extends Authenticatable
 
     public function clientAddress()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ClientAddress');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddress');
     }
 
     public function orders()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\Order');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Order\Entity\Order');
     }
 
 
     public function clientDeliveryAddress()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\ClientAddress', 'id', 'delivery_client_address_id');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddress', 'id', 'delivery_client_address_id');
     }
 
     public function clientBillAddress()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\ClientAddress', 'id', 'bill_client_address_id');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddress', 'id', 'bill_client_address_id');
     }
 
-    public function token()
-    {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ClientToken');
-    }
+
 }
