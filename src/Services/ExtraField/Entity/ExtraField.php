@@ -18,16 +18,16 @@ class ExtraField extends BaseModel
 
     public function categories()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\ProductCategory', 'extra_field_related_product_category');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory', 'extra_field_related_product_category');
     }
 
     public function productCategory()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\ProductCategory');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory');
     }
 
     public function values()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ExtraFieldDefaultValue');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\ExtraField\Entity\ExtraFieldDefaultValue');
     }
 }

@@ -23,11 +23,11 @@ class ClientAddress extends BaseModel
 
     public function clientDeliveryAddress()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Client', 'id', 'delivery_client_address_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Client\Entity\Client', 'id', 'delivery_client_address_id');
     }
 
     public function clientBillAddress()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Client', 'id', 'bill_client_address_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Client\Entity\Client', 'id', 'bill_client_address_id');
     }
 }

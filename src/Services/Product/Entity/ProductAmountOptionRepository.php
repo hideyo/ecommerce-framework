@@ -1,7 +1,7 @@
 <?php
 namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\ProductAmountOption;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAmountOption;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;

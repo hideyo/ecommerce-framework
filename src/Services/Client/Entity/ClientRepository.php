@@ -24,82 +24,6 @@ class ClientRepository extends BaseRepository
         $this->clientAddress = $clientAddress;
     }
 
-    /**
-     * The validation rules for the model.
-     *
-     * @param  integer  $clientId id attribute model    
-     * @return array
-     */
-    private function rules($clientId = false)
-    {
-        if ($clientId) {
-            $rules = array(
-                'email' => 'required|email|unique_with:client, shop_id'
-            );
-        } else {
-            $rules = array(
-                'email' => 'required|email|unique_with:'.$this->model->getTable().', shop_id',
-                'gender' => 'required',
-                'firstname' => 'required',
-                'lastname' => 'required',
-                'street' => 'required',
-                'housenumber' => 'required|integer',
-                'zipcode' => 'required',
-                'city' => 'required',
-                'country' => 'required'
-            );
-        }
-
-
-        if ($clientId) {
-            $rules['email'] =   'required|email|unique_with:'.$this->model->getTable().', shop_id, '.$clientId.' = id';
-        }
-
-        return $rules;
-    }
-
-    public function create(array $attributes)
-    {
-        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-        $validator = Validator::make($attributes, $this->rules());
-
-        if ($validator->fails()) {
-            return $validator;
-        }
-
-        $attributes['password'] = Hash::make($attributes['password']);
-        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->model->fill($attributes);
-        $this->model->save();
-        $clientAddress = $this->clientAddress->create($attributes, $this->model->id);
-        $new['delivery_client_address_id'] = $clientAddress->id;
-        $new['bill_client_address_id'] = $clientAddress->id;
-        $this->model->fill($new);
-        $this->model->save();
-        return $this->model;
-    }
-
-    public function updateById(array $attributes, $clientId)
-    {
-        $this->model = $this->find($clientId);
-        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-
-        $validator = Validator::make($attributes, $this->rules($clientId));
-
-        if ($validator->fails()) {
-            return $validator;
-        }
-
-        unset($attributes['password']);
-
-        if ($attributes['password']) {
-            $attributes['password'] = Hash::make($attributes['password']);
-        }
-
-        return $this->updateEntity($attributes);
-    }
-
     public function selectAll()
     {
         return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
@@ -125,8 +49,6 @@ class ClientRepository extends BaseRepository
     public function checkEmailByShopId($email, $shopId)
     {
         return $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->get()->first();
-
-
     }
 
     public function validateRegisterNoAccount(array $attributes, $shopId)
@@ -140,41 +62,24 @@ class ClientRepository extends BaseRepository
         return true;
     }
 
-    function selectOneByShopIdAndId($shopId, $clientId)
+    public function selectOneByShopIdAndId($shopId, $clientId)
     {
         $result = $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $clientId)->first();
         return $result;
     }
 
-    function selectOneById($clientId)
+    public function selectOneById($clientId)
     {
         $result = $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('active', '=', 1)->where('id', '=', $clientId)->first();
         return $result;
     }
 
-    function setBillOrDeliveryAddress($shopId, $clientId, $addressId, $type)
-    {
-        $this->model = $this->model->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $clientId)->get()->first();
-        
-        if ($this->model) {
-            if ($type == 'bill') {
-                $attributes['bill_client_address_id'] = $addressId;
-            } elseif ($type == 'delivery') {
-                $attributes['delivery_client_address_id'] = $addressId;
-            }
-            
-            return $this->updateEntity($attributes);
-        }
-        
-        return false;
-    }
-
-    function getClientByConfirmationCode($shopId, $email, $confirmationCode)
+    public function getClientByConfirmationCode($shopId, $email, $confirmationCode)
     {
         return $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->where('confirmation_code', '=', $confirmationCode)->get()->first();
     }
 
-    function activate($clientId)
+    public function activate($clientId)
     {
         $this->model = $this->model->where('id', '=', $clientId)->get()->first();
 
@@ -189,7 +94,7 @@ class ClientRepository extends BaseRepository
         return false;
     }
 
-    function deactivate($clientId)
+    public function deactivate($clientId)
     {
         $this->model = $this->model->where('id', '=', $clientId)->get()->first();
 
@@ -242,7 +147,7 @@ class ClientRepository extends BaseRepository
         return $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->whereNotNull('account_created')->where('active', '=', 1)->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
-    function editAddress($shopId, $clientId, $addressId, $attributes)
+    public function editAddress($shopId, $clientId, $addressId, $attributes)
     {
         $address = $this->clientAddress->updateByIdAndShopId($shopId, $attributes, $clientId, $addressId);
     }

@@ -4,9 +4,9 @@ namespace Hideyo\Ecommerce\Framework\Services;
  
 class BaseService
 {
-    public function find($shopId)
+    public function find($id)
     {
-        return $this->repo->find($shopId);
+        return $this->repo->find($id);
     }
 
     public function selectAll()

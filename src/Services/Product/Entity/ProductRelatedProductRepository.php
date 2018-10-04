@@ -1,7 +1,7 @@
 <?php
 namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
  
-use Hideyo\Ecommerce\Framework\Models\ProductRelatedProduct;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRelatedProduct;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;

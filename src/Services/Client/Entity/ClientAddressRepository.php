@@ -45,11 +45,6 @@ class ClientAddressRepository extends BaseRepository
         return $this->updateEntity($attributes);
     }
 
-    public function updateByIdAndShopId($shopId, array $attributes, $clientId, $id)
-    {
-        $this->model = $this->find($id);
-        return $this->updateEntity($attributes);
-    }
 
     public function selectAllByClientId($clientId)
     {

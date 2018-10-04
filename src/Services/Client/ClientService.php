@@ -18,6 +18,86 @@ class ClientService extends BaseService
 		$this->repoAddress = $clientAddress;
 	} 
 
+
+
+    /**
+     * The validation rules for the model.
+     *
+     * @param  integer  $clientId id attribute model    
+     * @return array
+     */
+    private function rules($clientId = false)
+    {
+        if ($clientId) {
+            $rules = array(
+                'email' => 'required|email|unique_with:client, shop_id'
+            );
+        } else {
+            $rules = array(
+                'email' => 'required|email|unique_with:'.$this->model->getTable().', shop_id',
+                'gender' => 'required',
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'street' => 'required',
+                'housenumber' => 'required|integer',
+                'zipcode' => 'required',
+                'city' => 'required',
+                'country' => 'required'
+            );
+        }
+
+
+        if ($clientId) {
+            $rules['email'] =   'required|email|unique_with:'.$this->model->getTable().', shop_id, '.$clientId.' = id';
+        }
+
+        return $rules;
+    }
+
+    public function create(array $attributes)
+    {
+        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
+        $validator = Validator::make($attributes, $this->rules());
+
+        if ($validator->fails()) {
+            return $validator;
+        }
+
+        $attributes['password'] = Hash::make($attributes['password']);
+        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
+        $this->model->fill($attributes);
+        $this->model->save();
+        $clientAddress = $this->clientAddress->create($attributes, $this->model->id);
+        $new['delivery_client_address_id'] = $clientAddress->id;
+        $new['bill_client_address_id'] = $clientAddress->id;
+        $this->model->fill($new);
+        $this->model->save();
+        return $this->model;
+    }
+
+    public function updateById(array $attributes, $clientId)
+    {
+        $this->model = $this->find($clientId);
+        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
+        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
+
+        $validator = Validator::make($attributes, $this->rules($clientId));
+
+        if ($validator->fails()) {
+            return $validator;
+        }
+
+        unset($attributes['password']);
+
+        if ($attributes['password']) {
+            $attributes['password'] = Hash::make($attributes['password']);
+        }
+
+        return $this->updateEntity($attributes);
+    }
+
+
+
     public function validateConfirmationCode($confirmationCode, $email, $shopId)
     {
     	return $this->repo->validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId);
@@ -137,6 +217,31 @@ class ClientService extends BaseService
         return $model;
     }
 
+    public function editAddress($shopId, $clientId, $addressId, $attributes)
+    {
+
+        $clientAddress = $this->repoAddress->find($addressId);
+
+        if($clientAddress) {
+            $clientAddress->fill($attributes);
+            $clientAddress->save();
+
+            return $clientAddress;
+        }
+
+        return false;
+    }    
+
+
+
+    public function updateByIdAndShopId($shopId, array $attributes, $clientId, $id)
+    {
+        $this->model = $this->find($id);
+        return $this->updateEntity($attributes);
+    }
+
+
+
     public function requestChangeAccountDetails($attributes, $shopId) {
 
         $client = $this->repo->checkEmailByShopId($attributes['email'], $shopId);
@@ -203,6 +308,29 @@ class ClientService extends BaseService
         return false;
     }
 
+
+
+    public function setBillOrDeliveryAddress($shopId, $clientId, $addressId, $type)
+    {
+        $client = $this->find($clientId);
+        
+        if ($client) {
+
+            $newAttributes = array();
+
+            if ($type == 'bill') {
+                $newAttributes['bill_client_address_id'] = $addressId;
+            } elseif ($type == 'delivery') {
+                $newAttributes['delivery_client_address_id'] = $addressId;
+            }
+            
+            $client->fill($newAttributes);
+            $client->save();
+            return $client;
+        }
+        
+        return false;
+    }
 
 
 
