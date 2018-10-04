@@ -14,7 +14,6 @@ class TaxRateService extends BaseService
 		$this->repo = $taxRate;
 	} 
 
-
     /**
      * The validation rules for the model.
      *

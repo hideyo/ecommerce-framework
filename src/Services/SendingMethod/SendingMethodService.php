@@ -14,6 +14,78 @@ class SendingMethodService extends BaseService
 		$this->repo = $sendingMethod;
 	} 
 
+
+    /**
+     * The validation rules for the model.
+     *
+     * @param  integer  $sendingMethodId id attribute model    
+     * @return array
+     */
+    private function rules($sendingMethodId = false)
+    {
+        $rules = array(
+            'active'            => 'required|integer',
+            'title'             => 'required|between:4,65|unique_with:'.$this->repo->getModel()->getTable().', shop_id',
+            'price'             => 'numeric|required',
+            'minimal_weight'    => 'numeric|nullable',
+            'maximal_weight'    => 'numeric|nullable'
+        );
+        
+        if($sendingMethodId) {
+            $rules['title'] =   $rules['title'].','.$sendingMethodId.' = id';
+        }
+
+        return $rules;
+    }
+
+    public function create(array $attributes)
+    {
+        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
+        $validator = Validator::make($attributes, $this->rules());
+
+        if ($validator->fails()) {
+            return $validator;
+        }
+
+        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
+                       
+        $this->model->fill($attributes);
+        $this->model->save();
+
+        if (isset($attributes['payment_methods'])) {
+            $this->model->relatedPaymentMethods()->sync($attributes['payment_methods']);
+        }
+   
+        return $this->model;
+    }
+
+    public function updateById(array $attributes, $sendingMethodId)
+    {
+        $model = $this->find($sendingMethodId);
+        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
+        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
+        $validator = Validator::make($attributes, $this->rules($sendingMethodId));
+       
+        if ($validator->fails()) {
+            return $validator;
+        }
+
+        if($model) {
+
+            $model->fill($attributes);
+            if (isset($attributes['payment_methods'])) {
+                $model->relatedPaymentMethods()->sync($attributes['payment_methods']);
+            }
+
+            $model->save();
+            return $model;
+        }
+
+        return false;
+    }
+
+
+
 	public function selectAllActiveByShopId($shopId)
     {
     	return $this->repo->selectAllActiveByShopId($shopId);
