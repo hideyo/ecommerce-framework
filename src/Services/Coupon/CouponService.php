@@ -172,8 +172,6 @@ class CouponService extends BaseService
 
     }
 
-
-
     public function destroyGroup($groupId)
     {
         $this->modelGroup = $this->findGroup($groupId);

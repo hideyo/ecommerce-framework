@@ -58,27 +58,27 @@ class Order extends BaseModel
 
     public function products()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\OrderProduct');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderProduct');
     }
 
     public function client()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Client');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Client\Entity\Client');
     }
 
     public function orderStatus()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\OrderStatus');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderStatus');
     }
 
     public function orderPaymentLog()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\OrderPaymentLog');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderPaymentLog');
     }
 
     public function orderAddress()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\OrderAddress');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderAddress');
     }
 
     public function shop()
@@ -94,27 +94,27 @@ class Order extends BaseModel
 
     public function invoice()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\Invoice');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Invoice\Entity\Invoice');
     }
 
     public function orderDeliveryAddress()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\OrderAddress', 'id', 'delivery_order_address_id');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderAddress', 'id', 'delivery_order_address_id');
     }
 
     public function orderBillAddress()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\OrderAddress', 'id', 'bill_order_address_id');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderAddress', 'id', 'bill_order_address_id');
     }
 
     public function orderSendingMethod()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\OrderSendingMethod');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderSendingMethod');
     }
 
     public function orderPaymentMethod()
     {
-        return $this->hasOne('Hideyo\Ecommerce\Framework\Models\OrderPaymentMethod');
+        return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderPaymentMethod');
     }
 
     public function taxTotal()
