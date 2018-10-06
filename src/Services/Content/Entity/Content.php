@@ -36,11 +36,11 @@ class Content extends BaseModel
 
     public function contentGroup()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\ContentGroup');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Content\Entity\ContentGroup');
     }
 
     public function contentImages()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ContentImage');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Content\Entity\ContentImage');
     }
 }
