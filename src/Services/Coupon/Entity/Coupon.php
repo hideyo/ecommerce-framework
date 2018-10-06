@@ -19,27 +19,27 @@ class Coupon extends BaseModel
 
     public function products()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\Product', 'coupon_product');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'coupon_product');
     }
 
     public function couponGroup()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\CouponGroup');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Coupon\Entity\CouponGroup');
     }
 
     public function productCategories()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\ProductCategory', 'coupon_product_category');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory', 'coupon_product_category');
     }
 
     public function sendingMethods()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\SendingMethod', 'coupon_sending_method');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethod', 'coupon_sending_method');
     }
 
     public function paymentMethods()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\PaymentMethod', 'coupon_payment_method');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod', 'coupon_payment_method');
     }
 
     public function setPublishedAtAttribute($value)
