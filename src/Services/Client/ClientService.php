@@ -18,8 +18,6 @@ class ClientService extends BaseService
 		$this->repoAddress = $clientAddress;
 	} 
 
-
-
     /**
      * The validation rules for the model.
      *
@@ -34,7 +32,7 @@ class ClientService extends BaseService
             );
         } else {
             $rules = array(
-                'email' => 'required|email|unique_with:'.$this->model->getTable().', shop_id',
+                'email' => 'required|email|unique_with:'.$this->repo->getModel()->getTable().', shop_id',
                 'gender' => 'required',
                 'firstname' => 'required',
                 'lastname' => 'required',
@@ -48,7 +46,7 @@ class ClientService extends BaseService
 
 
         if ($clientId) {
-            $rules['email'] =   'required|email|unique_with:'.$this->model->getTable().', shop_id, '.$clientId.' = id';
+            $rules['email'] =   'required|email|unique_with:'.$this->repo->getModel()->getTable().', shop_id, '.$clientId.' = id';
         }
 
         return $rules;
@@ -65,19 +63,19 @@ class ClientService extends BaseService
 
         $attributes['password'] = Hash::make($attributes['password']);
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->model->fill($attributes);
-        $this->model->save();
-        $clientAddress = $this->clientAddress->create($attributes, $this->model->id);
+        $this->repo->getModel()->fill($attributes);
+        $this->repo->getModel()->save();
+        $clientAddress = $this->createAddress($attributes, $this->repo->getModel()->id);
         $new['delivery_client_address_id'] = $clientAddress->id;
         $new['bill_client_address_id'] = $clientAddress->id;
-        $this->model->fill($new);
-        $this->model->save();
-        return $this->model;
+        $this->repo->getModel()->fill($new);
+        $this->repo->getModel()->save();
+        return $this->repo->getModel();
     }
 
     public function updateById(array $attributes, $clientId)
     {
-        $this->model = $this->find($clientId);
+        $model = $this->find($clientId);
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
 
@@ -87,16 +85,15 @@ class ClientService extends BaseService
             return $validator;
         }
 
-        unset($attributes['password']);
-
         if ($attributes['password']) {
             $attributes['password'] = Hash::make($attributes['password']);
         }
 
-        return $this->updateEntity($attributes);
+        $model->fill($attributes);
+        $model->save();
+
+        return $model;
     }
-
-
 
     public function validateConfirmationCode($confirmationCode, $email, $shopId)
     {
@@ -162,9 +159,7 @@ class ClientService extends BaseService
         );
 
         return $validator = Validator::make($attributes, $rules);
-
     }
-
 
     public function register($attributes, $shopId, $accountConfirmed = false)
     {
@@ -217,7 +212,7 @@ class ClientService extends BaseService
         return $model;
     }
 
-    public function editAddress($shopId, $clientId, $addressId, $attributes)
+    public function editAddress($clientId, $addressId, $attributes)
     {
 
         $clientAddress = $this->repoAddress->find($addressId);
@@ -232,15 +227,11 @@ class ClientService extends BaseService
         return false;
     }    
 
-
-
     public function updateByIdAndShopId($shopId, array $attributes, $clientId, $id)
     {
         $this->model = $this->find($id);
         return $this->updateEntity($attributes);
     }
-
-
 
     public function requestChangeAccountDetails($attributes, $shopId) {
 
@@ -282,9 +273,7 @@ class ClientService extends BaseService
         }
 
         return false;
-
     }
-
 
     public function changePassword(array $attributes, $shopId)
     {
@@ -309,6 +298,46 @@ class ClientService extends BaseService
     }
 
 
+    public function selectAllExport() {
+        return $this->repo->selectAllExport();
+    }
+
+
+    public function activate($clientId)
+    {
+        $model = $this->find($clientId);
+
+        if ($model) {
+            $attributes['confirmed'] = 1;
+            $attributes['active'] = 1;
+            $attributes['confirmation_code'] = null;
+            
+            $model->fill($attributes);
+            $model->save();
+            
+            return $model;
+        }
+        
+        return false;
+    }
+
+    public function deactivate($clientId)
+    {
+        $model = $this->find($clientId);
+
+        if ($model) {
+            $attributes['confirmed'] = 0;
+            $attributes['active'] = 0;
+            $attributes['confirmation_code'] = null;
+            
+            $model->fill($attributes);
+            $model->save();
+            
+            return $model;
+        }
+        
+        return false;
+    }
 
     public function setBillOrDeliveryAddress($shopId, $clientId, $addressId, $type)
     {
@@ -332,6 +361,19 @@ class ClientService extends BaseService
         return false;
     }
 
+    public function selectAddressesByClientId($clientId) {
+        return $this->repoAddress->selectAllByClientId($clientId);
+    }
+
+    public function getAddressModel()
+    {
+        return $this->repoAddress->getModel();
+    }
+
+    public function findAddress($clientAddressId)
+    {
+        return $this->repoAddress->find($clientAddressId);
+    }
 
 
 }

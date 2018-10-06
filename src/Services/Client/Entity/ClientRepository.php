@@ -79,36 +79,6 @@ class ClientRepository extends BaseRepository
         return $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->where('confirmation_code', '=', $confirmationCode)->get()->first();
     }
 
-    public function activate($clientId)
-    {
-        $this->model = $this->model->where('id', '=', $clientId)->get()->first();
-
-        if ($this->model) {
-            $attributes['confirmed'] = 1;
-            $attributes['active'] = 1;
-            $attributes['confirmation_code'] = null;
-            
-            return $this->updateEntity($attributes);
-        }
-        
-        return false;
-    }
-
-    public function deactivate($clientId)
-    {
-        $this->model = $this->model->where('id', '=', $clientId)->get()->first();
-
-        if ($this->model) {
-            $attributes['confirmed'] = 0;
-            $attributes['active'] = 0;
-            $attributes['confirmation_code'] = null;
-            
-            return $this->updateEntity($attributes);
-        }
-        
-        return false;
-    }
-
     public function validateConfirmationCodeByConfirmationCodeAndEmail($confirmationCode, $email, $shopId)
     {
         return $this->model
@@ -127,19 +97,6 @@ class ClientRepository extends BaseRepository
         ->whereNotNull('account_created')
         ->where('confirmation_code', '=', $confirmationCode)
         ->get()->first();
-    }
-
-    public function updateLastLogin($clientId)
-    {
-        $check = $this->model->where('id', '=', $clientId)->get()->first();
-
-        if ($check) {
-            $newAttributes['last_login'] = Carbon::now();
-            $this->model = $this->find($check->id);
-            return $this->updateEntity($newAttributes);
-        }
-
-        return false;
     }
 
     public function selectAllExport()
