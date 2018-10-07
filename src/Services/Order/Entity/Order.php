@@ -154,15 +154,16 @@ class Order extends BaseModel
         if ($this->products) {
             foreach ($this->products as $product) {
                 if (!isset($taxArray[$product->tax_rate])) {
-                    $taxArray[$product->tax_rate] = "";
+                    $taxArray[$product->tax_rate] = 0;
                 }
+
                 $taxArray[$product->tax_rate] += $product->total_price_with_tax - $product->total_price_without_tax;
             }
         }
 
         if ($this->orderSendingMethod) {
             if (!isset($taxArray[$this->orderSendingMethod->tax_rate])) {
-                $taxArray[$this->orderSendingMethod->tax_rate] = "";
+                $taxArray[$this->orderSendingMethod->tax_rate] = 0;
             }
             
             $taxArray[$this->orderSendingMethod->tax_rate] += $this->orderSendingMethod->price_with_tax - $this->orderSendingMethod->price_without_tax;
@@ -171,7 +172,7 @@ class Order extends BaseModel
 
         if ($this->orderPaymentMethod) {
             if (!isset($taxArray[$this->orderPaymentMethod->tax_rate])) {
-                $taxArray[$this->orderPaymentMethod->tax_rate] = "";
+                $taxArray[$this->orderPaymentMethod->tax_rate] = 0;
             }
             
             $taxArray[$this->orderPaymentMethod->tax_rate] += $this->orderPaymentMethod->price_with_tax - $this->orderPaymentMethod->price_without_tax;

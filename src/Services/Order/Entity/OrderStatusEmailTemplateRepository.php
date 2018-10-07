@@ -14,56 +14,6 @@ class OrderStatusEmailTemplateRepository extends BaseRepository
         $this->model = $model;
     }
 
-    /**
-     * The validation rules for the model.
-     *
-     * @param  integer  $id id attribute model    
-     * @return array
-     */
-    private function rules($id = false, $attributes = false)
-    {
-        $rules = array(
-            'title' => 'required|unique_with:order_status_email_template, shop_id',
-            'subject' => 'required',
-            'content' => 'required'
-        );
-        
-        if ($id) {
-            $rules['title'] =   'required|unique_with:order_status_email_template, shop_id,'.$id;
-        }
-
-        return $rules;
-    }
-  
-    public function create(array $attributes)
-    {
-        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-        $validator = \Validator::make($attributes, $this->rules());
-
-        if ($validator->fails()) {
-            return $validator;
-        }
-
-        $this->model->fill($attributes);
- 
-        $this->model->save();
-        
-        return $this->model;
-    }
-
-    public function updateById(array $attributes, $id)
-    {
-        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-        $validator = \Validator::make($attributes, $this->rules($id, $attributes));
-
-        if ($validator->fails()) {
-            return $validator;
-        }
-
-       
-        $this->model = $this->find($id);
-        return $this->updateEntity($attributes);
-    }
 
     public function selectBySendingMethodIdAndPaymentMethodId($paymentMethodId, $sendingMethodId)
     {

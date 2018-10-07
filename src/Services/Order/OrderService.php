@@ -19,4 +19,18 @@ class OrderService extends BaseService
     	return $this->repo->createByUserAndShopId($attributes, $shopId, $noAccountUser);
     }
 
+    public function updateStatus($id, $orderStatusId)
+    {
+        $model = $this->find($id);
+
+        $attributes['order_status_id'] = $orderStatusId;
+        if (count($attributes) > 0) {
+            $model->fill($attributes);
+            $model->save();
+        }
+
+        return $model;
+    }
+
+
 }

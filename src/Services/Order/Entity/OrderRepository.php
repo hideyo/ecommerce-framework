@@ -178,18 +178,7 @@ class OrderRepository extends BaseRepository
     }
 
 
-    public function updateStatus($id, $orderStatusId)
-    {
-        $this->model = $this->find($id);
 
-        $attributes['order_status_id'] = $orderStatusId;
-        if (count($attributes) > 0) {
-            $this->model->fill($attributes);
-            $this->model->save();
-        }
-
-        return $this->model;
-    }
 
     public function updateById(array $attributes, $id)
     {

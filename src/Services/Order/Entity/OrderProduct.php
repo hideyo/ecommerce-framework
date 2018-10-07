@@ -18,12 +18,12 @@ class OrderProduct extends BaseModel
 
     public function order()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Order');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Order\Entity\Order');
     }
 
     public function product()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\Product');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product');
     }
 
     public function getOriginalPriceWithTaxNumberFormat()
@@ -68,6 +68,6 @@ class OrderProduct extends BaseModel
     
     public function productAttribute()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\ProductAttribute');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute');
     }
 }
