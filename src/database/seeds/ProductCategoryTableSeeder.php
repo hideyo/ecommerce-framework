@@ -23,9 +23,6 @@ class ProductCategoryTableSeeder extends Seeder
         $productCategory->shop_id = $shop->id;
         $productCategory->save();
 
-
-
-
         $productCategory2 = new ProductCategory;
         $productCategory2->active = 1;
         $productCategory2->title = 'T-shirts';
@@ -76,7 +73,6 @@ class ProductCategoryTableSeeder extends Seeder
         $productCategory6->shop_id = $shop->id;
         $productCategory6->parent_id = $productCategory5->id;
         $productCategory6->save();
-
 
         $productCategory7 = new ProductCategory;
         $productCategory7->active = 1;
