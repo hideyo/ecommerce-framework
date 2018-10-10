@@ -44,7 +44,7 @@ class GeneralSettingService extends BaseService
         }
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        return $this->updateOrAddModel($this->model, $attributes);
+        return $this->updateOrAddModel($this->repo->getModel(), $attributes);
     }
 
     public function updateById(array $attributes, $id)

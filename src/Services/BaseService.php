@@ -1,6 +1,7 @@
 <?php
 
 namespace Hideyo\Ecommerce\Framework\Services;
+use Notification;
  
 class BaseService
 {
@@ -34,5 +35,22 @@ class BaseService
         $model = $this->find($id);
         return $model->delete();
     }
+
+
+    public function notificationRedirect($routeName, $result, $successMsg) {
+
+        if (isset($result->id)) {
+            Notification::success($successMsg);
+            return redirect()->route($routeName);
+        }
+
+        foreach ($result->errors()->all() as $error) {
+            Notification::error($error);
+        }
+
+        return redirect()->back()->withInput();
+
+    }
+
 
 }

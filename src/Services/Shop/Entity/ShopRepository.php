@@ -14,8 +14,6 @@ class ShopRepository extends BaseRepository
     public function __construct(Shop $model)
     {
         $this->model = $model;
-        $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/shop/";
-        $this->publicImagePath = public_path() .config('hideyo.public_path'). "/shop/";
     }
   
     public function selectAll()

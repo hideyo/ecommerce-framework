@@ -12,6 +12,9 @@ class ShopService extends BaseService
 	public function __construct(ShopRepository $shop)
 	{
 		$this->repo = $shop;
+        $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/shop/";
+        $this->publicImagePath = public_path() .config('hideyo.public_path'). "/shop/";
+        
 	} 
 
     /**
