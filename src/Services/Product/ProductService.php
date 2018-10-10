@@ -347,6 +347,141 @@ class ProductService extends BaseService
     }
 
 
+    public function priceDetails($product, $field)
+    {
+        $preSaleDiscount = session()->get('preSaleDiscount');
+
+        if ($product->price) {
+
+            $taxRate = 0;
+            $priceInc = 0;
+            $taxValue = 0;
+
+            if (isset($product->taxRate)) {
+                $taxRate = $product->taxRate->rate;        
+                $priceInc = (($product->taxRate->rate / 100) * $product->price) + $product->price;
+                $taxValue = $priceInc - $product->price;
+            }
+
+            $discountPriceInc = $priceInc;
+            $discountPriceEx = $product->price;
+            $discountTaxRate = 0;
+
+            if($preSaleDiscount) {
+
+                if ($preSaleDiscount['value'] AND $preSaleDiscount['collection_id'] == $product->collection_id) {
+
+                    if ($preSaleDiscount['discount_way'] == 'amount') {
+                        $discountPriceInc = $priceInc - $product->value;
+                        $discountPriceEx = $discountPriceInc / 1.21;
+                    } elseif ($preSaleDiscount['discount_way'] == 'percent') {
+          
+                        $tax = ($preSaleDiscount['value'] / 100) * $priceInc;
+                        $discountPriceInc = $priceInc - $tax;
+                        $discountPriceEx = $discountPriceInc / 1.21;                       
+                    }
+                    $discountTaxRate = $discountPriceInc - $discountPriceEx;                   
+                }
+
+                if($preSaleDiscount['products']) {
+
+                    $productIds = array_column($preSaleDiscount['products'], 'id');
+
+                    if (in_array($product->id, $productIds) OR (isset($product->product_id) AND in_array($product->product_id, $productIds))) {
+
+                        if ($preSaleDiscount['discount_way'] == 'amount') {
+                            $discountPriceInc = $priceInc - $product->value;
+                            $discountPriceEx = $discountPriceInc / 1.21;
+                        } elseif ($preSaleDiscount['discount_way'] == 'percent') {
+              
+                            $tax = ($preSaleDiscount['value'] / 100) * $priceInc;
+                            $discountPriceInc = $priceInc - $tax;
+                            $discountPriceEx = $discountPriceInc / 1.21;                       
+                        }
+                        $discountTaxRate = $discountPriceInc - $discountPriceEx;
+                    }
+
+                }
+            } else {
+                if ($product->discount_value) {
+                    if ($product->discount_type == 'amount') {
+
+                        $discountPriceInc = $priceInc - $product->discount_value;
+                        $discountPriceEx = $discountPriceInc / 1.21;
+                    } elseif ($product->discount_type == 'percent') {
+
+                        $tax = ($product->discount_value / 100) * $priceInc;
+                        $discountPriceInc = $priceInc - $tax;
+                        $discountPriceEx = $discountPriceInc / 1.21;
+                    }
+                    $discountTaxRate = $discountPriceInc - $discountPriceEx;
+                }
+            }
+
+            $productArray = array(
+                'original_price_ex_tax'  => $product->price,
+                'original_price_ex_tax_number_format'  => number_format($product->price, 2, '.', ''),
+                'original_price_inc_tax' => $priceInc,
+                'original_price_inc_tax_number_format' => number_format($priceInc, 2, '.', ''),
+                'tax_rate' => $taxRate,
+                'tax_value' => $taxValue,
+                'currency' => 'EU',
+                'discount_price_inc' => $discountPriceInc,
+                'discount_price_inc_number_format' => number_format($discountPriceInc, 2, '.', ''),
+                'discount_price_ex' => $discountPriceEx,
+                'discount_price_ex_number_format' => number_format($discountPriceEx, 2, '.', ''),
+                'discount_tax_value' => $discountTaxRate,
+                'discount_value' => $product->discount_value,
+                'amount' => $product->amount
+            );
+        
+            if (isset($productArray[$field])) {
+                return $productArray[$field];
+            }         
+        } 
+
+        return false;
+    }
+
+    public function getImage($productId, $combinationsIds, $productAttributeId = false)
+    {
+        $product = $this->getModel();
+        $product = $product->has('productImages')->where('id', '=', $productId)->first();
+        $images = array();
+
+        if($product AND $product->productImages->count()) {  
+
+            $images = $product->productImages()->has('relatedAttributes', '=', 0)->has('relatedProductAttributes', '=', 0)->orderBy('rank', '=', 'asc')->get();
+
+            if($combinationsIds) {
+
+                $imagesRelatedAttributes = $this->getImageModel()->
+                whereHas('relatedAttributes', function($query) use ($combinationsIds, $product, $productId) { $query->with(array('productImage'))->whereIn('attribute_id', $combinationsIds); });
+                
+                $images = $images->merge($imagesRelatedAttributes)->sortBy('rank');          
+            }
+
+            if($productAttributeId) {                
+                $imagesRelatedProductAttributes = $this->getImageModel()->
+                whereHas('relatedProductAttributes', function($query) use ($productAttributeId, $product) { $query->where('product_attribute_id', '=', $productAttributeId); })
+                ->where('product_id', '=', $productId)
+                ->get();
+
+                $images = $images->merge($imagesRelatedProductAttributes)->sortBy('rank');
+            }
+
+
+            if(!$images->count()) {
+                $images = $product->productImages()->orderBy('rank', '=', 'asc')->get();
+            }
+
+            if ($images->count()) {
+                return $images->first()->file;
+            }
+        }
+    }
+
+
   public function increaseAmounts($products)
     {
         if ($products->count()) {

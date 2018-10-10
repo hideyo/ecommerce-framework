@@ -4,6 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Services\HtmlBlock;
 
 use Validator;
 use File;
+use DbView;
 use Hideyo\Ecommerce\Framework\Services\HtmlBlock\Entity\HtmlBlockRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
@@ -264,5 +265,16 @@ class HtmlBlockService extends BaseService
 
     public function selectOneByShopIdAndPosition($position, $shopId) {
         return $this->repo->selectOneByShopIdAndPosition($position, $shopId);
+    }
+
+    public function findByPosition($position)
+    {
+        $result = $this->repo->selectOneByShopIdAndPosition($position, config()->get('app.shop_id'));
+        
+        if ($result) {
+            return DbView::make($result)->with($result->toArray())->render();
+        }
+        
+        return '';        
     }
 }

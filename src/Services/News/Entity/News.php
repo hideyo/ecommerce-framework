@@ -63,4 +63,11 @@ class News extends BaseModel
     {
         return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\News\Entity\NewsGroup');
     }
+
+    public function shop()
+    {
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop');
+    }
+    
+
 }
