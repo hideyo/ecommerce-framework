@@ -47,7 +47,7 @@ class BaseService
             return redirect()->route($routeName);
             
         }
-
+        
         foreach ($result->errors()->all() as $error) {
             Notification::error($error);
         }

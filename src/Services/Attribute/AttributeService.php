@@ -118,6 +118,11 @@ class AttributeService extends BaseService
         return $model;    
     } 
 
+    public function selectAllGroups()
+    {
+        return $this->repoGroup->selectAll();
+    }
+
 
     public function getGroupModel()
     {

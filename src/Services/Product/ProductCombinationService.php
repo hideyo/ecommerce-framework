@@ -3,7 +3,7 @@
 namespace Hideyo\Ecommerce\Framework\Services\Product;
  
 use App\Product;
-
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttributeCombination;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductCombinationRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
  
@@ -13,6 +13,136 @@ class ProductCombinationService extends BaseService
 	{
 		$this->repo = $productTagGroup;
 	} 
+
+   public function create(array $attributes, $productId)
+{
+        if (isset($attributes['selected_attribute_ids'])) {
+            $check = $this->repo->getModelAttributeCombination()->leftJoin($this->repo->getModel()->getTable(), $this->repo->getModel()->getTable().'.id', '=', $this->repo->getModelAttributeCombination()->getTable().'.product_attribute_id')
+            ->where($this->repo->getModel()->getTable().'.product_id', '=', $productId);
+
+            if (isset($attributes['selected_attribute_ids'])) {
+                $check->where(function ($query) use ($attributes) {
+                    $query->whereIn($this->repo->getModelAttributeCombination()->getTable().'.attribute_id', $attributes['selected_attribute_ids']);
+                });
+            }
+
+            if ($check->get()->count()) {
+                $newData = array();
+                foreach ($check->get() as $row) {
+                    $newData[$row['product_attribute_id']] = $row->productAttribute->combinations->toArray();
+                }
+
+                foreach ($newData as $row) {
+                    if (count($row) == count($attributes['selected_attribute_ids'])) {
+                        $i = 0;
+                        foreach ($row as $newRow) {
+                            if (in_array($newRow['attribute_id'], $attributes['selected_attribute_ids'])) {
+                                $i++;
+                            }
+                        }
+                        
+                        if (count($row) == $i) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            $data = $attributes;
+            $data['modified_by_user_id'] = auth('hideyobackend')->user()->id;
+            $data['product_id'] = $productId;
+
+            $new = $this->repo->getModel();
+            $new->fill($data);
+            $new->save();
+
+            if (isset($attributes['selected_attribute_ids'])) {
+                foreach ($attributes['selected_attribute_ids'] as $row) {
+                    $newData = array(
+                        'attribute_id' => $row,
+                        'product_attribute_id' => $new->id,
+
+                    );
+
+                    $ok = new ProductAttributeCombination;
+                    $ok->fill($newData);
+                    $ok->save();
+                }
+            }
+
+            return $new;
+        }
+    }
+
+    public function updateById(array $attributes, $productId, $productAttributeId)
+    {
+
+        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
+        $attributes['product_id'] = $productId;
+        $model = $this->find($productAttributeId);
+
+        if (count($attributes) > 0) {
+            $model->fill($attributes);
+            $model->save();
+
+            $model->combinations()->delete();
+
+
+            $check = $this->repo->getModelAttributeCombination()->leftJoin($this->repo->getModel()->getTable(), $this->repo->getModel()->getTable().'.id', '=', $this->repo->getModelAttributeCombination()->getTable().'.product_attribute_id')
+            ->where($this->repo->getModel()->getTable().'.product_id', '=', $attributes['product_id']);
+
+            if (isset($attributes['selected_attribute_ids'])) {
+                $check->where(function ($query) use ($attributes) {
+                    $query->whereIn($this->repo->getModelAttributeCombination()->getTable().'.attribute_id', $attributes['selected_attribute_ids']);
+                });
+            }
+
+            if ($check->get()->count()) {
+                $newData = array();
+
+                foreach ($check->get() as $row) {
+                    $newData[$row['product_attribute_id']] = $row->productAttribute->combinations->toArray();
+                }
+
+                if(isset($attributes['selected_attribute_ids'])) {
+                foreach ($newData as $row) {
+                    if (count($row) == count($attributes['selected_attribute_ids'])) {
+                        $i = 0;
+                        foreach ($row as $newRow) {
+                            if (in_array($newRow['attribute_id'], $attributes['selected_attribute_ids'])) {
+                                $i++;
+                            }
+                        }
+                        
+                        if (count($row) == $i) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            }
+
+
+            if (isset($attributes['selected_attribute_ids'])) {
+
+
+                foreach ($attributes['selected_attribute_ids'] as $row) {
+                    $newData = array(
+                        'attribute_id' => $row,
+                        'product_attribute_id' => $model->id,
+
+                    );
+
+                    $ok = new ProductAttributeCombination;
+                    $ok->fill($newData);
+                    $ok->save();
+                    $ok->refresh();
+                }
+            }
+        }
+
+        return $model;
+    }
 
 	public function selectAllByProductCategoryId($productCategoryId, $shopId) {
 		return $this->repo->selectAllByProductCategoryId($productCategoryId, $shopId);

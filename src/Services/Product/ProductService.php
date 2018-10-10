@@ -5,7 +5,9 @@ namespace Hideyo\Ecommerce\Framework\Services\Product;
 use App\Product;
 use Validator;
 use File;
+use Image;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
+use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
  
 class ProductService extends BaseService
@@ -142,7 +144,7 @@ class ProductService extends BaseService
             if ($uploadSuccess) {
                 $attributes['file'] = $filename;
                 $attributes['path'] = $uploadSuccess->getRealPath();
-                $file = new ProductImage;
+                $file = $this->repo->getImageModel();
                 $file->fill($attributes);
                 $file->save();
                 if ($shop->thumbnail_square_sizes) {
@@ -269,36 +271,29 @@ class ProductService extends BaseService
         return $model;
     }
 
-
-
     public function updateImageById(array $attributes, $productId, $imageId)
     {
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->modelImage = $this->findImage($imageId);
-        return $this->updateImageEntity($attributes);
-    }
+        $image = $this->findImage($imageId);
 
-    public function updateImageEntity(array $attributes = array())
-    {
         if (count($attributes) > 0) {
-            $this->modelImage->fill($attributes);
+            $image->fill($attributes);
             
-            $this->modelImage->relatedProductAttributes()->sync(array());
+            $image->relatedProductAttributes()->sync(array());
             if (isset($attributes['productAttributes'])) {
-                $this->modelImage->relatedProductAttributes()->sync($attributes['productAttributes']);
+                $image->relatedProductAttributes()->sync($attributes['productAttributes']);
             }
             
-            $this->modelImage->relatedAttributes()->sync(array());
+            $image->relatedAttributes()->sync(array());
             if (isset($attributes['attributes'])) {
-                $this->modelImage->relatedAttributes()->sync($attributes['attributes']);
+                $image->relatedAttributes()->sync($attributes['attributes']);
             }
 
-            $this->modelImage->save();
+            $image->save();
         }
 
-        return $this->modelImage;
+        return $image;
     }
-
 
     public function destroy($productId)
     {
@@ -480,5 +475,16 @@ class ProductService extends BaseService
     {
         return $this->repo->selectAllByShopIdAndProductCategoryId($shopId, $productCategoryId, $filters);
     }
+
+    public function findImage($imageId)
+    {
+        return $this->repo->findImage($imageId);
+    }
+
+    public function getImageModel()
+    {
+        return $this->repo->getImageModel();
+    }
+
 
 }
