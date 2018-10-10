@@ -16,55 +16,6 @@ class ProductExtraFieldValueRepository extends BaseRepository
         $this->product = $product;
     }
   
-    public function create(array $attributes, $productId)
-    {
-
-        $product = $this->product->find($productId);
-        $remove  = $this->model->where('product_id', '=', $productId)->delete();
-                
-        $result = false;
-        if (isset($attributes['rows'])) {
-            foreach ($attributes['rows'] as $row) {
-                $data = array();
-
-                $check  = $this->model->where('extra_field_id', '=', $row['extra_field_id'])->where('product_id', '=', $productId)->first();
-                $data['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-                if (!empty($row['extra_field_default_value_id']) or !empty($row['value'])) {
-                    if ($check) {
-                        $data['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-                        $data['extra_field_id'] = $row['extra_field_id'];
-                        $data['product_id'] = $product->id;
-                        if (isset($row['extra_field_default_value_id']) and $row['extra_field_default_value_id']) {
-                            $data['extra_field_default_value_id'] = $row['extra_field_default_value_id'];
-                        } else {
-                            $data['extra_field_default_value_id'] = null;
-                        }
-               
-                        $data['value'] = $row['value'];
-
-                        $result = new ProductExtraFieldValue;
-                        $result = $result->find($check->id);
-                        $result->fill($data);
-                        $result->save();
-                    } else {
-                        $data['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-                        $data['extra_field_id'] = $row['extra_field_id'];
-                        $data['product_id'] = $product->id;
-                        if (isset($row['extra_field_default_value_id']) and $row['extra_field_default_value_id']) {
-                            $data['extra_field_default_value_id'] = $row['extra_field_default_value_id'];
-                        }
-                        $data['value'] = $row['value'];
-
-                        $result = new ProductExtraFieldValue;
-                        $result->fill($data);
-                        $result->save();
-                    }
-                }
-            }
-        }
-
-        return $result;
-    }
  
     public function selectAllByProductId($productId)
     {

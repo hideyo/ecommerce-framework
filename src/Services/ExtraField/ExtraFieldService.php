@@ -140,6 +140,12 @@ class ExtraFieldService extends BaseService
 
     }
 
+    public function selectAllByAllProductsAndProductCategoryId($productCategoryId)
+    {
+        return $this->repo->selectAllByAllProductsAndProductCategoryId($productCategoryId);
+    }
+
+
     public function destroyValue($defaultValueId)
     {
         $this->modelValue = $this->findValue($defaultValueId);

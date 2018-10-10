@@ -17,17 +17,6 @@ class ProductRelatedProductRepository  extends BaseRepository
         $this->product = $product;
     }
   
-    public function create(array $attributes, $productParentId)
-    {
-        $parentProduct = $this->product->find($productParentId);
-   
-        if (isset($attributes['products'])) {
-            $parentProduct->relatedProducts()->attach($attributes['products']);
-        }
-
-        return $parentProduct->save();
-    }
-
     function selectAllByProductId($productId)
     {
          return $this->model->where('product_id', '=', $productId)->get();

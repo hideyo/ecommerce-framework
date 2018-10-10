@@ -304,6 +304,11 @@ class ProductCategoryService extends BaseService
     	return $this->repo->selectCategoriesByParentId($shopId, $parentId, $imageTag);
     }
 
+    public function selectAllProductPullDown()
+    {
+        return $this->repo->selectAllProductPullDown();
+    }
+
 
     public function findImage($imageId)
     {
