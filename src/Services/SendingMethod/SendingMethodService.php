@@ -76,7 +76,6 @@ class SendingMethodService extends BaseService
         return $model;
     }
 
-
 	public function selectAllActiveByShopId($shopId)
     {
     	return $this->repo->selectAllActiveByShopId($shopId);
@@ -89,7 +88,6 @@ class SendingMethodService extends BaseService
         if ($result->isEmpty()) {
             return false;
         }
-        return $result->first();
-    	
+        return $result->first();	
     }
 }

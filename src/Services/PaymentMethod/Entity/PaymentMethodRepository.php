@@ -15,8 +15,6 @@ class PaymentMethodRepository extends BaseRepository
         $this->model = $model;
     }
 
-    
-
     function selectOneByShopIdAndId($shopId, $paymentMethodId)
     {
         return $this->model->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $paymentMethodId)->get();

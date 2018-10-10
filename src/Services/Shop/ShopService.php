@@ -118,11 +118,11 @@ class ShopService extends BaseService
     public function destroy($shopId)
     {
         $model = $this->find($shopId);
+
         File::deleteDirectory($this->publicImagePath.$model->id);
-
         $destinationPath = $this->storageImagePath.$model->id;
-
         File::deleteDirectory($destinationPath);
+        
         $model->save();
 
         return $model->delete();

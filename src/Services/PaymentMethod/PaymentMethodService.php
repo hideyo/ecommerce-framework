@@ -54,10 +54,7 @@ class PaymentMethodService extends BaseService
             return $validator;
         }
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->model->fill($attributes);
-        $this->model->save();
-        
-        return $this->model;
+        return $this->updateOrAddModel($this->repo->getModel(), $attributes);
     }
 
     public function updateById(array $attributes, $paymentMethodId)
@@ -71,15 +68,6 @@ class PaymentMethodService extends BaseService
             return $validator;
         }
 
-        if($model) {
-
-            $model->fill($attributes);
-            $model->save();
-            return $model;
-        }
-
-        return false;
+        return $this->updateOrAddModel($model, $attributes);
     }
-
-
 }

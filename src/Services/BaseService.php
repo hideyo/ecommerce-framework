@@ -28,4 +28,11 @@ class BaseService
         return $model;  
 
     }
+
+    public function destroy($id)
+    {
+        $model = $this->find($id);
+        return $model->delete();
+    }
+
 }

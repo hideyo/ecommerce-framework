@@ -30,6 +30,6 @@ class FaqItemGroup extends BaseModel
 
     public function faqItems()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\FaqItem');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Faq\Entity\FaqItem');
     }
 }
