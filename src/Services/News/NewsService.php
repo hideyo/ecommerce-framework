@@ -28,4 +28,31 @@ class NewsService extends BaseService
     {
     	return $this->repo->selectAllActiveGroupsByShopId($shopId);
     }
+
+    public function findGroup($groupId)
+    {
+        return $this->repo->findGroup($groupId);
+    }
+
+    public function getGroupModel()
+    {
+        return $this->repo->getGroupModel();
+    }
+
+    public function findImage($imageId)
+    {
+        return $this->repo->getImageModel()->find($imageId);
+    }
+
+    public function getImageModel()
+    {
+        return $this->repo->getImageModel();
+    }
+
+    public function selectAllGroups()
+    {
+       return $this->repo->selectAllGroups();
+    }
+
+
 }

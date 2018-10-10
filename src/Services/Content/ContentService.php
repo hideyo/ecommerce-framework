@@ -98,19 +98,14 @@ class ContentService extends BaseService
      */
     public function rulesGroup($contentGroupId = false, $attributes = false)
     {
-        if (isset($attributes['seo'])) {
-            $rules = array(
-                'meta_title'                 => 'required|between:4,65|unique_with:'.$this->modelGroup->getTable().', shop_id'
-            );
-        } else {
-            $rules = array(
-                'title'                 => 'required|between:4,65|unique:'.$this->modelGroup->getTable().''
-            );
-            
-            if ($contentGroupId) {
-                $rules['title'] =   'required|between:4,65|unique:'.$this->modelGroup->getTable().',title,'.$contentGroupId;
-            }
+        $rules = array(
+            'title'                 => 'required|between:4,65|unique:'.$this->repo->getGroupModel()->getTable().''
+        );
+        
+        if ($contentGroupId) {
+            $rules['title'] =   'required|between:4,65|unique:'.$this->repo->getGroupModel()->getTable().',title,'.$contentGroupId;
         }
+
 
         return $rules;
     }
@@ -127,10 +122,10 @@ class ContentService extends BaseService
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
             
-        $this->modelGroup->fill($attributes);
-        $this->modelGroup->save();
+        $this->repo->getGroupModel()->fill($attributes);
+        $this->repo->getGroupModel()->save();
    
-        return $this->modelGroup;
+        return $this->repo->getGroupModel();
     }
 
     public function createImage(array $attributes, $contentId)
@@ -265,6 +260,13 @@ class ContentService extends BaseService
     {
         return $this->repo->getGroupModel();
     }
+
+
+    public function findGroup($id)
+    {
+        return $this->repo->findGroup($id);
+    }
+
 
     public function selectAllGroups()
     {
