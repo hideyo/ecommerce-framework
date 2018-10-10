@@ -162,7 +162,7 @@ class ProductCombinationService extends BaseService
             }
         }
 
-        if(!$productAttributeId AND $attributeLeadingGroup) {
+        if(!$productAttributeId AND $attributeLeadingGroup AND isset($newPullDowns[$attributeLeadingGroup->title])) {
             $productAttributeId = key($newPullDowns[$attributeLeadingGroup->title]);
         }
 

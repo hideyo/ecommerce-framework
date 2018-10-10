@@ -18,11 +18,11 @@ class ProductExtraFieldValue extends BaseModel
 
     public function extraField()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\ExtraField');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\ExtraField\Entity\ExtraField');
     }
     public function extraFieldDefaultValue()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Product\Entity\ExtraFieldDefaultValue');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Extrafield\Entity\ExtraFieldDefaultValue');
     }
 
     public function product()
