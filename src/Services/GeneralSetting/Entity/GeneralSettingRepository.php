@@ -7,16 +7,13 @@ use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class GeneralSettingRepository extends BaseRepository
 {
-
     protected $model;
 
     public function __construct(GeneralSetting $model)
     {
         $this->model = $model;
     }
-
-   
-    
+  
     public function selectOneByShopIdAndName($shopId, $name)
     {     
         $result = $this->model

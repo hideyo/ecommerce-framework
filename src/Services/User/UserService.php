@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\User;
 
 use Validator;
-use File;
 use Hash;
 use Hideyo\Ecommerce\Framework\Services\User\Entity\UserRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
@@ -46,22 +45,9 @@ class UserService extends BaseService
             return $validator;
         }
 
-
         $model = $this->find($userId);
-
-
-        if (count($attributes) > 0) {
-            $model->username = array_get($attributes, 'username');
-            $model->email    = array_get($attributes, 'email');
-            $model->password = Hash::make(array_get($attributes, 'password'));
-            $model->selected_shop_id    = array_get($attributes, 'selected_shop_id');
-            $model->confirmed = array_get($attributes, 'confirmed');
-            $model->save();
-        }
-   
-        return $model;
-
-
+        $attributes['password']= Hash::make(array_get($attributes, 'password'));
+        return $this->updateOrAddModel($model, $attributes);
     }
 
 
@@ -73,40 +59,26 @@ class UserService extends BaseService
      *
      * @return  User User object that may or may not be saved successfully. Check the id to make sure.
      */
-    public function signup($input)
+    public function signup($attributes)
     {
-        $validator = Validator::make($input, $this->rules());
+        $validator = Validator::make($attributes, $this->rules());
 
         if ($validator->fails()) {
             return $validator;
         }
 
-        $this->repo->getModel()->username = array_get($input, 'username');
-        $this->repo->getModel()->email    = array_get($input, 'email');
-        $this->repo->getModel()->password = Hash::make(array_get($input, 'password'));
-        $this->repo->getModel()->confirmed = 0;
-        $this->repo->getModel()->language_id    = array_get($input, 'language_id');
-        // The password confirmation will be removed from model
-        // before saving. This field will be used in Ardent's
-        // auto validation.
-        //$this->repo->getModel()->password_confirmation = array_get($input, 'password_confirmation');
 
-        // Generate a random confirmation code
-        $this->repo->getModel()->confirmation_code     = md5(uniqid(mt_rand(), true));
-        $this->repo->getModel()->selected_shop_id    = array_get($input, 'selected_shop_id');
+        $attributes['password'] = Hash::make(array_get($attributes, 'password'));
+        $attributes['confirmed'] = 0;
 
-        // Save if valid. Password field will be hashed before save
+        $attributes['confirmation_code']     = md5(uniqid(mt_rand(), true));
 
-        $this->repo->getModel()->save();
+        $model =  $this->updateOrAddModel($this->repo->getModel(), $attributes);
 
-        if ($this->repo->getModel()->id) {
-            // $role = $input['role'];
-            // $roles = $this->repo->getModel()->roles;
-            // $this->repo->getModel()->detachAllRoles($roles);
-            // $this->repo->getModel()->attachRole( $role ); // Parameter can be an Role object, array or id.
+        if ($model) {
 
             if (config()->get('confide::signup_email')) {
-                $user = $this->repo->getModel();
+                $user = $model;
                 Mail::queueOn(
                     config()->get('confide::email_queue'),
                     config()->get('confide::email_account_confirmation'),
@@ -120,7 +92,7 @@ class UserService extends BaseService
             }
         }
   
-        return $this->repo->getModel();
+        return $model;
     }
 
     public function updateProfileById(array $attributes, $avatar, $userId)

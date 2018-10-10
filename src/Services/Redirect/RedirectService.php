@@ -100,8 +100,5 @@ class RedirectService extends BaseService
         }
 
         return true;
-    }
-
-
-	
+    }	
 }

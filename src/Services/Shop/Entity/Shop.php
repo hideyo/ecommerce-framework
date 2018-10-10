@@ -20,34 +20,30 @@ class Shop extends BaseModel
     // Add the 'avatar' attachment to the fillable array so that it's mass-assignable on this model.
     protected $fillable = ['active', 'email', 'wholesale', 'currency_code', 'title', 'url', 'description', 'meta_title', 'meta_description', 'meta_keywords', 'logo_file_name', 'logo_file_path', 'thumbnail_square_sizes', 'thumbnail_widescreen_sizes'];
 
-    protected $sluggable = array(
-        'build_from'        => 'title',
-        'save_to'           => 'slug',
-        'on_update'         => true,
-    );
-
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'title',
+                'on_update'         => true,
+                'unique'          => false
             ]
         ];
     }
 
     public function shops()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\Shop');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop');
     }
     
     public function categories()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\ProductCategory');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory');
     }
 
     public function products()
     {
-        return $this->hasMany('Hideyo\Ecommerce\Framework\Models\Product');
+        return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product');
     }
 
     public function setThumbnailSquareSizesAttribute($value = null)

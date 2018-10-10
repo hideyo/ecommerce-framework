@@ -17,8 +17,11 @@ class SendingMethodRepository extends BaseRepository
 
     public function selectOneByShopIdAndId($shopId, $sendingMethodId)
     {
-        return $this->model->with(array('relatedPaymentMethods' => function ($query) {
-            $query->where('active', '=', 1);
-        }))->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $sendingMethodId)->get();
+        return $this->model->with(
+            array('relatedPaymentMethods' => function ($query) {
+                $query->where('active', '=', 1);
+            })
+        )->where('shop_id', '=', $shopId)->where('active', '=', 1)
+        ->where('id', '=', $sendingMethodId)->get();
     } 
 }

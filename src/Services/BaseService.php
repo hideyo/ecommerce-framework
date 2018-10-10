@@ -18,4 +18,14 @@ class BaseService
     {
         return $this->repo->getModel();
     }
+
+    public function updateOrAddModel($model, $attributes) 
+    {
+        if (count($attributes) > 0) {
+            $model->fill($attributes);
+            $model->save();
+        }
+        return $model;  
+
+    }
 }

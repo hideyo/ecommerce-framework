@@ -28,4 +28,8 @@ class HtmlBlockService extends BaseService
     {
     	return $this->repo->selectAllActiveGroupsByShopId($shopId);
     }
+
+    public function selectOneByShopIdAndPosition($position, $shopId) {
+        return $this->repo->selectOneByShopIdAndPosition($position, $shopId);
+    }
 }

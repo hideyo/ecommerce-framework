@@ -2,21 +2,16 @@
 
 namespace Hideyo\Ecommerce\Framework\Helpers;
 
-use Config;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute;
-use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttributeCombination;
-use DbView;
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductImage;
-use Illuminate\Support\Facades\Request;
 
 class ProductHelper
 {
     public static function getProductAttributeId($productId, $attributeIds) 
     {
         $productAttributeResultWithAttributeId =  ProductAttribute::
-        whereHas('combinations', function ($query) use ($attributeIds) {    
-        print_r($attributeIds);               
+        whereHas('combinations', function ($query) use ($attributeIds) {                 
             $query->whereIn('attribute_id', $attributeIds);              
         })
         ->with('combinations')

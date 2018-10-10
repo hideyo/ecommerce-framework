@@ -10,7 +10,6 @@ use Hideyo\Ecommerce\Framework\Services\Shop\Entity\ShopRepositoryInterface;
  */
 class ShopServiceProvider extends ServiceProvider
 {
-
     /**
      * Binding User service
      */

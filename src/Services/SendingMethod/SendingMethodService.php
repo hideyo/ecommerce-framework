@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\SendingMethod;
 
 use Validator;
-use File;
 use Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethodRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
  
@@ -13,7 +12,6 @@ class SendingMethodService extends BaseService
 	{
 		$this->repo = $sendingMethod;
 	} 
-
 
     /**
      * The validation rules for the model.
@@ -48,15 +46,14 @@ class SendingMethodService extends BaseService
         }
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-                       
-        $this->model->fill($attributes);
-        $this->model->save();
+        $model = $this->updateOrAddModel($this->repo->getModel(), $attributes);     
+
 
         if (isset($attributes['payment_methods'])) {
-            $this->model->relatedPaymentMethods()->sync($attributes['payment_methods']);
+            $model->relatedPaymentMethods()->sync($attributes['payment_methods']);
         }
    
-        return $this->model;
+        return $model;
     }
 
     public function updateById(array $attributes, $sendingMethodId)
@@ -70,20 +67,14 @@ class SendingMethodService extends BaseService
             return $validator;
         }
 
-        if($model) {
-
-            $model->fill($attributes);
-            if (isset($attributes['payment_methods'])) {
-                $model->relatedPaymentMethods()->sync($attributes['payment_methods']);
-            }
-
-            $model->save();
-            return $model;
+        $model = $this->updateOrAddModel($model, $attributes); 
+        $model->relatedPaymentMethods()->sync(array());
+        if (isset($attributes['payment_methods'])) {
+            $model->relatedPaymentMethods()->sync($attributes['payment_methods']);
         }
 
-        return false;
+        return $model;
     }
-
 
 
 	public function selectAllActiveByShopId($shopId)
@@ -101,5 +92,4 @@ class SendingMethodService extends BaseService
         return $result->first();
     	
     }
-
 }

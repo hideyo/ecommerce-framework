@@ -264,7 +264,7 @@ class HtmlBlockRepository extends BaseRepository
         return $result->first();
     }
 
-    function selectOneByShopIdAndPosition($shopId, $position)
+    public function selectOneByShopIdAndPosition($position, $shopId)
     {
         $result = $this->model->where('shop_id', '=', $shopId)->where('position', '=', $position)->get();
         

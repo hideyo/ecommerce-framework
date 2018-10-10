@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\TaxRate;
 
 use Validator;
-use File;
 use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRateRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
  
@@ -44,9 +43,7 @@ class TaxRateService extends BaseService
         }
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->repo->getModel()->fill($attributes);
-        $this->repo->getModel()->save();
-        return $this->repo->getModel();
+        return $this->updateOrAddModel($this->repo->getModel(), $attributes);
     }
 
     public function updateById(array $attributes, $id)
@@ -59,12 +56,7 @@ class TaxRateService extends BaseService
 
         $model = $this->find($id);
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-
-        if (count($attributes) > 0) {
-            $model->fill($attributes);
-            $model->save();
-        }
-        return $model;  
+        return $this->updateOrAddModel($model, $attributes);
     } 
 	
 }

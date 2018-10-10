@@ -7,15 +7,12 @@ use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class RedirectRepository  extends BaseRepository 
 {
-
     protected $model;
 
     public function __construct(Redirect $model)
     {
         $this->model = $model;
     }
-
-
 
     public function updateClicks($url)
     {

@@ -31,12 +31,6 @@ class ProductCategory extends Node
         ];
     }
 
-    public function __construct(array $attributes = array())
-    {
-        $this->table = $this->table;  
-        parent::__construct($attributes);
-    }
-
     public function shop()
     {
         return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop');
@@ -67,12 +61,12 @@ class ProductCategory extends Node
 
     public function productCategoryHighlightProduct()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\Product', 'product_category_highlight_product', 'product_category_id', 'product_id');
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_category_highlight_product', 'product_category_id', 'product_id');
     }
 
     public function productCategoryHighlightProductActive()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Models\Product', 'product_category_highlight_product', 'product_category_id', 'product_id')->where('active', '=', 1);
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_category_highlight_product', 'product_category_id', 'product_id')->where('active', '=', 1);
     }
 
     public function products()

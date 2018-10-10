@@ -44,9 +44,7 @@ class GeneralSettingService extends BaseService
         }
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->model->fill($attributes);
-        $this->model->save();
-        return $this->model;
+        return $this->updateOrAddModel($this->model, $attributes);
     }
 
     public function updateById(array $attributes, $id)
@@ -59,12 +57,6 @@ class GeneralSettingService extends BaseService
 
         $model = $this->find($id);
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-
-        if (count($attributes) > 0) {
-            $model->fill($attributes);
-            $model->save();
-        }
-        return $model;    
+        return $this->updateOrAddModel($model, $attributes);   
     }  
-
 }
