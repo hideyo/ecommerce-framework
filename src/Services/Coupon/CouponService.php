@@ -99,10 +99,10 @@ class CouponService extends BaseService
 
         $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
             
-        $this->modelGroup->fill($attributes);
-        $this->modelGroup->save();
+        $this->repo->getGroupModel()->fill($attributes);
+        $this->repo->getGroupModel()->save();
    
-        return $this->modelGroup;
+        return $this->repo->getGroupModel();
     }
 
 
@@ -174,10 +174,10 @@ class CouponService extends BaseService
 
     public function destroyGroup($groupId)
     {
-        $this->modelGroup = $this->findGroup($groupId);
-        $this->modelGroup->save();
+        $modelGroup = $this->findGroup($groupId);
+        $modelGroup->save();
 
-        return $this->modelGroup->delete();
+        return $modelGroup->delete();
     }
 
     public function getGroupModel()

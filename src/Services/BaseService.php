@@ -41,7 +41,11 @@ class BaseService
 
         if (isset($result->id)) {
             Notification::success($successMsg);
+            if(is_array($routeName)) {
+                return redirect()->route($routeName[0], $routeName[1]);
+            }
             return redirect()->route($routeName);
+            
         }
 
         foreach ($result->errors()->all() as $error) {
