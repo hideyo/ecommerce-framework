@@ -375,7 +375,7 @@ class CartRepository
                     $discountValue = $coupon->value.'%';
                 } 
 
-                self::setCouponCode($discountValue, $couponData, $couponCode);
+                $this->setCouponCode($discountValue, $couponData, $couponCode);
             }
 
             if($coupon->type == 'product') {
@@ -399,7 +399,7 @@ class CartRepository
                         }
                     }
 
-                    self::setCouponCode($discountValue, $couponData, $couponCode);
+                    $this->setCouponCode($discountValue, $couponData, $couponCode);
                 }
             }
 
@@ -423,7 +423,7 @@ class CartRepository
 
                     }
 
-                    self::setCouponCode($discountValue, $couponData, $couponCode);
+                    $this->setCouponCode($discountValue, $couponData, $couponCode);
                 }
             }
 
@@ -446,7 +446,7 @@ class CartRepository
                         }
                     }
 
-                    self::setCouponCode($discountValue, $couponData, $couponCode);
+                    $this->setCouponCode($discountValue, $couponData, $couponCode);
 
                 } elseif($coupon->sendingMethods()->count()) {
 
@@ -466,7 +466,7 @@ class CartRepository
                         }            
                     }
 
-                    self::setCouponCode($discountValue, $couponData, $couponCode);
+                    $this->setCouponCode($discountValue, $couponData, $couponCode);
                 }
             }
 
@@ -490,7 +490,7 @@ class CartRepository
                         }            
                     }
 
-                    self::setCouponCode($discountValue, $couponData, $couponCode);
+                    $this->setCouponCode($discountValue, $couponData, $couponCode);
                 }
             }
         }
