@@ -65,7 +65,7 @@ class ProductTableSeeder extends Seeder
 
             if ($shop->thumbnail_square_sizes) {
                 $sizes = explode(',', $shop->thumbnail_square_sizes);
-                if ($sizes) {
+                if (is_array($sizes)) {
                     foreach ($sizes as $valueSize) {
 
                         $image = Image::make(storage_path().'/app/'.$storageImagePath.$product->id.'/'.$productFiles[0]->getFileName());
@@ -98,7 +98,7 @@ class ProductTableSeeder extends Seeder
 
         if ($shop->thumbnail_square_sizes) {
             $sizes = explode(',', $shop->thumbnail_square_sizes);
-            if ($sizes) {
+            if (is_array($sizes) {
                 foreach ($sizes as $valueSize) {
 
                     $image = Image::make(storage_path().'/app/'.$storageImagePath.$product->id.'/'.$productFiles[1]->getFileName());
@@ -154,7 +154,7 @@ class ProductTableSeeder extends Seeder
 
         if ($shop->thumbnail_square_sizes) {
             $sizes = explode(',', $shop->thumbnail_square_sizes);
-            if ($sizes) {
+            if (is_array($sizes) {
                 foreach ($sizes as $valueSize) {
 
                     $image = Image::make(storage_path().'/app/'.$storageImagePath.$product2->id.'/'.$productFiles[2]->getFileName());
@@ -204,7 +204,7 @@ class ProductTableSeeder extends Seeder
 
         if ($shop->thumbnail_square_sizes) {
             $sizes = explode(',', $shop->thumbnail_square_sizes);
-            if ($sizes) {
+            if (is_array($sizes) {
                 foreach ($sizes as $valueSize) {
 
                     $image = Image::make(storage_path().'/app/'.$storageImagePath.$product3->id.'/'.$productFiles[2]->getFileName());
@@ -256,7 +256,7 @@ class ProductTableSeeder extends Seeder
 
         if ($shop->thumbnail_square_sizes) {
             $sizes = explode(',', $shop->thumbnail_square_sizes);
-            if ($sizes) {
+            if (is_array($sizes) {
                 foreach ($sizes as $valueSize) {
 
                     $image = Image::make(storage_path().'/app/'.$storageImagePath.$product4->id.'/'.$productFiles[2]->getFileName());
