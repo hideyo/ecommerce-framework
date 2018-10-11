@@ -595,6 +595,11 @@ class ProductService extends BaseService
     }
 
 
+    public function selectOneById($productId)
+    {
+        return $this->repo->selectOneById($productId);
+    }
+
 
     public function selectOneByShopIdAndId($shopId, $productId, $attributeId = false)
     {
