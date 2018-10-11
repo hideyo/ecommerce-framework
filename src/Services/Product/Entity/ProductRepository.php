@@ -70,7 +70,7 @@ class ProductRepository extends BaseRepository
         return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('product_parent_id', '=', $productParentId)->get();
     }
 
-    function selectOneById($productId)
+    public function selectOneById($productId)
     {
         $result = $this->model->with(array('productCategory', 'relatedProducts', 'productImages' => function ($query) {
             $query->orderBy('rank', 'asc');
