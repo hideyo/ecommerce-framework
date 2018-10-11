@@ -13,7 +13,6 @@ use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class ClientRepository extends BaseRepository 
 {
-
     protected $model;
 
     public function __construct(
