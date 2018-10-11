@@ -73,15 +73,15 @@ class ProductService extends BaseService
             $attributes['discount_value'] = null;
         }
 
-        $this->model->fill($attributes);
+        $this->getModel()->fill($attributes);
 
-        $this->model->save();
+        $this->getModel()->save();
 
         if (isset($attributes['subcategories'])) {
-            $this->model->subcategories()->sync($attributes['subcategories']);
+            $this->getModel()->subcategories()->sync($attributes['subcategories']);
         }
                 
-        return $this->model;
+        return $this->getModel();
     }
 
   
@@ -100,15 +100,15 @@ class ProductService extends BaseService
             $attributes['discount_value'] = null;
         }
 
-        $this->model->fill($attributes);
-        $this->model->save();
+        $this->getModel()->fill($attributes);
+        $this->getModel()->save();
         if (isset($attributes['subcategories'])) {
-            $this->model->subcategories()->sync($attributes['subcategories']);
+            $this->getModel()->subcategories()->sync($attributes['subcategories']);
         }
         
-        $this->model->addAllToIndex();
+        $this->getModel()->addAllToIndex();
 
-        return $this->model;
+        return $this->getModel();
     }
 
     public function createImage(array $attributes, $productId)
@@ -185,7 +185,7 @@ class ProductService extends BaseService
 
     public function refactorAllImagesByShopId($shopId)
     {
-        $result = $this->modelImage->get();
+        $result = $this->getImageModel()->get();
         $shop = ShopService::find($shopId);
         foreach ($result as $productImage) {
             if ($shop->thumbnail_square_sizes) {
@@ -297,35 +297,35 @@ class ProductService extends BaseService
 
     public function destroy($productId)
     {
-        $this->model = $this->find($productId);
+        $model = $this->find($productId);
 
-        if ($this->model->productCategory) {
-            $url = $this->model->shop->url.route('product.item', ['productId' => $this->model->id, 'productSlug' => $this->model->slug, 'categorySlug' => $this->model->productCategory->slug], null);
-            $productCategoryUrl = $this->model->shop->url.route('product-category', ['slug' => $this->model->productCategory->slug], null);
-            $this->redirect->create(array('active' => 1, 'url' => $url, 'redirect_url' => $productCategoryUrl, 'shop_id' => $this->model->shop_id));
+        if ($model->productCategory) {
+            $url = $model->shop->url.route('product.item', ['productId' => $model->id, 'productSlug' => $model->slug, 'categorySlug' => $model->productCategory->slug], null);
+            $productCategoryUrl = $model->shop->url.route('product-category', ['slug' => $model->productCategory->slug], null);
+            $this->redirect->create(array('active' => 1, 'url' => $url, 'redirect_url' => $productCategoryUrl, 'shop_id' => $model->shop_id));
         }
 
 
-        if ($this->model->productImages()->count()) {
-            foreach ($this->model->productImages()->get() as $image) {
+        if ($model->productImages()->count()) {
+            foreach ($model->productImages()->get() as $image) {
                 $this->productImage->destroy($image->id);
             }
         }
 
 
-        $directory = $this->storageImagePath.$this->model->id;
+        $directory = $this->storageImagePath.$model->id;
         File::deleteDirectory($directory);
 
-        File::deleteDirectory($this->publicImagePath.$this->model->id);
-        $this->model->addAllToIndex();
-        return $this->model->delete();
+        File::deleteDirectory($this->publicImagePath.$model->id);
+        $model->addAllToIndex();
+        return $model->delete();
     }
 
 
     public function destroyImage($imageId)
     {
-        $this->modelImage = $this->findImage($imageId);
-        $filename = $this->modelImage->path;
+        $modelImage = $this->findImage($imageId);
+        $filename = $modelImage->path;
         $shopId = auth('hideyobackend')->user()->selected_shop_id;
         $shop = ShopService::find($shopId);
         
@@ -337,13 +337,13 @@ class ProductService extends BaseService
                 $sizes = explode(',', $shop->thumbnail_square_sizes);
                 if ($sizes) {
                     foreach ($sizes as $valueSize) {
-                        File::delete($this->publicImagePath.$valueSize."/".$this->modelImage->product_id."/".$this->modelImage->file);
+                        File::delete($this->publicImagePath.$valueSize."/".$modelImage->product_id."/".$modelImage->file);
                     }
                 }
             }
         }
 
-        return $this->modelImage->delete();
+        return $modelImage->delete();
     }
 
 
