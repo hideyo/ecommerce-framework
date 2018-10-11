@@ -55,6 +55,10 @@ class OrderStatusEmailTemplateService extends BaseService
         return $this->repo->getModel();
     }
 
+    public function selectAllByShopId($shopId) {
+        return $this->repo->selectAllByShopId($shopId);
+    }
+
     public function updateById(array $attributes, $id)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;

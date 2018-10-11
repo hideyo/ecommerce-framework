@@ -6,7 +6,6 @@ use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class OrderStatusEmailTemplateRepository extends BaseRepository 
 {
-
     protected $model;
 
     public function __construct(OrderStatusEmailTemplate $model)
@@ -14,10 +13,13 @@ class OrderStatusEmailTemplateRepository extends BaseRepository
         $this->model = $model;
     }
 
+    public function selectAllByShopId($shopId)
+    {
+        return $this->model->where('shop_id', '=', $shopId)->get();
+    }
 
     public function selectBySendingMethodIdAndPaymentMethodId($paymentMethodId, $sendingMethodId)
     {
-
         $result = $this->model->with(array('sendingPaymentMethodRelated' => function ($query) use ($paymentMethodId, $sendingMethodId) {
             $query->with(array('sendingMethod' => function ($query) use ($sendingMethodId) {
                 $query->where('id', '=', $sendingMethodId);
