@@ -51,6 +51,40 @@ class SendingMethodTable extends Migration
             $table->unique(array('sending_method_id','payment_method_id'), 'unique_sending_payment_method_related');
         });
 
+
+        Schema::create('sending_method_country_price', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('flag')->nullable();
+            $table->string('iso_3166_2')->nullable();
+            $table->string('iso_3166_3')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('currency_code')->nullable();
+            $table->string('country_code')->nullable();
+            $table->string('currency_sub_unit')->nullable();
+            $table->string('currency_symbol')->nullable(); 
+
+            $table->decimal('price', 12, 4)->nullable(); 
+            $table->decimal('no_price_from', 12, 4)->nullable(); 
+            $table->decimal('minimal_weight', 12, 4)->nullable(); 
+            $table->decimal('maximal_weight', 12, 4)->nullable(); 
+            $table->integer('tax_rate_id')->unsigned()->nullable();
+            $table->foreign('tax_rate_id')->references('id')->on('tax_rate')->onDelete('set null');
+            
+            $table->enum('total_price_discount_type', array('amount', 'percent'));
+            $table->decimal('total_price_discount_value', 12, 4)->nullable();
+            $table->date('total_price_discount_start_date')->nullable();
+            $table->date('total_price_discount_end_date')->nullable();
+
+            $table->integer('sending_method_id')->unsigned();
+            $table->foreign('sending_method_id')->references('id')->on('sending_method')->onDelete('cascade');
+            $table->timestamps();
+            $table->unique(array('sending_method_id','name'));
+
+        });
+
+
     }
 
     /**

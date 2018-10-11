@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
-use Hideyo\Ecommerce\Framework\Models\PaymentMethod as PaymentMethod;
-use Hideyo\Ecommerce\Framework\Models\SendingMethod as SendingMethod;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod as PaymentMethod;
+use Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethod as SendingMethod;
 
-use Hideyo\Ecommerce\Framework\Models\TaxRate as TaxRate;
+use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate as TaxRate;
 
 class PaymentMethodTableSeeder extends Seeder
 {

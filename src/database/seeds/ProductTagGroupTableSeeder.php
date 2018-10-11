@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
-use Hideyo\Ecommerce\Framework\Models\Product as Product;
-use Hideyo\Ecommerce\Framework\Models\ProductTagGroup as ProductTagGroup;
-use Hideyo\Ecommerce\Framework\Models\TaxRate as TaxRate;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product as Product;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductTagGroup as ProductTagGroup;
+use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate as TaxRate;
 
 class ProductTagGroupTableSeeder extends Seeder
 {

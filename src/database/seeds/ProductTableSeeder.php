@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
-use Hideyo\Ecommerce\Framework\Models\Product as Product;
-use Hideyo\Ecommerce\Framework\Models\ProductCategory as ProductCategory;
-use Hideyo\Ecommerce\Framework\Models\ProductImage as ProductImage;
-use Hideyo\Ecommerce\Framework\Models\TaxRate as TaxRate;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product as Product;
+use Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory as ProductCategory;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductImage as ProductImage;
+use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate as TaxRate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as Image;
 

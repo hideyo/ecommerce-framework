@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
-use Hideyo\Ecommerce\Framework\Models\Attribute as Attribute;
-use Hideyo\Ecommerce\Framework\Models\AttributeGroup as AttributeGroup;
-use Hideyo\Ecommerce\Framework\Models\ProductAttribute as ProductAttribute;
-use Hideyo\Ecommerce\Framework\Models\ProductAttributeCombination as ProductAttributeCombination;
-use Hideyo\Ecommerce\Framework\Models\Product as Product;
-use Hideyo\Ecommerce\Framework\Models\TaxRate as TaxRate;
-use Hideyo\Ecommerce\Framework\Models\ProductCategory as ProductCategory;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\Attribute as Attribute;
+use Hideyo\Ecommerce\Framework\Services\AttributeGroup\Entity\AttributeGroup as AttributeGroup;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute as ProductAttribute;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttributeCombination as ProductAttributeCombination;
+use Hideyo\Ecommerce\Framework\Services\Product\Entity\Product as Product;
+use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate as TaxRate;
+use Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory as ProductCategory;
 
 class ProductAttributeTableSeeder extends Seeder
 {

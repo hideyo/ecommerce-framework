@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Hideyo\Ecommerce\Framework\Models\Shop as Shop;
-use Hideyo\Ecommerce\Framework\Models\Attribute as Attribute;
-use Hideyo\Ecommerce\Framework\Models\AttributeGroup as AttributeGroup;
-use Hideyo\Ecommerce\Framework\Models\ProductCategory as ProductCategory;
+use Hideyo\Ecommerce\Framework\Services\Shop\Entity\Shop as Shop;
+use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\Attribute as Attribute;
+use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\AttributeGroup as AttributeGroup;
+use Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory as ProductCategory;
 
 class AttributeTableSeeder extends Seeder
 {
