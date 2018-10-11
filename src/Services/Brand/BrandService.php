@@ -19,7 +19,6 @@ class BrandService extends BaseService
 
 	} 
 
-
     /**
      * The validation rules for the model.
      *
@@ -227,6 +226,4 @@ class BrandService extends BaseService
             }
         }
     }
-
-
 }

@@ -9,7 +9,6 @@ use \Illuminate\Support\Facades\Facade;
  */
 class BrandFacade extends Facade
 {
-
     /**
      * Returning service name
      *

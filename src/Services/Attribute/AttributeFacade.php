@@ -9,7 +9,6 @@ use \Illuminate\Support\Facades\Facade;
  */
 class AttributeFacade extends Facade
 {
-
     /**
      * Returning service name
      *

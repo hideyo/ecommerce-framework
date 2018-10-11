@@ -22,10 +22,7 @@ class BrandRepository extends BaseRepository
         $this->model        = $model;
         $this->modelImage   = $modelImage;
         $this->redirect     = $redirect;
-        $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/brand/";
-        $this->publicImagePath = public_path() .config('hideyo.public_path'). "/brand/";
     }
-
 
     public function selectAll()
     {
