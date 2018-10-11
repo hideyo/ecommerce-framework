@@ -10,12 +10,13 @@ use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate as TaxRate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
+use DB;
+use Log;
 
 class ProductTableSeeder extends Seeder
 {
     public function run()
     {
-
         Illuminate\Support\Facades\File::deleteDirectory(storage_path().'/app/files/product');
         Illuminate\Support\Facades\File::deleteDirectory(public_path().'/files/product');
         $directory = resource_path('assets/images/product');
@@ -117,8 +118,6 @@ class ProductTableSeeder extends Seeder
                 }
             }
         }
-
-
 
         $product2 = new Product;
         $product2->id = 12;

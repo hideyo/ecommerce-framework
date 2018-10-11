@@ -487,20 +487,20 @@ class ProductService extends BaseService
         if ($products->count()) {
             foreach ($products as $product) {
                 if ($product->product_id) {
-                    $this->model = $this->find($product->product_id);
-                    if ($this->model) {
+                    $model = $this->find($product->product_id);
+                    if ($model) {
                         $attributes = array(
-                            'title' => $this->model->title,
-                            'amount' => $this->model->amount + $product->amount
+                            'title' => $model->title,
+                            'amount' => $model->amount + $product->amount
                         );
                     }
                 }
 
-                $this->model->fill($attributes);
+                $model->fill($attributes);
 
     
 
-                $this->model->save();
+                $model->save();
             }
         }
     }
@@ -510,33 +510,30 @@ class ProductService extends BaseService
         if ($products->count()) {
             foreach ($products as $product) {
                 if ($product->product_id) {
-                    $this->model = $this->find($product->product_id);
-                    if ($this->model) {
+                    $model = $this->find($product->product_id);
+                    if ($model) {
                         $attributes = array(
-                            'title' => $this->model->title,
-                            'amount' => $this->model->amount - $product->amount
+                            'title' => $model->title,
+                            'amount' => $model->amount - $product->amount
                         );
                     }
                 }
 
-                $this->model->fill($attributes);
-
-    
-
-                $this->model->save();
+                $model->fill($attributes);
+                $model->save();
             }
         }
     }
 
     public function changeActive($productId)
     {
-        $this->model = $this->find($productId);
+        $model = $this->find($productId);
 
-        if ($this->model) {
+        if ($model) {
 
             $active = 1;
             
-            if ($this->model->active) {
+            if ($model->active) {
                 $active = 0;
             }
 
@@ -544,18 +541,18 @@ class ProductService extends BaseService
                 'active' => $active
             );
 
-            $this->model->fill($attributes);
+            $model->fill($attributes);
 
-            // if (!$this->model->active) {
-            //     $url = $this->model->shop->url.route('product.item', ['productId' => $this->model->id, 'productSlug' => $this->model->slug, 'categorySlug' => $this->model->productCategory->slug], null);
-            //     $productCategoryUrl = $this->model->shop->url.route('product-category', ['slug' => $this->model->productCategory->slug], null);
-            //     $redirectResult = $this->redirect->create(array('active' => 1, 'url' => $url, 'redirect_url' => $productCategoryUrl, 'shop_id' => $this->model->shop_id));
+            // if (!$model->active) {
+            //     $url = $model->shop->url.route('product.item', ['productId' => $model->id, 'productSlug' => $model->slug, 'categorySlug' => $model->productCategory->slug], null);
+            //     $productCategoryUrl = $model->shop->url.route('product-category', ['slug' => $model->productCategory->slug], null);
+            //     $redirectResult = $this->redirect->create(array('active' => 1, 'url' => $url, 'redirect_url' => $productCategoryUrl, 'shop_id' => $model->shop_id));
             // } else {
-            //     $url = $this->model->shop->url.route('product.item', ['productId' => $this->model->id, 'productSlug' => $this->model->slug, 'categorySlug' => $this->model->productCategory->slug], null);
+            //     $url = $model->shop->url.route('product.item', ['productId' => $model->id, 'productSlug' => $model->slug, 'categorySlug' => $model->productCategory->slug], null);
             //     $this->redirect->destroyByUrl($url);
             // }
 
-            return $this->model->save();
+            return $model->save();
         }
 
         return false;
@@ -563,15 +560,15 @@ class ProductService extends BaseService
 
     public function changeAmount($productId, $amount)
     {
-        $this->model = $this->find($productId);
+        $model = $this->find($productId);
 
-        if ($this->model) {
+        if ($model) {
             $attributes = array(
                 'amount' => $amount
             );
 
-            $this->model->fill($attributes);
-            return $this->model->save();
+            $model->fill($attributes);
+            return $model->save();
         }
 
         return false;
@@ -579,16 +576,16 @@ class ProductService extends BaseService
 
     public function changeRank($productId, $rank)
     {
-        $this->model = $this->find($productId);
+        $model = $this->find($productId);
 
-        if ($this->model) {
+        if ($model) {
             $attributes = array(
                 'rank' => $rank
             );
 
-            $this->model->fill($attributes);
+            $model->fill($attributes);
 
-            return $this->model->save();
+            return $model->save();
         }
 
         return false;
@@ -599,7 +596,6 @@ class ProductService extends BaseService
     {
         return $this->repo->selectOneById($productId);
     }
-
 
     public function selectOneByShopIdAndId($shopId, $productId, $attributeId = false)
     {
