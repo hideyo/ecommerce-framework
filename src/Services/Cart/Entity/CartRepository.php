@@ -5,34 +5,22 @@ use Hideyo\Ecommerce\Framework\Models\Shop;
 use Cart;
 use Hideyo\Ecommerce\Framework\Services\Sendingmethod\SendingmethodFacade as SendingmethodService;
 use Hideyo\Ecommerce\Framework\Services\PaymentMethod\PaymentMethodFacade as PaymentMethodService;
-use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductRepository;
-use Hideyo\Ecommerce\Framework\Services\Coupon\Entity\CouponRepository;
-use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductAttribute;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
+use Hideyo\Ecommerce\Framework\Services\Product\ProductFacade as ProductService;
+use Hideyo\Ecommerce\Framework\Services\Product\ProductCombinationFacade as ProductCombinationService;
+use Hideyo\Ecommerce\Framework\Services\Coupon\CouponFacade as CouponService;
  
 class CartRepository 
 {
-    protected $cart;
-
-    public function __construct(
-        Cart $cart, 
-        ProductRepository $product,
-        CouponRepository $coupon)
-    {
-        $this->cart = $cart;
-        $this->product = $product;
-        $this->coupon = $coupon;
-    }
-
     public function updateAmountProduct($productId, $amount, $leadingAttributeId, $productAttributeId)
     {
         $explode = explode('-', $productId);
-        $product = $this->product->selectOneById($explode[0]);
+        $product = ProductService::selectOneById($explode[0]);
 
         $productCombination = false;
         if (isset($explode[1])) {
             $productAttributeId = $explode[1];
-            $productCombination = ProductAttribute::where('id', '=', $productAttributeId)->first();
+            $productCombination = ProductCombinationService::getModel()->where('id', '=', $productAttributeId)->first();
         }
 
         if ($product->id) {
@@ -60,7 +48,7 @@ class CartRepository
                     $productArray['reference_code'] = $productCombination->reference_code;
                 }
 
-                $productArray['product_images'] =     $this->product->ajaxProductImages($product, array($leadingAttributeId), $productAttributeId);
+                $productArray['product_images'] =     ProductService::ajaxProductImages($product, array($leadingAttributeId), $productAttributeId);
             }
 
             if ($product->amountSeries()->where('active', '=', '1')->count()) {
@@ -92,11 +80,11 @@ class CartRepository
    
     public function postProduct($productId, $productCombinationId = false, $leadingAttributeId, $productAttributeId, $amount)
     {
-        $product = $this->product->selectOneByShopIdAndId(config()->get('app.shop_id'), $productId);
+        $product = ProductService::selectOneByShopIdAndId(config()->get('app.shop_id'), $productId);
         $productCombination = false;
 
         if ($productCombinationId) {
-            $productCombination = ProductAttribute::where('id', '=', $productCombinationId)->first();
+            $productCombination = ProductCombinationService::getModel()->where('id', '=', $productCombinationId)->first();
         } elseif ($product->attributes()->count()) {
             return false;
         }
@@ -124,7 +112,7 @@ class CartRepository
                     $productArray['reference_code'] = $productCombination->reference_code;
                 }
 
-                $productArray['product_images'] =     $this->product->ajaxProductImages($product, array($leadingAttributeId, $productAttributeId));
+                $productArray['product_images'] =     ProductService::ajaxProductImages($product, array($leadingAttributeId, $productAttributeId));
             }
 
             $productId = $productArray['id'];
@@ -359,7 +347,7 @@ class CartRepository
     public function updateCouponCode($couponCode) {
 
         Cart::removeConditionsByType('coupon');
-        $coupon = $this->coupon->selectOneByShopIdAndCode(config()->get('app.shop_id'), $couponCode);
+        $coupon = CouponService::selectOneByShopIdAndCode(config()->get('app.shop_id'), $couponCode);
         
         $couponData = array();
         $discountValue = 0;
