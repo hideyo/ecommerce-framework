@@ -376,4 +376,11 @@ class ClientService extends BaseService
     }
 
 
+    public function validateRegisterNoAccount(array $attributes, $shopId)
+    {
+        return $this->repo->validateRegisterNoAccount($attributes, $shopId);
+
+    }
+
+
 }
