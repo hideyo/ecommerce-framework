@@ -140,8 +140,6 @@ class ProductTableSeeder extends Seeder
             Log::info('Created product "'.$product2->title.'" <'.$product2->title.'>');
         }
 
-
-
         $productImage = new productImage;
         $productImage->product_id = $product2->id;
         $productImage->extension = 'jpg';
