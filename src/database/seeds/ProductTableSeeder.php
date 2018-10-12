@@ -10,8 +10,6 @@ use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate as TaxRate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
-use DB;
-use Log;
 
 class ProductTableSeeder extends Seeder
 {
@@ -32,7 +30,7 @@ class ProductTableSeeder extends Seeder
         $taxRate = TaxRate::where('title', '=', '21%')->first();
         $product = new Product;
 
-        DB::table($product->getTable())->delete();
+        \DB::table($product->getTable())->delete();
 
         for ($x = 0; $x <= 10; $x++) {
   
@@ -135,9 +133,9 @@ class ProductTableSeeder extends Seeder
         $product2->tax_rate_id = $taxRate->id;
 
         if (! $product2->save()) {
-            Log::info('Unable to create product '.$product2->title, (array)$product2->errors());
+            \Log::info('Unable to create product '.$product2->title, (array)$product2->errors());
         } else {
-            Log::info('Created product "'.$product2->title.'" <'.$product2->title.'>');
+            \Log::info('Created product "'.$product2->title.'" <'.$product2->title.'>');
         }
 
         $productImage = new productImage;
