@@ -101,4 +101,30 @@ class RedirectService extends BaseService
 
         return true;
     }	
+
+    public function updateClicks($url)
+    {
+        $result = $this->repo->findByUrl($url);
+        if ($result) {
+            $model = $this->find($result->id);
+            $model->fill(array('clicks' => $result->clicks + 1));
+            $model->save();
+
+            return $model;
+
+        }
+    }
+
+    public function findByUrl($url)
+    {
+        return $this->repo->findByUrl($url);
+    }
+
+
+    public function findByUrlAndActive($url)
+    {
+        return $this->repo->findByUrlAndActive($url);
+    }
+
+
 }

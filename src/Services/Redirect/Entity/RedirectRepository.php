@@ -14,15 +14,6 @@ class RedirectRepository  extends BaseRepository
         $this->model = $model;
     }
 
-    public function updateClicks($url)
-    {
-        $result = $this->model->where('url', '=', $url)->get()->first();
-        if ($result) {
-            $this->model = $this->find($result->id);
-            return $this->updateEntity(array('clicks' => $result->clicks + 1));
-        }
-    }
-
     public function destroyByUrl($url)
     {
         $result = $this->model->where('url', '=', $url)->delete();
@@ -51,8 +42,7 @@ class RedirectRepository  extends BaseRepository
 
     public function findByUrlAndActive($url)
     {
-        $result = $this->model->where('url', '=', $url)->whereNotNull('redirect_url')->where('active', '=', 1)->get()->first();
-        return $result;
+        return $this->model->where('url', '=', $url)->whereNotNull('redirect_url')->where('active', '=', 1)->get()->first();
     }
 
     public function findByUrl($url)
