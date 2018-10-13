@@ -104,10 +104,27 @@ class ClientService extends BaseService
     {
         $rules = array(
             'email'            => 'required|email',
-            'password'         => 'required'
+            'password'         => 'required|min:2'
         );
 
         return Validator::make($attributes, $rules);
+    }
+
+    public function login($request) {
+
+        $loginData = array(
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+            'confirmed' => 1,
+            'active' => 1,
+            'shop_id' => config()->get('app.shop_id')
+        );
+
+        if (auth('web')->attempt($loginData)) {
+            return true;
+        }
+
+
     }
 
     public function confirmClient($confirmationCode, $email, $shopId)
