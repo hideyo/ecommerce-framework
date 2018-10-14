@@ -6,189 +6,46 @@ use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderProduct;
 use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderAddress;
 use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderSendingMethod;
 use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderPaymentMethod;
-use Hideyo\Ecommerce\Framework\Services\Order\Entity\OrderAddressRepository;
-use Hideyo\Ecommerce\Framework\Services\Sendingmethod\SendingmethodFacade as SendingmethodService;
-use Hideyo\Ecommerce\Framework\Services\PaymentMethod\PaymentMethodFacade as PaymentMethodService;
-use Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientRepository;
-use Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddressRepository;
 use DB;
 use Carbon\Carbon;
-use Cart;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class OrderRepository extends BaseRepository 
 {
-
     protected $model;
 
     public function __construct(
         Order $model,
         OrderProduct $modelOrderProduct,
-        ClientRepository $client,
-        ClientAddressRepository $clientAddress,
-        OrderAddressRepository $orderAddress
+        OrderAddress $modelOrderAddress,
+        OrderSendingMethod $modelOrderSendingMethod,
+        OrderPaymentMethod $modelOrderPaymentMethod
     ) {
         $this->model = $model;
         $this->modelOrderProduct = $modelOrderProduct;
-        $this->client = $client;
-        $this->orderAddress = $orderAddress;
-        $this->clientAddress = $clientAddress;
+        $this->modelOrderAddress = $modelOrderAddress;
+        $this->modelOrderSendingMethod = $modelOrderSendingMethod;
+        $this->modelOrderPaymentMethod = $modelOrderPaymentMethod;
     }
   
-    public function create(array $attributes)
+    public function getProductModel()
     {
-        $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-        $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        $this->model->fill($attributes);
-        $this->model->save();
-
-        if (isset($attributes['categories'])) {
-            $this->model->categories()->sync($attributes['categories']);
-        }
-        
-        return $this->model;
+        return $this->modelOrderProduct;
     }
 
-
-    public function createByUserAndShopId(array $attributes, $shopId, $noAccountUser)
+    public function getAddressModel()
     {
-        $attributes['shop_id'] = $shopId;
-        $attributes['client_id'] = $attributes['user_id'];
-        $client  = $this->client->selectOneByShopIdAndId($shopId, $attributes['user_id']);
-
-        $this->model->fill($attributes);
-        $this->model->save();
-
-        if (!Cart::getContent()->count()) {
-            return false;
-        }
-
-        foreach (Cart::getContent()->sortBy('id')  as $product) {
-
-            $quantity = $product->quantity;
-            $newProduct = array(
-                'product_id' => $product['attributes']['id'],
-                'title' => $product['attributes']['title'],
-                'original_price_without_tax' => $product['attributes']['price_details']['original_price_ex_tax'],
-                'original_price_with_tax' => $product['attributes']['price_details']['original_price_inc_tax'],
-                'original_total_price_without_tax' => $quantity * $product['attributes']['price_details']['original_price_ex_tax'],
-                'original_total_price_with_tax' => $quantity * $product['attributes']['price_details']['original_price_inc_tax'],
-                'price_without_tax' => $product->getOriginalPriceWithoutTaxAndConditions(false),
-                'price_with_tax' => $product->getOriginalPriceWithTaxAndConditions(false),
-                'total_price_without_tax' => $product->getOriginalPriceWithoutTaxSum(false),
-                'total_price_with_tax' => $product->getOriginalPriceWithTaxSum(false),
-                'amount' => $quantity,
-                'tax_rate' => $product['attributes']['tax_rate'],
-                'tax_rate_id' => $product['attributes']['tax_rate_id'],
-                'weight' => $product['attributes']['weight'],
-                'reference_code' => $product['attributes']['reference_code'],
-            );
-
-            if (isset($product['attributes']['product_combination_id'])) {
-                $newProduct['product_attribute_id'] = $product['attributes']['product_combination_id'];
-                $productCombinationTitleArray = array();
-
-                if (isset($product['attributes']['product_combination_title'])) {
-                    $productCombinationTitle = array();
-
-                    foreach ($product['attributes']['product_combination_title'] as $key => $val) {
-
-                        $productCombinationTitle[] = $key.': '.$val;
-                    }
-
-                    $newProduct['product_attribute_title'] = implode(', ', $productCombinationTitle);
-                
-                }
-            }
-
-            $newProducts[] = new OrderProduct($newProduct);
-        }
-
-        $this->model->products()->saveMany($newProducts);
-
-        if ($client) {
-            if ($client->clientDeliveryAddress) {
-                $deliveryOrderAddress = new $this->orderAddress(new OrderAddress());
-                $deliveryOrderAddress = $deliveryOrderAddress->create($client->clientDeliveryAddress->toArray(), $this->model->id);
-            }
-
-            if ($client->clientBillAddress) {
-                $billOrderAddress = new $this->orderAddress(new OrderAddress());
-                $billOrderAddress = $billOrderAddress->create($client->clientBillAddress->toArray(), $this->model->id);
-            }
-
-            $this->model->fill(array('delivery_order_address_id' => $deliveryOrderAddress->id, 'bill_order_address_id' => $billOrderAddress->id));
-            $this->model->save();
-
-        } elseif ($noAccountUser) {
-            $deliveryOrderAddress = new $this->orderAddress(new OrderAddress());
-            if (isset($noAccountUser['delivery'])) {
-                $deliveryOrderAddress = $deliveryOrderAddress->create($noAccountUser['delivery'], $this->model->id);
-            } else {
-                $deliveryOrderAddress = $deliveryOrderAddress->create($noAccountUser, $this->model->id);
-            }
-
-            $billOrderAddress = new $this->orderAddress(new OrderAddress());
-            $billOrderAddress = $billOrderAddress->create($noAccountUser, $this->model->id);
-
-            $this->model->fill(array('delivery_order_address_id' => $deliveryOrderAddress->id, 'bill_order_address_id' => $billOrderAddress->id));
-            $this->model->save();
-        }
-
-        if (Cart::getConditionsByType('sending_method')->count()) {
-
-            $attributes = Cart::getConditionsByType('sending_method')->first()->getAttributes();
-            $sendingMethod = SendingMethodService::find($attributes['data']['id']);
-            $price = $sendingMethod->getPriceDetails();
-            $sendingMethodArray = $sendingMethod->toArray();
-  
-
-            $sendingMethodArray['price_with_tax'] = Cart::getConditionsByType('sending_method')->first()->getAttributes()['data']['price_details']['original_price_inc_tax'];
-            $sendingMethodArray['price_without_tax'] = Cart::getConditionsByType('sending_method')->first()->getAttributes()['data']['price_details']['original_price_ex_tax'];
-            $sendingMethodArray['tax_rate'] = $price['tax_rate'];
-            $sendingMethodArray['sending_method_id'] = $sendingMethod->id;
-
-            $orderSendingMethod = new OrderSendingMethod($sendingMethodArray);
-            $this->model->orderSendingMethod()->save($orderSendingMethod);
-        }
-
-        if (Cart::getConditionsByType('payment_method')->count()) {
-
-           $attributes = Cart::getConditionsByType('payment_method')->first()->getAttributes();
-            $paymentMethod = PaymentMethodService::find($attributes['data']['id']);
-            $price = $paymentMethod->getPriceDetails();
-
-            $paymentMethodArray = $paymentMethod->toArray();
-
-            $paymentMethodArray['price_with_tax'] = Cart::getConditionsByType('payment_method')->first()->getAttributes()['data']['value_inc_tax'];
-            $paymentMethodArray['price_without_tax'] = Cart::getConditionsByType('payment_method')->first()->getAttributes()['data']['value_ex_tax'];
-            $paymentMethodArray['tax_rate'] = $price['tax_rate'];
-            $paymentMethodArray['payment_method_id'] = $paymentMethod->id;
-            $orderPaymentMethod = new OrderPaymentMethod($paymentMethodArray);
-            $this->model->orderPaymentMethod()->save($orderPaymentMethod);
-        }
-
-
-        if ($this->model->orderPaymentMethod->paymentMethod->order_confirmed_order_status_id) {
-            $this->model->fill(array('order_status_id' => $this->model->orderPaymentMethod->paymentMethod->order_confirmed_order_status_id));
-            $this->model->save();
-        }
-
-        return $this->model;
+        return $this->modelOrderAddress;
     }
 
-
-
-
-    public function updateById(array $attributes, $id)
+    public function getOrderSendingMethodModel()
     {
-        $this->model = $this->find($id);
-        if (auth('hideyobackend')->check()) {
-            $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
-            $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
-        }
+        return $this->modelOrderSendingMethod;
+    }
 
-        return $this->updateEntity($attributes);
+    public function getOrderPaymentMethodModel()
+    {
+        return $this->modelOrderPaymentMethod;
     }
 
     public function selectAllByShopIdAndStatusId($orderStatusId, $startDate = false, $endDate = false, $shopId = false)
@@ -218,7 +75,6 @@ class OrderRepository extends BaseRepository
 
     public function orderProductsByClientId($clientId, $shopId)
     {
-
         return $this->modelOrderProduct->with(array('product'))->whereHas('Order', function ($query) use ($clientId, $shopId) {
             $query->where('client_id', '=', $clientId)->where('shop_id', '=', $shopId);
         });

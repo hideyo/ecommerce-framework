@@ -378,6 +378,13 @@ class ClientService extends BaseService
         return false;
     }
 
+
+    public function selectOneByShopIdAndId($shopId, $clientId)
+    {
+        return $this->repo->selectOneByShopIdAndId($shopId, $clientId);
+    }
+
+
     public function selectAddressesByClientId($clientId) {
         return $this->repoAddress->selectAllByClientId($clientId);
     }
