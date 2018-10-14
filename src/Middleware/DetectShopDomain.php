@@ -14,17 +14,13 @@ class DetectShopDomain
      */
     public function handle($request, Closure $next)
     {
-        if (config()->get('app.url') != $request->root()) {
-            $root = $request->root();
-            config()->set('app.url', $root);
-        }
-
-        $shop = ShopService::checkByUrl(config()->get('app.url'));
+        $shop = ShopService::checkByUrl($request->root());
 
         if(!$shop) {
             abort(404, "shop cannot be found");
         }
 
+        config()->set('app.url', $request->root());
         config()->set('app.shop_id', $shop->id);
         view()->share('shop', $shop);
         app()->instance('shop', $shop);
