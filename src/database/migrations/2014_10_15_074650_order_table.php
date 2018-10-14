@@ -130,7 +130,7 @@ class OrderTable extends Migration
             $table->integer('order_id')->unsigned()->nullable();
             $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->string('company')->nullable();
-            $table->enum('gender', array('male', 'female'));
+            $table->enum('gender', array('male', 'female'))->nullable();
             $table->string('initials')->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
