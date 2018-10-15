@@ -51,8 +51,8 @@ class OrderRepository extends BaseRepository
     public function selectAllByShopIdAndStatusId($orderStatusId, $startDate = false, $endDate = false, $shopId = false)
     {
         $query = $this->model
-        ->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)
-        ->where('order_status_id', '=', $orderStatusId);
+        ->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)
+        ->where('order_status_id', $orderStatusId);
 
         if ($startDate) {
             $dt = Carbon::createFromFormat('d/m/Y', $startDate);
@@ -76,7 +76,7 @@ class OrderRepository extends BaseRepository
     public function orderProductsByClientId($clientId, $shopId)
     {
         return $this->modelOrderProduct->with(array('product'))->whereHas('Order', function ($query) use ($clientId, $shopId) {
-            $query->where('client_id', '=', $clientId)->where('shop_id', '=', $shopId);
+            $query->where('client_id', '=', $clientId)->where('shop_id', $shopId);
         });
     }
 

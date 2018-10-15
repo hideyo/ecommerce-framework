@@ -50,8 +50,6 @@ class SendingMethodCountryPrice extends BaseModel
         );
     }
 
-
-
     public function taxRate()
     {
         return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate');

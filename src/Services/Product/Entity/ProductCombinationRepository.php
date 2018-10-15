@@ -70,8 +70,8 @@ class ProductCombinationRepository extends BaseRepository
          return $this->model->
          whereHas('product', function ($query) use ($productCategoryId, $shopId) {
             $query->where('product_category_id', '=', $productCategoryId);
-            $query->where('active', '=', 1);
-            $query->where('shop_id', '=', $shopId);
+            $query->where('active', 1);
+            $query->where('shop_id', $shopId);
          })->with(array('combinations' => function ($q) {
             $q->with(array('attribute' => function ($q) {
                 $q->with(array('attributeGroup'));

@@ -16,12 +16,12 @@ class HtmlBlockRepository extends BaseRepository
 
     function selectAllActiveByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->get();
+         return $this->model->where('shop_id', $shopId)->get();
     }
 
     function selectOneByShopIdAndSlug($shopId, $slug)
     {
-        $result = $this->model->where('shop_id', '=', $shopId)->where('slug', '=', $slug)->get();
+        $result = $this->model->where('shop_id', $shopId)->where('slug', $slug)->get();
         
         if ($result->isEmpty()) {
             return false;
@@ -31,7 +31,7 @@ class HtmlBlockRepository extends BaseRepository
 
     public function selectOneByShopIdAndPosition($position, $shopId)
     {
-        $result = $this->model->where('shop_id', '=', $shopId)->where('position', '=', $position)->get();
+        $result = $this->model->where('shop_id', $shopId)->where('position', $position)->get();
         
         if ($result->isEmpty()) {
             return false;

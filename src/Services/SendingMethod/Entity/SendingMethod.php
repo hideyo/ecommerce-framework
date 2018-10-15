@@ -24,7 +24,7 @@ class SendingMethod extends BaseModel
 
     public function relatedPaymentMethodsActive()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod', 'sending_payment_method_related')->where('active', '=', 1);
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod', 'sending_payment_method_related')->where('active', 1);
     }
 
     public function countryPrices()

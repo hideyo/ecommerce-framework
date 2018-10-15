@@ -20,6 +20,6 @@ class ShopRepository extends BaseRepository
 
     public function findUrl($shopUrl)
     {
-        return $result = $this->model->where('url', '=', $shopUrl)->get()->first();     
+        return $result = $this->model->where('url', $shopUrl)->get()->first();     
     }    
 }

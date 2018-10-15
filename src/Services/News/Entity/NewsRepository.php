@@ -294,7 +294,7 @@ class NewsRepository  extends BaseRepository
 
     public function selectAllGroups()
     {
-       return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+       return $this->model->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
     public function findGroup($groupId)
@@ -320,7 +320,7 @@ class NewsRepository  extends BaseRepository
     function selectOneBySlug($shopId, $slug)
     {
         $dt = Carbon::now('Europe/Amsterdam');
-        return $this->model->where('slug', '=', $slug)->where('published_at', '<=', $dt->toDateString('Y-m-d'))->get()->first();
+        return $this->model->where('slug', $slug)->where('published_at', '<=', $dt->toDateString('Y-m-d'))->get()->first();
     }
 
     function selectAllByBlogCategoryId($newsCategoryId)
@@ -330,7 +330,7 @@ class NewsRepository  extends BaseRepository
             $query->with('newsImages')->orderBy('rank', 'asc');
            }, 'newsImages' => function ($query) {
             $query->orderBy('rank', 'asc');
-           }))->where('active', '=', 1)->where('news_category_id', '=', $newsCategoryId)->get();
+           }))->where('active', 1)->where('news_category_id', '=', $newsCategoryId)->get();
     }
 
     function selectOneById($shopId, $slug)
@@ -338,18 +338,18 @@ class NewsRepository  extends BaseRepository
         $dt = Carbon::now('Europe/Amsterdam');
         $result = $this->model->with(array('newsCategory', 'relatedBlogs', 'newsImages' => function ($query) {
             $query->orderBy('rank', 'asc');
-        }))->where('published_at', '<=', $dt->toDateString('Y-m-d'))->where('active', '=', 1)->where('id', '=', $id)->get()->first();
+        }))->where('published_at', '<=', $dt->toDateString('Y-m-d'))->where('active', 1)->where('id', $id)->get()->first();
         return $result;
     }
 
     function selectAllActiveGroupsByShopId($shopId)
     {
-         return $this->modelGroup->where('shop_id', '=', $shopId)->where('active', '=', 1)->get();
+         return $this->modelGroup->where('shop_id', $shopId)->where('active', 1)->get();
     }
 
     function selectOneGroupByShopIdAndSlug($shopId, $slug)
     {
-        $result = $this->modelGroup->where('shop_id', '=', $shopId)->where('slug', '=', $slug)->get();
+        $result = $this->modelGroup->where('shop_id', $shopId)->where('slug', $slug)->get();
         
         if ($result->isEmpty()) {
             return false;
@@ -367,7 +367,7 @@ class NewsRepository  extends BaseRepository
             })
         )
         ->limit($limit)
-        ->where('shop_id', '=', $shopId)
+        ->where('shop_id', $shopId)
         ->where('published_at', '<=', $dt->toDateString('Y-m-d'))
         ->orderBy('created_at', $orderBy)->get();
     }
@@ -377,7 +377,7 @@ class NewsRepository  extends BaseRepository
         $dt = Carbon::now('Europe/Amsterdam');
 
            $result = $this->model
-           ->where('shop_id', '=', $shopId)
+           ->where('shop_id', $shopId)
            ->where('published_at', '<=', $dt->toDateString('Y-m-d'));
 
             return array(
@@ -393,7 +393,7 @@ class NewsRepository  extends BaseRepository
         $dt = Carbon::now('Europe/Amsterdam');
 
            $result = $this->model
-           ->where('shop_id', '=', $shopId)
+           ->where('shop_id', $shopId)
            ->where('published_at', '<=', $dt->toDateString('Y-m-d'))
            ->whereHas('newsGroup', function ($query) use ($newsGroupSlug) {
             $query->where('slug', '=', $newsGroupSlug);

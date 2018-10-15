@@ -21,10 +21,10 @@ class SendingMethodRepository extends BaseRepository
     {
         return $this->model->with(
             array('relatedPaymentMethods' => function ($query) {
-                $query->where('active', '=', 1);
+                $query->where('active', 1);
             })
-        )->where('shop_id', '=', $shopId)->where('active', '=', 1)
-        ->where('id', '=', $sendingMethodId)->get();
+        )->where('shop_id', $shopId)->where('active', 1)
+        ->where('id', $sendingMethodId)->get();
     } 
 
     public function getCountryModel() {

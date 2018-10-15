@@ -17,12 +17,12 @@ class FaqItemRepository extends BaseRepository
 
     public function selectAllGroups()
     {
-        return $this->modelFaqItemGroup->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+        return $this->modelFaqItemGroup->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
     function selectOneById($faqItemId)
     {
-        $result = $this->model->with(array('relatedPaymentMethods'))->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('active', '=', 1)->where('id', '=', $faqItemId)->get();
+        $result = $this->model->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->where('active', 1)->where('id', $faqItemId)->get();
         
         if ($result->isEmpty()) {
             return false;
@@ -32,6 +32,6 @@ class FaqItemRepository extends BaseRepository
 
     function selectAllActiveByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->get();
+         return $this->model->where('shop_id', $shopId)->get();
     }      
 }

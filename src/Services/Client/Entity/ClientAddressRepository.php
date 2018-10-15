@@ -22,6 +22,6 @@ class ClientAddressRepository extends BaseRepository
 
     public function selectOneByClientIdAndId($clientId, $id)
     {
-        return $this->model->where('client_id', '=', $clientId)->where('id', '=', $id)->get()->first();
+        return $this->model->where('client_id', $clientId)->where('id', $id)->get()->first();
     }
 }

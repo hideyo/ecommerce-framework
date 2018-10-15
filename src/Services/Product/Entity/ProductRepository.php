@@ -28,24 +28,24 @@ class ProductRepository extends BaseRepository
     {
         return $this->model->with(array('productCategory', 'relatedProducts', 'productImages' => function ($query) {
             $query->orderBy('rank', 'asc');
-        }))->where('shop_id', '=', $shopId)->where('active', '=', 1)->limit($limit)->orderBy('id', $orderBy)->get();
+        }))->where('shop_id', $shopId)->where('active', 1)->limit($limit)->orderBy('id', $orderBy)->get();
     }
 
     function selectAllByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->get();
+         return $this->model->where('shop_id', $shopId)->get();
     }
     
     public function selectAllExport()
     {
         return $this->model->with(array('productImages' => function ($query) {
             $query->orderBy('rank', 'asc');
-        }))->where('active', '=', 1)->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+        }))->where('active', 1)->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
     public function selectAllWithCombinations()
     {
-        $result = $this->model->with(array('attributes'))->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+        $result = $this->model->with(array('attributes'))->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
 
         $newResult = array();
         foreach ($result as $product) {
@@ -67,14 +67,14 @@ class ProductRepository extends BaseRepository
 
     public function selectAllByProductParentId($productParentId)
     {
-        return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('product_parent_id', '=', $productParentId)->get();
+        return $this->model->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->where('product_parent_id', '=', $productParentId)->get();
     }
 
     public function selectOneById($productId)
     {
         $result = $this->model->with(array('productCategory', 'relatedProducts', 'productImages' => function ($query) {
             $query->orderBy('rank', 'asc');
-        }))->where('active', '=', 1)->where('id', '=', $productId)->get()->first();
+        }))->where('active', 1)->where('id', '=', $productId)->get()->first();
         return $result;
     }
 
@@ -100,8 +100,8 @@ class ProductRepository extends BaseRepository
         }, 'productImages' => function ($query) {
             $query->orderBy('rank', 'asc');
         }))
-        ->where('shop_id', '=', $shopId)
-        ->where('active', '=', 1)
+        ->where('shop_id', $shopId)
+        ->where('active', 1)
                 ->whereNotNull('product.product_category_id')
         ->where(function ($query) use ($productCategoryId) {
             $query->where('product_category_id', '=', $productCategoryId);
@@ -167,7 +167,7 @@ class ProductRepository extends BaseRepository
                     )->with(array('relatedProductAttributes',
                     'relatedAttributes'));
                 })
-           )->where('shop_id', '=', $shopId)->where('active', '=', 1)->whereNotNull('product_category_id')->where('id', '=', $productId)->get()->first();
+           )->where('shop_id', $shopId)->where('active', 1)->whereNotNull('product_category_id')->where('id', '=', $productId)->get()->first();
     }
 
     public function ajaxProductImages($product, $combinationsIds, $productAttributeId = false) 

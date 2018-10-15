@@ -19,7 +19,7 @@ class BrandRepository extends BaseRepository
 
     public function selectAll()
     {
-        return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
+        return $this->model->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
     } 
     
     public function findImage($imageId)

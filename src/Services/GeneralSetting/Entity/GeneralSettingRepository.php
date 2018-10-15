@@ -16,7 +16,7 @@ class GeneralSettingRepository extends BaseRepository
     public function selectOneByShopIdAndName($shopId, $name)
     {     
         $result = $this->model
-        ->where('shop_id', '=', $shopId)->where('name', '=', $name)->get();
+        ->where('shop_id', $shopId)->where('name', $name)->get();
         
         if ($result->isEmpty()) {
             return false;

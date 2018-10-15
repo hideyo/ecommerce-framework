@@ -15,16 +15,16 @@ class OrderStatusEmailTemplateRepository extends BaseRepository
 
     public function selectAllByShopId($shopId)
     {
-        return $this->model->where('shop_id', '=', $shopId)->get();
+        return $this->model->where('shop_id', $shopId)->get();
     }
 
     public function selectBySendingMethodIdAndPaymentMethodId($paymentMethodId, $sendingMethodId)
     {
         $result = $this->model->with(array('sendingPaymentMethodRelated' => function ($query) use ($paymentMethodId, $sendingMethodId) {
             $query->with(array('sendingMethod' => function ($query) use ($sendingMethodId) {
-                $query->where('id', '=', $sendingMethodId);
+                $query->where('id', $sendingMethodId);
             }, 'paymentMethod' => function ($query) use ($paymentMethodId) {
-                $query->where('id', '=', $paymentMethodId);
+                $query->where('id', $paymentMethodId);
             }));
         } ))
         ->get();

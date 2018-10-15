@@ -70,7 +70,7 @@ class ProductAmountOptionRepository extends BaseRepository
 
     function selectOneById($AmountOptionId)
     {
-        $result = $this->model->with(array('relatedPaymentMethods'))->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('active', '=', 1)->where('id', '=', $AmountOptionId)->get();
+        $result = $this->model->with(array('relatedPaymentMethods'))->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->where('active', 1)->where('id', '=', $AmountOptionId)->get();
         
         if ($result->isEmpty()) {
             return false;
@@ -81,8 +81,8 @@ class ProductAmountOptionRepository extends BaseRepository
     function selectOneByShopIdAndId($shopId, $AmountOptionId)
     {
         $result = $this->model->with(array('relatedPaymentMethods' => function ($query) {
-            $query->where('active', '=', 1);
-        }))->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $AmountOptionId)->get();
+            $query->where('active', 1);
+        }))->where('shop_id', $shopId)->where('active', 1)->where('id', '=', $AmountOptionId)->get();
         
         if ($result->isEmpty()) {
             return false;

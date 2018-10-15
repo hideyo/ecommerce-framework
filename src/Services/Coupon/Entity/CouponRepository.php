@@ -19,16 +19,16 @@ class CouponRepository extends BaseRepository
 
     public function selectAllGroups()
     {
-        return $this->modelGroup->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+        return $this->modelGroup->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
     public function selectOneByShopIdAndCode($shopId, $code)
     {
         $dt = Carbon::now('Europe/Amsterdam');
         $result = $this->model
-        ->where('shop_id', '=', $shopId)
-        ->where('active', '=', 1)
-        ->where('code', '=', $code)
+        ->where('shop_id', $shopId)
+        ->where('active', 1)
+        ->where('code', $code)
         // ->where('published_at', '<=', $dt->toDateString('Y-m-d'))
         // ->where('unpublished_at', '>=', $dt->toDateString('Y-m-d'))
         ->with(array('products', 'productCategories', 'sendingMethods', 'paymentMethods'))

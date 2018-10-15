@@ -6,17 +6,17 @@ class BaseRepository
 {
 	public function selectAll()
 	{
-	    return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+	    return $this->model->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
 	}
 
     public function selectAllByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->get();
+         return $this->model->where('shop_id', $shopId)->get();
     }
 
     public function selectAllActiveByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->where('active', '=', 1)->get();
+         return $this->model->where('shop_id', $shopId)->where('active', 1)->get();
     }
 
     public function getModel() {

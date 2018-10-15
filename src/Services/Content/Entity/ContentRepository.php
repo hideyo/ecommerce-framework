@@ -21,7 +21,7 @@ class ContentRepository extends BaseRepository
 
     public function selectAllGroups()
     {
-        return $this->modelGroup->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+        return $this->modelGroup->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
  
     public function findGroup($newsGroupId)

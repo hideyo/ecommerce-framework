@@ -66,7 +66,7 @@ class ProductCategory extends Node
 
     public function productCategoryHighlightProductActive()
     {
-        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_category_highlight_product', 'product_category_id', 'product_id')->where('active', '=', 1);
+        return $this->belongsToMany('Hideyo\Ecommerce\Framework\Services\Product\Entity\Product', 'product_category_highlight_product', 'product_category_id', 'product_id')->where('active', 1);
     }
 
     public function products()

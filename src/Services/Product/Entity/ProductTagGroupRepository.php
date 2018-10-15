@@ -21,8 +21,8 @@ class ProductTagGroupRepository extends BaseRepository
         $result = $this->model->with(array('relatedProducts' => function ($query) {
             $query->with(array('productCategory', 'productImages' => function ($query) {
                 $query->orderBy('rank', 'asc');
-            }))->where('active', '=', 1);
-        }))->where('shop_id', '=', $shopId)->where('tag', '=', $tag)->get();
+            }))->where('active', 1);
+        }))->where('shop_id', $shopId)->where('tag', '=', $tag)->get();
         if ($result->count()) {
             return $result->first()->relatedProducts;
         } else {

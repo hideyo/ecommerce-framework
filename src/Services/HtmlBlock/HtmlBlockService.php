@@ -26,7 +26,6 @@ class HtmlBlockService extends BaseService
      */
     public function rules($htmlBlockId = false, $attributes = false)
     {
-
         $rules = array(
             'title'                 => 'required|between:4,65'
         );

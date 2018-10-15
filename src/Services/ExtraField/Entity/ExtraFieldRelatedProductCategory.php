@@ -23,6 +23,6 @@ class ExtraFieldRelatedProductCategory extends BaseModel
 
     public function relatedProductCategory()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Models\ProductCategory', 'product_category_id');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory', 'product_category_id');
     }
 }

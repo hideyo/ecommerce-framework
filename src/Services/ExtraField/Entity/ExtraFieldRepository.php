@@ -34,13 +34,13 @@ class ExtraFieldRepository extends BaseRepository
         
         ->where(function ($query) use ($productCategoryId) {
 
-            $query->where('all_products', '=', 1)
+            $query->where('all_products', 1)
             ->orWhereHas('categories', function ($query) use ($productCategoryId) {
 
-                $query->where('product_category_id', '=', $productCategoryId);
+                $query->where('product_category_id', $productCategoryId);
             });
         })
 
-        ->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
+        ->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->get();
     }    
 }

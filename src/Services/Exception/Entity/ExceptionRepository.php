@@ -63,11 +63,10 @@ class ExceptionRepository extends BaseRepository
         return $this->updateEntity($attributes);
     }
 
-    function selectOneByShopIdAndName($shopId, $name)
-    {
-        
+    public function selectOneByShopIdAndName($shopId, $name)
+    {  
         $result = $this->model
-        ->where('shop_id', '=', $shopId)->where('name', '=', $name)->get();
+        ->where('shop_id', $shopId)->where('name', $name)->get();
         
         if ($result->isEmpty()) {
             return false;

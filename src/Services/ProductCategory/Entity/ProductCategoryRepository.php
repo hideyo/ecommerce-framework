@@ -25,32 +25,32 @@ class ProductCategoryRepository extends BaseRepository
 
     public function selectAll()
     {
-        return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
+        return $this->model->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
     }
 
     public function selectAllProductPullDown()
     {
-        return $this->model->whereNull('redirect_product_category_id')->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
+        return $this->model->whereNull('redirect_product_category_id')->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
     }
 
     public function ajaxSearchByTitle($query)
     {
-        return $this->model->where('title', 'LIKE', '%'.$query.'%')->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
+        return $this->model->where('title', 'LIKE', '%'.$query.'%')->where('shop_id', auth('hideyobackend')->user()->selected_shop_id)->orderBy('title', 'asc')->get();
     }
 
     function selectAllByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->orderBy('title', 'asc')->get();
+         return $this->model->where('shop_id', $shopId)->orderBy('title', 'asc')->get();
     }
 
     function selectAllActiveByShopId($shopId)
     {
-         return $this->model->where('shop_id', '=', $shopId)->where('active', '=', 1)->orderBy('title', 'asc')->get();
+         return $this->model->where('shop_id', $shopId)->where('active', 1)->orderBy('title', 'asc')->get();
     }
 
     function selectAllByShopIdAndRoot($shopId)
     {
-         return $this->model->roots()->where('shop_id', '=', $shopId)->where('active', '=', 1)->orderBy('title', 'asc')->get();
+         return $this->model->roots()->where('shop_id', $shopId)->where('active', 1)->orderBy('title', 'asc')->get();
     }  
 
     function selectCategoriesByParentId($shopId, $parentId, $imageTag = false)
@@ -101,7 +101,7 @@ class ProductCategoryRepository extends BaseRepository
 
     public function entireTreeStructure($shopId)
     {
-        return $this->model->where('shop_id', '=', $shopId)->get()->toHierarchy();
+        return $this->model->where('shop_id', $shopId)->get()->toHierarchy();
     }
 
     public function findImage($imageId)
@@ -120,7 +120,7 @@ class ProductCategoryRepository extends BaseRepository
         with(
             array(
                 'products' => function ($query) {
-                    $query->where('active', '=', 1)->with(
+                    $query->where('active', 1)->with(
                         array('productImages' => function ($query) {
                             $query->orderBy('rank', 'asc');
                         })
