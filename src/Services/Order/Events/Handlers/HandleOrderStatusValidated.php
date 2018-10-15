@@ -20,22 +20,19 @@ class HandleOrderStatusValidated
      */
     public function handle(OrderChangeStatus $event)
     {
-
-
         if ($event->status->generate_invoice_from_order) {
 
             $result = InvoiceService::generateInvoiceFromOrder($event->order->id);
             if (isset($result->id)) {
                 Notification::success('Invoice is generated');
             }
-        }     
+        } 
+
         if ($event->status->order_is_validated AND !$event->order->validated) {        
             $this->order->updateById(array('validated' => 1), $event->order->id);  
             ProductService::reduceAmounts($event->order->products);
             ProductCombinationService::reduceAmounts($event->order->products);      
             Notification::success('Inventory updated: product amounts are reduced.');   
         }
-
-
     }
 }
