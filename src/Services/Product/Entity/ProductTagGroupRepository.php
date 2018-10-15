@@ -2,8 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\Product\Entity\ProductTagGroup;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class ProductTagGroupRepository extends BaseRepository 

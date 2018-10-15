@@ -72,8 +72,6 @@ class ContentService extends BaseService
         return $model;  
     } 
 
-
-  
     public function destroy($newsId)
     {
         $this->model = $this->find($newsId);
@@ -224,7 +222,6 @@ class ContentService extends BaseService
         return $this->modelImage;
     }
 
-
     public function destroyImage($newsImageId)
     {
         $this->modelImage = $this->findImage($newsImageId);
@@ -255,29 +252,23 @@ class ContentService extends BaseService
         return $this->modelGroup->delete();
     }
 
-
     public function getGroupModel()
     {
         return $this->repo->getGroupModel();
     }
-
 
     public function findGroup($id)
     {
         return $this->repo->findGroup($id);
     }
 
-
     public function selectAllGroups()
     {
         return $this->repo->selectAllGroups();
     }
 
-
     public function getImageModel()
     {
         return $this->repo->getImageModel();
     }
-
-	
 }

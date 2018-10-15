@@ -36,8 +36,6 @@ class SendingMethodService extends BaseService
         return $rules;
     }
 
-
-
     private function rulesCountry($id = false)
     {
         $rules = array(
@@ -87,8 +85,6 @@ class SendingMethodService extends BaseService
    
         return $this->getCountryModel();
     }
-
-
 
     public function updateCountryById(array $attributes, $id)
     {
@@ -153,5 +149,4 @@ class SendingMethodService extends BaseService
         $model = $this->findCountry($id);
         return $model->delete();
     }
-
 }

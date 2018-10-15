@@ -1,22 +1,18 @@
 <?php
 
 namespace Hideyo\Ecommerce\Framework\Services\HtmlBlock\Entity;
+
 use Hideyo\Ecommerce\Framework\Services\HtmlBlock\Entity\HtmlBlock;
-use File;
-use Image;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class HtmlBlockRepository extends BaseRepository 
 {
-
     protected $model;
 
     public function __construct(HtmlBlock $model)
     {
         $this->model = $model;
     }
-
 
     function selectAllActiveByShopId($shopId)
     {

@@ -2,9 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
  
 use Hideyo\Ecommerce\Framework\Models\ProductWaitingList;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Auth;
 use Validator;
  
 class ProductWaitingListRepository  extends BaseRepository 

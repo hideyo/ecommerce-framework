@@ -2,7 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Redirect\Entity;
 
 use Hideyo\Ecommerce\Framework\Services\Redirect\Entity\Redirect;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class RedirectRepository  extends BaseRepository 
@@ -16,8 +15,7 @@ class RedirectRepository  extends BaseRepository
 
     public function destroyByUrl($url)
     {
-        $result = $this->model->where('url', '=', $url)->delete();
-        return $result;
+        return $this->model->where('url', '=', $url)->delete();
     }
 
     public function selectNewRedirects()
@@ -47,13 +45,11 @@ class RedirectRepository  extends BaseRepository
 
     public function findByUrl($url)
     {
-        $result = $this->model->where('url', '=', $url)->get()->first();
-        return $result;
+        return $this->model->where('url', '=', $url)->get()->first();
     }
     
     public function findByCompanyIdAndUrl($companyId, $shopUrl)
     {
-        $result = $this->model->where('company_id', '=', $companyId)->where('url', '=', $shopUrl)->get()->first();
-        return $result;
+        return $this->model->where('company_id', '=', $companyId)->where('url', '=', $shopUrl)->get()->first();
     }    
 }

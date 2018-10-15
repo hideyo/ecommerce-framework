@@ -14,7 +14,7 @@ class DetectShopDomain
      */
     public function handle($request, Closure $next)
     {
-        $shop = ShopService::checkByUrl($request->root());
+        $shop = ShopService::findUrl($request->root());
 
         if(!$shop) {
             abort(404, "shop cannot be found");

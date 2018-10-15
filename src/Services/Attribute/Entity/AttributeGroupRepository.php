@@ -2,7 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Attribute\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\AttributeGroup;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class AttributeGroupRepository extends BaseRepository

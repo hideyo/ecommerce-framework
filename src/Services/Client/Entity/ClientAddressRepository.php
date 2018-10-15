@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Client\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddress;
-use File;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class ClientAddressRepository extends BaseRepository

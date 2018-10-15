@@ -6,10 +6,6 @@ use Hideyo\Ecommerce\Framework\Repositories\ProductCategoryImageRepository;
 use Hideyo\Ecommerce\Framework\Services\Redirect\Entity\RedirectRepository;
 use Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategory;
 use Hideyo\Ecommerce\Framework\Services\ProductCategory\Entity\ProductCategoryImage;
-use Image;
-use File;
-use Auth;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class ProductCategoryRepository extends BaseRepository 

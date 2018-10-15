@@ -2,7 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\PaymentMethod\Entity\PaymentMethod;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class PaymentMethodRepository extends BaseRepository 

@@ -4,20 +4,13 @@ namespace Hideyo\Ecommerce\Framework\Services\Client\Entity;
 
 use Hideyo\Ecommerce\Framework\Services\Client\Entity\Client;
 use Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddressRepository;
-use Mail;
-use Carbon\Carbon;
-use Validator;
-use Hash;
-use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
 
 class ClientRepository extends BaseRepository 
 {
     protected $model;
 
-    public function __construct(
-        Client $model,  
-        ClientAddressRepository $clientAddress)
+    public function __construct(Client $model, ClientAddressRepository $clientAddress)
     {
         $this->model = $model;
         $this->clientAddress = $clientAddress;
@@ -37,8 +30,7 @@ class ClientRepository extends BaseRepository
 
     public function findByEmail($email, $shopId)
     {
-        $client = $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->get()->first();
-        return $client;
+        return $this->model->where('shop_id', '=', $shopId)->where('email', '=', $email)->get()->first();
     }
 
     public function checkEmailByShopIdAndNoAccountCreated($email, $shopId) {
@@ -63,14 +55,12 @@ class ClientRepository extends BaseRepository
 
     public function selectOneByShopIdAndId($shopId, $clientId)
     {
-        $result = $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $clientId)->first();
-        return $result;
+        return $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->where('shop_id', '=', $shopId)->where('active', '=', 1)->where('id', '=', $clientId)->first();
     }
 
     public function selectOneById($clientId)
     {
-        $result = $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('active', '=', 1)->where('id', '=', $clientId)->first();
-        return $result;
+        return $this->model->with(array('clientAddress', 'clientDeliveryAddress', 'clientBillAddress'))->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->where('active', '=', 1)->where('id', '=', $clientId)->first();
     }
 
     public function getClientByConfirmationCode($shopId, $email, $confirmationCode)
@@ -105,6 +95,6 @@ class ClientRepository extends BaseRepository
 
     public function editAddress($shopId, $clientId, $addressId, $attributes)
     {
-        $address = $this->clientAddress->updateByIdAndShopId($shopId, $attributes, $clientId, $addressId);
+        return $this->clientAddress->updateByIdAndShopId($shopId, $attributes, $clientId, $addressId);
     }
 }

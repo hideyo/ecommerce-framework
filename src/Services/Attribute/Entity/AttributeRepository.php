@@ -2,7 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Attribute\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\Attribute;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class AttributeRepository extends BaseRepository 

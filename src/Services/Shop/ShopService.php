@@ -131,8 +131,14 @@ class ShopService extends BaseService
         return $model->delete();
     }
 
-    public function checkByUrl($shopUrl)
+    public function findUrl($shopUrl)
     {
-        return $this->repo->checkByUrl($shopUrl);
+        $result = $this->repo->findUrl($shopUrl);
+
+        if (isset($result->id)) {
+            return $result;
+        }
+        
+        return false;      
     }
 }

@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\TaxRate\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\TaxRate\Entity\TaxRate;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class TaxRateRepository extends BaseRepository 

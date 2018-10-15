@@ -3,7 +3,6 @@ namespace Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethod;
 use Hideyo\Ecommerce\Framework\Services\SendingMethod\Entity\SendingMethodCountryPrice;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class SendingMethodRepository extends BaseRepository 

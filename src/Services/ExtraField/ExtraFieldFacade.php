@@ -9,7 +9,6 @@ use \Illuminate\Support\Facades\Facade;
  */
 class ExtraFieldFacade extends Facade
 {
-
     /**
      * Returning service name
      *

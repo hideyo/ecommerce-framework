@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\ExtraField;
 
 use Validator;
-use File;
 use Hideyo\Ecommerce\Framework\Services\ExtraField\Entity\ExtraFieldRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
  
@@ -14,23 +13,18 @@ class ExtraFieldService extends BaseService
 		$this->repo = $extraField;
 	}
 
-
-
     private function rulesValue($defaultValueId = false)
     {
         if ($defaultValueId) {
             return [
                 'value' => 'required|unique_with:'.$this->getValueModel()->getModel()->getTable().',extra_field_id,'.$defaultValueId,
             ];
-        } else {
-            return [
-                'value' => 'required|unique_with:'.$this->getValueModel()->getModel()->getTable().',extra_field_id'
-            ];
         }
+
+        return [
+            'value' => 'required|unique_with:'.$this->getValueModel()->getModel()->getTable().',extra_field_id'
+        ]; 
     }
-
-
-
 
     /**
      * The validation rules for the model.
@@ -96,11 +90,7 @@ class ExtraFieldService extends BaseService
         }
 
         return $model;
-
-
-
     }
-
 
     public function createValue(array $attributes, $extraFieldId)
     {
@@ -136,15 +126,12 @@ class ExtraFieldService extends BaseService
         }
 
         return $modelValue;
-
-
     }
 
     public function selectAllByAllProductsAndProductCategoryId($productCategoryId)
     {
         return $this->repo->selectAllByAllProductsAndProductCategoryId($productCategoryId);
     }
-
 
     public function destroyValue($defaultValueId)
     {
@@ -154,19 +141,13 @@ class ExtraFieldService extends BaseService
         return $this->modelValue->delete();
     }
 
-
     public function findValue($id)
     {
         return $this->repo->findValue($id);
     }
 
-
     public function getValueModel()
     {
         return $this->repo->getValueModel();
     }
-
-
-
-
 }

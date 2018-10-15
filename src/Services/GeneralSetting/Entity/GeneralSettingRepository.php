@@ -2,7 +2,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\GeneralSetting\Entity;
  
 use Hideyo\Ecommerce\Framework\Services\GeneralSetting\Entity\GeneralSetting;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class GeneralSettingRepository extends BaseRepository
