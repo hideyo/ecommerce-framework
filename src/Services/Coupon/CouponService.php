@@ -14,7 +14,6 @@ class CouponService extends BaseService
 		$this->repo = $coupon;
 	}
 
-
     /**
      * The validation rules for the model.
      *
@@ -40,7 +39,6 @@ class CouponService extends BaseService
 
     private function rulesGroup($groupId = false, $attributes = false)
     {
-
         $rules = array(
             'title'                 => 'required|between:4,65|unique_with:'.$this->repo->getGroupModel()->getTable().', shop_id'
         );
@@ -48,12 +46,10 @@ class CouponService extends BaseService
         if ($groupId) {
             $rules['title'] =   'required|between:4,65|unique_with:'.$this->repo->getGroupModel()->getTable().', shop_id, '.$groupId.' = id';
         }
-        
 
         return $rules;
     }
 
-  
     public function create(array $attributes)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
@@ -87,7 +83,6 @@ class CouponService extends BaseService
         return $this->repo->getModel();
     }
 
-  
     public function createGroup(array $attributes)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
@@ -104,7 +99,6 @@ class CouponService extends BaseService
    
         return $this->repo->getGroupModel();
     }
-
 
     public function updateById(array $attributes, $couponId)
     {
@@ -148,9 +142,7 @@ class CouponService extends BaseService
         }
 
         return $model;
-
     }
-
 
     public function updateGroupById(array $attributes, $groupId)
     {
@@ -169,7 +161,6 @@ class CouponService extends BaseService
         }
 
         return $modelGroup;
-
     }
 
     public function destroyGroup($groupId)
@@ -190,10 +181,8 @@ class CouponService extends BaseService
         return $this->repo->findGroup($groupId);
     } 
 
-
     public function selectAllGroups()
     {
         return $this->repo->selectAllGroups();
     }
-
 }

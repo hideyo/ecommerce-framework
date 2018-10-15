@@ -2,7 +2,6 @@
 
 namespace Hideyo\Ecommerce\Framework\Providers;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 /**

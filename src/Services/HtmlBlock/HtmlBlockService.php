@@ -109,10 +109,8 @@ class HtmlBlockService extends BaseService
         return $this->model;
     }
 
-
     public function createCopy(array $attributes, $htmlBlockId)
     {
-
         $product =  $this->find($htmlBlockId);
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
         $validator = Validator::make($attributes, $this->rules());
@@ -133,7 +131,6 @@ class HtmlBlockService extends BaseService
 
     public function changeActive($htmlBlockId)
     {
-
         $this->model = $this->find($htmlBlockId);
 
         if ($this->model) {
@@ -246,7 +243,6 @@ class HtmlBlockService extends BaseService
 
         return $this->model->delete();
     }
-
 
     public function selectByLimitAndOrderBy($shopId, $limit, $orderBy)
     {

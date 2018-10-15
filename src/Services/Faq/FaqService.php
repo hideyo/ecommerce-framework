@@ -65,12 +65,8 @@ class FaqService extends BaseService
         return $this->updateOrAddModel($model, $attributes); 
     }  
     
-
-
     public function selectAllGroups()
     {
     	return $this->repo->selectAllGroups();
-    
     }
-
 }

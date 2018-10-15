@@ -35,6 +35,4 @@ class BaseModel extends Model
         // Laravel 5.0/5.1 check
         return $list instanceof Collection ? $list->all() : $list;
     }
-    
-
 }

@@ -5,10 +5,6 @@ namespace Hideyo\Ecommerce\Framework\Services\Content\Entity;
 use Hideyo\Ecommerce\Framework\Services\Content\Entity\Content;
 use Hideyo\Ecommerce\Framework\Services\Content\Entity\ContentImage;
 use Hideyo\Ecommerce\Framework\Services\Content\Entity\ContentGroup;
-use Image;
-use File;
-use Validator;
-use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class ContentRepository extends BaseRepository 

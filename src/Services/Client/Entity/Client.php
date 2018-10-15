@@ -77,7 +77,6 @@ class Client extends Authenticatable
         return $this->hasMany('Hideyo\Ecommerce\Framework\Services\Order\Entity\Order');
     }
 
-
     public function clientDeliveryAddress()
     {
         return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddress', 'id', 'delivery_client_address_id');
@@ -87,6 +86,4 @@ class Client extends Authenticatable
     {
         return $this->hasOne('Hideyo\Ecommerce\Framework\Services\Client\Entity\ClientAddress', 'id', 'bill_client_address_id');
     }
-
-
 }

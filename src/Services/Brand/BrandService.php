@@ -16,7 +16,6 @@ class BrandService extends BaseService
 		$this->repo = $brand;
         $this->storageImagePath = storage_path() .config('hideyo.storage_path'). "/brand/";
         $this->publicImagePath = public_path() .config('hideyo.public_path'). "/brand/";
-
 	} 
 
     /**

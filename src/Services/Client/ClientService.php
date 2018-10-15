@@ -44,7 +44,6 @@ class ClientService extends BaseService
             );
         }
 
-
         if ($clientId) {
             $rules['email'] =   'required|email|unique_with:'.$this->repo->getModel()->getTable().', shop_id, '.$clientId.' = id';
         }
@@ -110,8 +109,8 @@ class ClientService extends BaseService
         return Validator::make($attributes, $rules);
     }
 
-    public function login($request) {
-
+    public function login($request) 
+    {
         $loginData = array(
             'email' => $request->get('email'),
             'password' => $request->get('password'),
@@ -123,8 +122,6 @@ class ClientService extends BaseService
         if (auth('web')->attempt($loginData)) {
             return true;
         }
-
-
     }
 
     public function confirmClient($confirmationCode, $email, $shopId)
@@ -159,8 +156,8 @@ class ClientService extends BaseService
         return false;
     }
 
-    public function validateRegister($attributes) {
-
+    public function validateRegister($attributes) 
+    {
         // create the validation rules ------------------------
         $rules = array(
             'email'         => 'required|email',     // required and must be unique in the ducks table
@@ -231,7 +228,6 @@ class ClientService extends BaseService
 
     public function editAddress($clientId, $addressId, $attributes)
     {
-
         $clientAddress = $this->repoAddress->find($addressId);
 
         if($clientAddress) {
@@ -314,11 +310,9 @@ class ClientService extends BaseService
         return false;
     }
 
-
     public function selectAllExport() {
         return $this->repo->selectAllExport();
     }
-
 
     public function activate($clientId)
     {
@@ -378,12 +372,10 @@ class ClientService extends BaseService
         return false;
     }
 
-
     public function selectOneByShopIdAndId($shopId, $clientId)
     {
         return $this->repo->selectOneByShopIdAndId($shopId, $clientId);
     }
-
 
     public function selectAddressesByClientId($clientId) {
         return $this->repoAddress->selectAllByClientId($clientId);
@@ -399,12 +391,8 @@ class ClientService extends BaseService
         return $this->repoAddress->find($clientAddressId);
     }
 
-
     public function validateRegisterNoAccount(array $attributes, $shopId)
     {
         return $this->repo->validateRegisterNoAccount($attributes, $shopId);
-
     }
-
-
 }

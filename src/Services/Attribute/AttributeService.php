@@ -3,7 +3,6 @@
 namespace Hideyo\Ecommerce\Framework\Services\Attribute;
 
 use Validator;
-use File;
 use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\AttributeRepository;
 use Hideyo\Ecommerce\Framework\Services\Attribute\Entity\AttributeGroupRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
@@ -58,7 +57,6 @@ class AttributeService extends BaseService
         $this->repo->getModel()->save();
         return $this->repo->getModel();
     }
-
 
     public function createGroup(array $attributes)
     {

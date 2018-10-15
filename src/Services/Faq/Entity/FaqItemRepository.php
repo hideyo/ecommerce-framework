@@ -7,7 +7,6 @@ use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class FaqItemRepository extends BaseRepository 
 {
-
     protected $model;
 
     public function __construct(FaqItem $model, FaqItemGroup $modelFaqItemGroup)
@@ -34,6 +33,5 @@ class FaqItemRepository extends BaseRepository
     function selectAllActiveByShopId($shopId)
     {
          return $this->model->where('shop_id', '=', $shopId)->get();
-    }
-        
+    }      
 }

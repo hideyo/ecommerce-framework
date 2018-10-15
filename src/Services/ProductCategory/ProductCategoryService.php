@@ -60,7 +60,6 @@ class ProductCategoryService extends BaseService
         return $model;
     }
 
-
     public function updateById(array $attributes, $id)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
@@ -308,7 +307,6 @@ class ProductCategoryService extends BaseService
     {
         return $this->repo->selectAllProductPullDown();
     }
-
 
     public function findImage($imageId)
     {

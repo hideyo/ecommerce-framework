@@ -5,12 +5,10 @@ namespace Hideyo\Ecommerce\Framework\Services\Coupon\Entity;
 use Hideyo\Ecommerce\Framework\Services\Coupon\Entity\Coupon;
 use Hideyo\Ecommerce\Framework\Services\Coupon\Entity\CouponGroup;
 use Carbon\Carbon;
-use Validator;
 use Hideyo\Ecommerce\Framework\Services\BaseRepository;
  
 class CouponRepository extends BaseRepository  
 {
-
     protected $model;
 
     public function __construct(Coupon $model, CouponGroup $couponGroup)
@@ -24,7 +22,7 @@ class CouponRepository extends BaseRepository
         return $this->modelGroup->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
     }
 
-    function selectOneByShopIdAndCode($shopId, $code)
+    public function selectOneByShopIdAndCode($shopId, $code)
     {
         $dt = Carbon::now('Europe/Amsterdam');
         $result = $this->model

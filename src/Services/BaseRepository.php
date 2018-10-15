@@ -9,7 +9,7 @@ class BaseRepository
 	    return $this->model->where('shop_id', '=', auth('hideyobackend')->user()->selected_shop_id)->get();
 	}
 
-    function selectAllByShopId($shopId)
+    public function selectAllByShopId($shopId)
     {
          return $this->model->where('shop_id', '=', $shopId)->get();
     }

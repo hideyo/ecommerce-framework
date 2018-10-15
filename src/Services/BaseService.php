@@ -27,7 +27,6 @@ class BaseService
             $model->save();
         }
         return $model;  
-
     }
 
     public function destroy($id)
@@ -36,16 +35,14 @@ class BaseService
         return $model->delete();
     }
 
-
-    public function notificationRedirect($routeName, $result, $successMsg) {
-
+    public function notificationRedirect($routeName, $result, $successMsg) 
+    {
         if (isset($result->id)) {
             Notification::success($successMsg);
             if(is_array($routeName)) {
                 return redirect()->route($routeName[0], $routeName[1]);
             }
-            return redirect()->route($routeName);
-            
+            return redirect()->route($routeName);   
         }
         
         foreach ($result->errors()->all() as $error) {
@@ -53,8 +50,5 @@ class BaseService
         }
 
         return redirect()->back()->withInput();
-
     }
-
-
 }
