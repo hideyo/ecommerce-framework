@@ -51,6 +51,22 @@ class ClientService extends BaseService
         return $rules;
     }
 
+    public function validateAddress(array $attributes) 
+    {
+        $rules = array(
+                'firstname'     => 'required',
+                'lastname'      => 'required',
+                'zipcode'       => 'required|max:8',
+                'housenumber'   => 'required|numeric',
+                'street'        => 'required',
+                'city'          => 'required',
+                'country'       => 'required'
+            );
+
+        return Validator::make($attributes, $rules);
+    }
+
+
     public function create(array $attributes)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
