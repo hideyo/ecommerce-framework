@@ -5,7 +5,19 @@
     "homepage": "http://hideyo.io",
     "license": "GPL-3.0+",
     "require": {
-        "php": ">=5.6.4"
+        "php": ">=7.0.0",
+        "laravel/framework": "5.7.*",
+        "edvinaskrucas/notification": "5.*",
+        "cviebrock/eloquent-sluggable": "^4.1",
+        "laravelcollective/html": "^5.2",
+        "baum/baum": "~1.1",
+        "intervention/image": "~2.3",
+        "intervention/imagecache": "^2.3",
+        "felixkiss/uniquewith-validator": "2.*",
+        "nesbot/carbon": "^1.33",
+        "maatwebsite/excel": "~3.0.0",
+        "elasticquent/elasticquent": "1.0.6"                
+
     },
     "autoload": {
         "psr-4": {
