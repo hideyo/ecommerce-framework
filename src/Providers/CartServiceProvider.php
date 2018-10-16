@@ -47,7 +47,7 @@ class CartServiceProvider extends ServiceProvider
                 $instanceName,
                 $session_key,
                 config('cart')
-                );
+            );
         });
     }
 

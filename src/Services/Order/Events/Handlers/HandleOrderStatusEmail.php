@@ -6,25 +6,12 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 use Mail;
 use File;
-
-use Hideyo\Ecommerce\Framework\Services\Cart\Entity\CartRepository;
 use Hideyo\Ecommerce\Framework\Services\Invoice\InvoiceFacade as InvoiceService;
 use Hideyo\Ecommerce\Framework\Services\GeneralSetting\GeneralSettingFacade as GeneralSettingService;
 use Notification;
 
 class HandleOrderStatusEmail
 {
-    /**
-     * Create the event handler.
-     *
-     * @return void
-     */
-    public function __construct(CartRepository $cart)
-    {
-
-        $this->cart = $cart;
-    }
-
     /**
      * Handle the event.
      *
@@ -62,9 +49,9 @@ class HandleOrderStatusEmail
                     }    
             
 
-                    Mail::send('frontend.email.order-status', ['content' => $this->cart->replaceTags($event->status->orderStatusEmailTemplate->translate($language)->content, $event->order)], function ($message) use ($event, $destinationPath, $orderStatusEmailFrom, $orderStatusEmailName, $orderStatusEmailBcc, $language) {
+                    Mail::send('frontend.email.order-status', ['content' => Cart::replaceTags($event->status->orderStatusEmailTemplate->translate($language)->content, $event->order)], function ($message) use ($event, $destinationPath, $orderStatusEmailFrom, $orderStatusEmailName, $orderStatusEmailBcc, $language) {
                         $message->from($orderStatusEmailFrom, $orderStatusEmailName);
-                        $message->to($event->order->client->email, $event->order->orderBillAddress->firstname)->subject($this->cart->replaceTags($event->status->orderStatusEmailTemplate->translate($language)->subject, $event->order));
+                        $message->to($event->order->client->email, $event->order->orderBillAddress->firstname)->subject(Cart::replaceTags($event->status->orderStatusEmailTemplate->translate($language)->subject, $event->order));
 
                         if ($orderStatusEmailBcc) {
                             $message->bcc($orderStatusEmailBcc, $orderStatusEmailName);
@@ -134,9 +121,9 @@ class HandleOrderStatusEmail
                         $language = 'nl';
                     }    
 
-                    Mail::send('frontend.email.order-status', ['content' => $this->cart->replaceTags($event->status->orderStatusEmailTemplate->translate($language)->content, $event->order)], function ($message) use ($event, $destinationPath, $orderStatusEmailFrom, $orderStatusEmailName, $orderStatusEmailBcc, $language) {
+                    Mail::send('frontend.email.order-status', ['content' => Cart::replaceTags($event->status->orderStatusEmailTemplate->translate($language)->content, $event->order)], function ($message) use ($event, $destinationPath, $orderStatusEmailFrom, $orderStatusEmailName, $orderStatusEmailBcc, $language) {
                         $message->from($orderStatusEmailFrom, $orderStatusEmailName);
-                        $message->to($event->order->client->email, $event->order->orderBillAddress->firstname)->subject($this->cart->replaceTags($event->status->orderStatusEmailTemplate->translate($language)->subject, $event->order));
+                        $message->to($event->order->client->email, $event->order->orderBillAddress->firstname)->subject(Cart::replaceTags($event->status->orderStatusEmailTemplate->translate($language)->subject, $event->order));
 
                         if ($orderStatusEmailBcc) {
                             $message->bcc($orderStatusEmailBcc, $orderStatusEmailName);
@@ -158,7 +145,7 @@ class HandleOrderStatusEmail
                         
                             $pdfText = "";
                             if ($text) {
-                                $pdfText = $this->cart->replaceTags($text->pdf_text, $event->order);
+                                $pdfText = Cart::replaceTags($text->pdf_text, $event->order);
                             }
 
                             $pdf = \PDF::loadView('admin.order.pdf', array('order' => $event->order, 'pdfText' => $pdfText));
