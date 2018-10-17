@@ -4,6 +4,7 @@ namespace Hideyo\Ecommerce\Framework\Services\Shop;
 
 use Validator;
 use File;
+use Image;
 use Hideyo\Ecommerce\Framework\Services\Shop\Entity\ShopRepository;
 use Hideyo\Ecommerce\Framework\Services\BaseService;
  
