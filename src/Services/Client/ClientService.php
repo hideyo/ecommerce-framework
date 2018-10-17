@@ -172,7 +172,7 @@ class ClientService extends BaseService
         return false;
     }
 
-    public function validateRegister($attributes) 
+    public function validateRegister($attributes, $noAccount = false) 
     {
         // create the validation rules ------------------------
         $rules = array(
@@ -187,6 +187,12 @@ class ClientService extends BaseService
             'city'          => 'required',
             'country'       => 'required'
         );
+
+        if ($noAccount) {
+            unset($rules['email']);
+            unset($rules['password']);
+        } 
+
 
         return $validator = Validator::make($attributes, $rules);
     }

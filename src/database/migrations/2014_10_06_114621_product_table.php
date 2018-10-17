@@ -25,7 +25,6 @@ class ProductTable extends Migration
             $table->string('title');
             $table->string('short_description')->nullable();
             $table->text('description')->nullable();
-            $table->text('ingredients')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('meta_keywords')->nullable();
