@@ -5,7 +5,7 @@
 namespace Hideyo\Ecommerce\Framework\Services\Cart;
 
 use Hideyo\Ecommerce\Framework\Services\Cart\Helpers\Helpers;
-use Hideyo\Ecommerce\Framework\Services\Sendingmethod\SendingMethodFacade as SendingMethodService;
+use Hideyo\Ecommerce\Framework\Services\SendingMethod\SendingMethodFacade as SendingMethodService;
 use Hideyo\Ecommerce\Framework\Services\PaymentMethod\PaymentMethodFacade as PaymentMethodService;
 use Hideyo\Ecommerce\Framework\Services\Shop\ShopFacade as ShopService;
 use Hideyo\Ecommerce\Framework\Services\Product\ProductFacade as ProductService;
