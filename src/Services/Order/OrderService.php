@@ -48,13 +48,14 @@ class OrderService extends BaseService
 
     public function updateById(array $attributes, $id)
     {
-        $this->model = $this->find($id);
+        $model = $this->find($id);
         if (auth('hideyobackend')->check()) {
             $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
             $attributes['modified_by_user_id'] = auth('hideyobackend')->user()->id;
         }
 
-        return $this->updateEntity($attributes);
+        $model->fill($attributes);
+        return $model->save();   
     }
 
     public function addProducts($orderModel, $products) 
