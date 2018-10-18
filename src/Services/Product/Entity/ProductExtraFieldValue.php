@@ -22,7 +22,7 @@ class ProductExtraFieldValue extends BaseModel
     }
     public function extraFieldDefaultValue()
     {
-        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\Extrafield\Entity\ExtraFieldDefaultValue');
+        return $this->belongsTo('Hideyo\Ecommerce\Framework\Services\ExtraField\Entity\ExtraFieldDefaultValue');
     }
 
     public function product()
