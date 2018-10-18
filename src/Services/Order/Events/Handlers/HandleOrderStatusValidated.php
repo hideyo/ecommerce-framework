@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldBeQueued;
 
 use Hideyo\Ecommerce\Framework\Services\Invoice\InvoiceFacade as InvoiceService;
 use Hideyo\Ecommerce\Framework\Services\Product\ProductFacade as ProductService;
+use Hideyo\Ecommerce\Framework\Services\Order\OrderFacade as OrderService;
 use Hideyo\Ecommerce\Framework\Services\Product\ProductCombinationFacade as ProductCombinationService;
 use Notification;
 
@@ -29,7 +30,7 @@ class HandleOrderStatusValidated
         } 
 
         if ($event->status->order_is_validated AND !$event->order->validated) {        
-            $this->order->updateById(array('validated' => 1), $event->order->id);  
+            OrderService::updateById(array('validated' => 1), $event->order->id);  
             ProductService::reduceAmounts($event->order->products);
             ProductCombinationService::reduceAmounts($event->order->products);      
             Notification::success('Inventory updated: product amounts are reduced.');   
