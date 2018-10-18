@@ -144,6 +144,42 @@ class ProductCombinationService extends BaseService
         return $model;
     }
 
+
+    public function increaseAmounts($products)
+    {
+        if ($products->count()) {
+            foreach ($products as $product) {
+                if ($product->product_attribute_id) {
+                    $model = $this->find($product->product_attribute_id);
+                    $attributes = array(
+                        'amount' => $model->amount + $product->amount
+                    );
+
+                    $model->fill($attributes);
+                    $model->save();
+                }
+            }
+        }
+    }
+
+    public function reduceAmounts($products)
+    {
+        if ($products->count()) {
+            foreach ($products as $product) {
+                if ($product->product_attribute_id) {
+                    $model = $this->find($product->product_attribute_id);
+                    $attributes = array(
+                        'amount' => $model->amount - $product->amount
+                    );
+
+                    $model->fill($attributes);
+                    $model->save();
+                }
+            }
+        }
+    }
+
+
 	public function selectAllByProductCategoryId($productCategoryId, $shopId) {
 		return $this->repo->selectAllByProductCategoryId($productCategoryId, $shopId);
 	}
