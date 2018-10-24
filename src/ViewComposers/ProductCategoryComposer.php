@@ -6,7 +6,7 @@ use Hideyo\Ecommerce\Framework\Services\ProductCategory\ProductCategoryFacade as
 class ProductCategoryComposer
 {
     /**
-     * Bind data to the view.
+     * Bind productcategory data to the view.
      *
      * @param  View  $view
      * @return void

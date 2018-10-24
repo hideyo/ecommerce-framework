@@ -6,7 +6,7 @@ use Hideyo\Ecommerce\Framework\Services\News\NewsFacade as NewsService;
 class FooterComposer
 {
     /**
-     * Bind data to the view.
+     * Bind news data to the view.
      *
      * @param  View  $view
      * @return void

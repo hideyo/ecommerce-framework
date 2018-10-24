@@ -14,19 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Using class based composers...
-
         View::composer('*', 'Hideyo\Ecommerce\Framework\ViewComposers\FooterComposer');
         View::composer('*', 'Hideyo\Ecommerce\Framework\ViewComposers\ProductCategoryComposer');
-    }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

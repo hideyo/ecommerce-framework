@@ -5,12 +5,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
+    /**
+     * construct
+     * @param array $attributes 
+     */
     public function __construct(array $attributes = array())
     {
         $this->table = $this->table;
         parent::__construct($attributes);
     }
 
+    /**
+     * check existing slug
+     * @param  string $slug 
+     * @return object  
+     */
     protected function getExistingSlugs($slug)
     {
         $config = $this->getSluggableConfig();

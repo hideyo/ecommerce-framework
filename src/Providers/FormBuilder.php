@@ -7,24 +7,15 @@ use Form;
 
 class FormBuilder extends \Collective\Html\FormBuilder
 {
-    public function tree($items, $output = false)
-    {
-        if ($output) {
-            $output = '';
-        }
-        foreach ($items as $item) {
-            if (!empty($item['children'])) {
-                $output .= "<li>".$item['title']."<ul>\n";
-                $output .= $this->tree($item['children'], $output);
-                $output .= '</ul></li>';
-            } else {
-                $output .= '<li>'.$item['title'].'</li>';
-            }
-        }
-
-        return $output;
-    }
-
+    /**
+     * delete ajax button
+     * @param  string  $url            
+     * @param  string  $buttonLabel    
+     * @param  array   $formParameters 
+     * @param  array   $buttonOptions  
+     * @param  boolean $title          
+     * @return object                  
+     */
     public function deleteajax($url, $buttonLabel = 'Delete', $formParameters = array(), $buttonOptions = array(), $title = false)
     {
         if (empty($formParameters)) {
@@ -45,12 +36,15 @@ class FormBuilder extends \Collective\Html\FormBuilder
             . Form::close();
     }
 
-    public function submit($value = null, $options = [])
-    {
-        $options['class'] = 'btn btn-cons btn-success' . (isset($options['class']) ? ' ' . $options['class'] : '');
-        return parent::submit($value, $options);
-    }
-
+    /**
+     * multi select2 
+     * @param  string $name        
+     * @param  array  $list        
+     * @param  array  $selected    
+     * @param  array  $options     
+     * @param  string $placeholder 
+     * @return string             
+     */
     public function multiselect2($name, array $list = [], array $selected = [], $options = [], $placeholder = 'Select one...')
     {
         $options['name'] = $name;
@@ -78,6 +72,15 @@ class FormBuilder extends \Collective\Html\FormBuilder
         return "<select multiple {$options} class=\"select2 form-control\">{$list}</select>";
     }
 
+    /**
+     * select2
+     * @param string $name        
+     * @param  array  $list        
+     * @param  [type] $selected    
+     * @param  array  $options     
+     * @param  string $placeholder 
+     * @return string             
+     */
     public function select2($name, array $list = [], $selected, $options = [], $placeholder = 'Select one...')
     {
         $options['name'] = $name;
