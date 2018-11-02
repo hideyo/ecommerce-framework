@@ -71,6 +71,12 @@ class ShopService extends BaseService
         return $model;
     }
 
+    /**
+     * update model by id
+     * @param  array  $attributes 
+     * @param  integer $shopId     
+     * @return midex             
+     */
     public function updateById(array $attributes, $shopId)
     {
         $validator = Validator::make($attributes, $this->rules($shopId));
@@ -118,6 +124,11 @@ class ShopService extends BaseService
         return $model;
     }
 
+    /**
+     * destroy model
+     * @param  integer $shopId 
+     * @return object      
+     */
     public function destroy($shopId)
     {
         $model = $this->find($shopId);
@@ -131,6 +142,11 @@ class ShopService extends BaseService
         return $model->delete();
     }
 
+    /**
+     * find model by url
+     * @param  string $shopUrl 
+     * @return mixed
+     */
     public function findUrl($shopUrl)
     {
         $result = $this->repo->findUrl($shopUrl);

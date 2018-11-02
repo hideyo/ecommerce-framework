@@ -33,6 +33,11 @@ class TaxRateService extends BaseService
         return $rules;
     } 
 
+    /**
+     * create model
+     * @param  array  $attributes 
+     * @return mixed         
+     */
     public function create(array $attributes)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
@@ -46,7 +51,13 @@ class TaxRateService extends BaseService
         return $this->updateOrAddModel($this->repo->getModel(), $attributes);
     }
 
-    public function updateById(array $attributes, $id)
+    /**
+     * update model by id
+     * @param  array  $attributes 
+     * @param  integer $taxRateId         
+     * @return mixed            
+     */
+    public function updateById(array $attributes, $taxRateId)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
         $validator = Validator::make($attributes, $this->rules($id));

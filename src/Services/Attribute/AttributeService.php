@@ -15,6 +15,11 @@ class AttributeService extends BaseService
 		$this->repoGroup = $attributeGroup;		
 	} 
 
+    /**
+     * laravel validation rules for attribute
+     * @param  boolean $id 
+     * @return array    
+     */
     private function rules($id = false)
     {
         $rules = array(
@@ -28,6 +33,11 @@ class AttributeService extends BaseService
         return $rules;
     }
 
+    /**
+     * laravel validation rules for attributeGroup
+     * @param  boolean $id 
+     * @return array    
+     */
     private function rulesGroup($id = false)
     {
         $rules = array(
@@ -41,6 +51,12 @@ class AttributeService extends BaseService
         return $rules;
     }
 
+    /**
+     * create a attribute
+     * @param  array  $attributes       
+     * @param  integer $attributeGroupId 
+     * @return mixed                   
+     */
     public function create(array $attributes, $attributeGroupId)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
@@ -58,6 +74,11 @@ class AttributeService extends BaseService
         return $this->repo->getModel();
     }
 
+    /**
+     * create a attribute group
+     * @param  array  $attributes        
+     * @return mixed                   
+     */    
     public function createGroup(array $attributes)
     {
         $attributes['shop_id'] = auth('hideyobackend')->user()->selected_shop_id;
@@ -109,16 +130,28 @@ class AttributeService extends BaseService
         return $model;    
     } 
 
+    /**
+     * select all attribute Groups
+     * @return object
+     */
     public function selectAllGroups()
     {
         return $this->repoGroup->selectAll();
     }
 
+    /**
+     * get attribute group model
+     * @return object
+     */
     public function getGroupModel()
     {
         return $this->repoGroup->getModel();
     }
 
+    /**
+     * find a attribute group model
+     * @return object
+     */
     public function findGroup($groupId)
     {
         return $this->repoGroup->find($groupId);
