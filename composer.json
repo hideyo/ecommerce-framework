@@ -5,18 +5,17 @@
     "homepage": "http://hideyo.io",
     "license": "GPL-3.0+",
     "require": {
-        "php": ">=7.0.0",
-        "laravel/framework": "5.5.*",
-        "edvinaskrucas/notification": "5.*",
-        "cviebrock/eloquent-sluggable": "^4.1",
-        "laravelcollective/html": "^5.2",
-        "baum/baum": "~1.1",
-        "intervention/image": "~2.3",
-        "intervention/imagecache": "^2.3",
-        "felixkiss/uniquewith-validator": "2.*",
-        "nesbot/carbon": "^1.25",
-        "maatwebsite/excel": "~3.0.0",
-        "elasticquent/elasticquent": "1.0.6"                
+        "php": "^7.2",   
+        "laracasts/flash": "^3.1",
+        "laravel/framework": "6.18.8",
+        "cviebrock/eloquent-sluggable": "6.0.*",
+        "laravelcollective/html": "^6.1.2",
+        "baum/baum": "2.0.0-alpha1",
+        "intervention/image": "2.5.1",
+        "intervention/imagecache": "2.4.1",
+        "felixkiss/uniquewith-validator": "3.4",
+        "nesbot/carbon": "2.35.0",
+        "maatwebsite/excel": "~3.1.19"              
 
     },
     "autoload": {

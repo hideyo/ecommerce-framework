@@ -9,7 +9,6 @@ use Hideyo\Ecommerce\Framework\Services\Invoice\InvoiceFacade as InvoiceService;
 use Hideyo\Ecommerce\Framework\Services\Product\ProductFacade as ProductService;
 use Hideyo\Ecommerce\Framework\Services\Order\OrderFacade as OrderService;
 use Hideyo\Ecommerce\Framework\Services\Product\ProductCombinationFacade as ProductCombinationService;
-use Notification;
 
 class HandleOrderStatusValidated
 {
@@ -25,7 +24,7 @@ class HandleOrderStatusValidated
 
             $result = InvoiceService::generateInvoiceFromOrder($event->order->id);
             if (isset($result->id)) {
-                Notification::success('Invoice is generated');
+                flash('Invoice is generated');
             }
         } 
 
@@ -33,7 +32,7 @@ class HandleOrderStatusValidated
             OrderService::updateById(array('validated' => 1), $event->order->id);  
             ProductService::reduceAmounts($event->order->products);
             ProductCombinationService::reduceAmounts($event->order->products);      
-            Notification::success('Inventory updated: product amounts are reduced.');   
+            flash('Inventory updated: product amounts are reduced.');   
         }
     }
 }

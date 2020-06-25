@@ -1,7 +1,6 @@
 <?php
 
 namespace Hideyo\Ecommerce\Framework\Services;
-use Notification;
   
 class BaseService
 {
@@ -69,7 +68,7 @@ class BaseService
     public function notificationRedirect($routeName, $result, $successMsg) 
     {
         if (isset($result->id)) {
-            Notification::success($successMsg);
+            flash($successMsg);
             if(is_array($routeName)) {
                 return redirect()->route($routeName[0], $routeName[1]);
             }
@@ -77,7 +76,7 @@ class BaseService
         }
         
         foreach ($result->errors()->all() as $error) {
-            Notification::error($error);
+            flash($error);
         }
 
         return redirect()->back()->withInput();

@@ -8,7 +8,6 @@ use Mail;
 use File;
 use Hideyo\Ecommerce\Framework\Services\Invoice\InvoiceFacade as InvoiceService;
 use Hideyo\Ecommerce\Framework\Services\GeneralSetting\GeneralSettingFacade as GeneralSettingService;
-use Notification;
 
 class HandleOrderStatusEmail
 {
@@ -72,10 +71,10 @@ class HandleOrderStatusEmail
 
                             $upload_success = $pdf->save($destinationPath.'/order/order-'.$event->order->generated_custom_order_id.'.pdf');
                             $message->attach($destinationPath.'/order/order-'.$event->order->generated_custom_order_id.'.pdf');
-                            Notification::success('Email has order attachment');
+                            flash('Email has order attachment');
                         }
 
-                        Notification::success('Email with order status has been sent to '.$event->order->client->email.' from info@'.$orderStatusEmailFrom);
+                        flash('Email with order status has been sent to '.$event->order->client->email.' from info@'.$orderStatusEmailFrom);
                     });
 
                     if ($event->status->attach_order_to_email) {
@@ -137,7 +136,7 @@ class HandleOrderStatusEmail
 
                             $upload_success = $pdf->save($destinationPath.'/invoice/invoice-'.$event->order->invoice->generated_custom_invoice_id.'.pdf');
                             $message->attach($destinationPath.'/invoice/invoice-'.$event->order->invoice->generated_custom_invoice_id.'.pdf');
-                            Notification::success('Email has invoice attachment');
+                            flash('Email has invoice attachment');
                         }
 
                         if ($event->order and $event->status->attach_order_to_email) {
@@ -155,10 +154,10 @@ class HandleOrderStatusEmail
 
                             $upload_success = $pdf->save($destinationPath.'/order/order-'.$event->order->generated_custom_order_id.'.pdf');
                             $message->attach($destinationPath.'/order/order-'.$event->order->generated_custom_order_id.'.pdf');
-                            Notification::success('Email has order attachment');
+                            flash('Email has order attachment');
                         }
 
-                        Notification::success('Email with order status has been sent to '.$event->order->client->email.' from info@'.$orderStatusEmailFrom);
+                        flash('Email with order status has been sent to '.$event->order->client->email.' from info@'.$orderStatusEmailFrom);
                     });
 
                     if ($event->status->attach_invoice_to_email AND $event->order->invoice) {
