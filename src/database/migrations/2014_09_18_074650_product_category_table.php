@@ -33,8 +33,8 @@ class ProductCategoryTable extends Migration
             $table->integer('redirect_product_category_id')->unsigned()->nullable();
             $table->foreign('redirect_product_category_id')->references('id')->on('product_category')->onDelete('set null');
             $table->integer('parent_id')->nullable()->index();
-            $table->integer('lft')->nullable()->index();
-            $table->integer('rgt')->nullable()->index();
+            $table->integer('left')->nullable()->index();
+            $table->integer('right')->nullable()->index();
             $table->integer('depth')->nullable();
             $table->timestamps();
         });

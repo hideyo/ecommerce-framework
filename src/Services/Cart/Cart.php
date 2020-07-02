@@ -79,6 +79,7 @@ class Cart
         $this->config = $config;
     }
 
+
     /**
      * get instance name of the cart
      *
@@ -673,7 +674,7 @@ class Cart
      */
     protected function fireEvent($name, $value = [])
     {
-        return $this->events->fire($this->getInstanceName() . '.' . $name, array_values([$value, $this]));
+        return $this->events->dispatch($this->getInstanceName() . '.' . $name, array_values([$value, $this]));
     }  
 
     public function updateAmountProduct($productId, $amount, $leadingAttributeId, $productAttributeId)

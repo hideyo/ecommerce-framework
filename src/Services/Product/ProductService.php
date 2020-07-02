@@ -451,7 +451,7 @@ class ProductService extends BaseService
 
         if($product AND $product->productImages->count()) {  
 
-            $images = $product->productImages()->has('relatedAttributes', '=', 0)->has('relatedProductAttributes', '=', 0)->orderBy('rank', '=', 'asc')->get();
+            $images = $product->productImages()->has('relatedAttributes', '=', 0)->has('relatedProductAttributes', '=', 0)->orderBy('rank', 'asc')->get();
 
             if($combinationsIds) {
 

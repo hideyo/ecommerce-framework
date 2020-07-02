@@ -5,11 +5,10 @@ namespace Hideyo\Ecommerce\Framework\Services\Product\Entity;
 use Hideyo\Ecommerce\Framework\Services\BaseModel;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Carbon\Carbon;
-use Elasticquent\ElasticquentTrait;
 
 class Product extends BaseModel
 {
-    use ElasticquentTrait, Sluggable;
+    use Sluggable;
 
     /**
      * The database table used by the model.

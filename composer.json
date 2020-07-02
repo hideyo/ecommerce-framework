@@ -15,7 +15,8 @@
         "intervention/imagecache": "2.4.1",
         "felixkiss/uniquewith-validator": "3.4",
         "nesbot/carbon": "2.35.0",
-        "maatwebsite/excel": "~3.1.19"              
+        "maatwebsite/excel": "~3.1.19",
+        "baum/baum": "2.0.0-alpha1"            
     },
     "autoload": {
         "psr-4": {
