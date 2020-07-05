@@ -48,9 +48,9 @@ class ProductCategoryRepository extends BaseRepository
          return $this->model->where('shop_id', $shopId)->where('active', 1)->orderBy('title', 'asc')->get();
     }
 
-    function selectAllByShopIdAndRoot($shopId)
+    function selectAllByShopIdAndRoot()
     {
-         return $this->model->roots()->where('shop_id', $shopId)->where('active', 1)->orderBy('title', 'asc')->get();
+         return $this->model->roots()->where('shop_id', config()->get('app.shop_id'))->where('active', 1)->orderBy('title', 'asc')->get();
     }  
 
     function selectCategoriesByParentId($shopId, $parentId, $imageTag = false)

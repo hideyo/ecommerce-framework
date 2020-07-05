@@ -288,9 +288,9 @@ class ProductCategoryService extends BaseService
     	return $this->repo->selectOneByShopIdAndSlug($shopId, $slug, $imageTag);
     }
 
-    public function selectAllByShopIdAndRoot($shopId)
+    public function selectAllByShopIdAndRoot()
     {
-    	return $this->repo->selectAllByShopIdAndRoot($shopId);
+    	return $this->repo->selectAllByShopIdAndRoot();
     }
 
     public function selectRootCategories($shopId, $imageTag)
