@@ -362,7 +362,7 @@ class NewsRepository  extends BaseRepository
         $dt = Carbon::now('Europe/Amsterdam');
 
         return $this->model->with(
-            array('newsImages' => function ($query) {
+            array('newsGroup', 'newsImages' => function ($query) {
                 $query->orderBy('rank', 'asc');
             })
         )
